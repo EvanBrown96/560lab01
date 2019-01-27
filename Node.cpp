@@ -1,3 +1,10 @@
+/**
+ * @author: Evan Brown
+ * @file: Node.cpp
+ * @date: 1/25/19
+ * @brief: implementation of Node methods
+ */
+
 template <typename A>
 Node<A>::Node(const A& value){
   this->value = value;
@@ -8,11 +15,6 @@ template <typename A>
 Node<A>::Node(const A& value, Node<A>* next){
   this->value = value;
   this->next = next;
-}
-
-template <typename A>
-Node<A>::~Node(){
-
 }
 
 template <typename A>

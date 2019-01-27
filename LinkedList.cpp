@@ -1,3 +1,10 @@
+/**
+ * @author: Evan Brown
+ * @file: LinkedList.cpp
+ * @date: 1/25/19
+ * @brief: implementation of linked list methods
+ */
+
 #include <iostream>
 
 template <typename A>
@@ -57,18 +64,22 @@ void LinkedList<A>::deleteVal(const A& value) throw(ValueNotFound<A>){
   Node<A>* prev = nullptr;
   Node<A>* iter = head;
 
+  // iterate until the item is found or the end of the list is reached.
   while(iter != nullptr && iter->getValue() != value){
     prev = iter;
     iter = iter->getNext();
   }
 
+  // throw an error if the end of the list was reached without finding the item
   if(iter == nullptr){
     throw ValueNotFound<A>(value);
   }
 
+  // actually delete the item
   Node<A>* next = iter->getNext();
   delete iter;
 
+  // if it was the first item, reset the head
   if(prev == nullptr){
     head = next;
   }
@@ -76,6 +87,7 @@ void LinkedList<A>::deleteVal(const A& value) throw(ValueNotFound<A>){
     prev->setNext(next);
   }
 
+  // if it was the last item, reset the tail
   if(next == nullptr){
     tail = prev;
   }
@@ -152,34 +164,49 @@ A LinkedList<A>::average() const throw(EmptyList){
 template <typename A>
 void LinkedList<A>::merge2lists(const LinkedList<A>& new_list){
 
+  // if both lists are empty, there's nothing to be done
   if(isEmpty() && new_list.isEmpty()){
     return;
   }
 
+  // create a copy of the list to merge so we can edit it
   LinkedList<A> copy_list = new_list;
+  // reset the merge head
   merge_new_head = nullptr;
 
+  // repeat while both lists are nonempty
   while(!(isEmpty() || copy_list.isEmpty())){
+    // get smallest value of both lists
     A new_value = copy_list.smallest();
     A old_value = smallest();
+
+    // repeat until the list to merge has no values smaller than the original list,
+    // OR the list to merge is empty
     while(new_value < old_value){
       mergeHelper(copy_list, new_value);
       if(copy_list.isEmpty()){
         break;
       }
+      // get next smallest value
       new_value = copy_list.smallest();
     }
+    // if the list to merge is empty, leave this loop
     if(copy_list.isEmpty()){
       break;
     }
+    // repeat until the original list has no values smaller than the list to merge,
+    // OR the original list is empty
     while(new_value >= old_value){
       mergeHelper(*this, old_value);
       if(isEmpty()){
         break;
       }
+      // get the next smallest value
       old_value = smallest();
     }
   }
+  // at this point at least one of the lists is empty, so we can move all the rest
+  // of the items from the other list very simply.
   while(!isEmpty()){
     A old_value = smallest();
     mergeHelper(*this, old_value);
@@ -189,7 +216,6 @@ void LinkedList<A>::merge2lists(const LinkedList<A>& new_list){
     mergeHelper(copy_list, new_value);
   }
 
-  removeEverything();
   head = merge_new_head;
   tail = merge_next;
 
@@ -197,14 +223,19 @@ void LinkedList<A>::merge2lists(const LinkedList<A>& new_list){
 
 template <typename A>
 void LinkedList<A>::mergeHelper(LinkedList<A>& operand, A& value){
+  // create a new node with the given value
   merge_next = new Node<A>(value);
+
+  // if this is the first item, set the new head, otherwise add it to the list normally
   if(merge_new_head == nullptr){
     merge_new_head = merge_next;
   }
   else{
     merge_prev->setNext(merge_next);
   }
+  // increment the previous pointer
   merge_prev = merge_next;
+  // delete the value from the list it came from
   operand.deleteVal(value);
 }
 

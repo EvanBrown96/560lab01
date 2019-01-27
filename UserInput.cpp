@@ -2,7 +2,6 @@
 #include <iostream>
 #include <limits>
 
-
 void UserInput::clearCin(){
   std::cin.clear();
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -12,7 +11,7 @@ void UserInput::start(){
 
   choice = 0;
 
-  while(choice != 8){
+  while(true){
     std::cout << "Choose one operation from the options below:\n\n";
     std::cout << "\t1. Insert\n";
     std::cout << "\t2. Delete\n";
@@ -26,6 +25,10 @@ void UserInput::start(){
     while(!(std::cin >> choice && choice > 0 && choice < 9)){
       clearCin();
       std::cout << "Invalid choice, try again: ";
+    }
+
+    if(choice == 8){
+      break;
     }
 
     switch(choice){
@@ -53,7 +56,7 @@ void UserInput::start(){
         userMerge();
         break;
       }
-      case 7: {
+      default: {
         ll.print();
       }
     }
