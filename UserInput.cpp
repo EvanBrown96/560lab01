@@ -1,3 +1,10 @@
+/**
+ * @author: Evan Brown
+ * @file: UserInput.cpp
+ * @date: 1/26/19
+ * @brief: implementation of UserInput functions
+ */
+
 #include "UserInput.hpp"
 #include <iostream>
 #include <limits>
@@ -140,39 +147,51 @@ void UserInput::userMerge(){
 
   std::cout << "Enter new list to be merged:\n";
 
+  // clear any previous stuff in input buffer
   clearCin();
 
   char res;
   int cur;
   LinkedList<int> temp;
 
+  // get first character of input
   std::cin.get(res);
 
+  // repeat until reach end of line
   while(res != '\n'){
 
+    // reset current value
     choice = 0;
-    while(res == ' '){
+    // throw out any whitespace before next number
+    while(res == ' ' || res == '\t'){
       std::cin.get(res);
     }
-    while(res != ' ' && res != '\n'){
+    // repeat until we reach space again
+    while(res != ' ' && res != '\t' && res != '\n'){
 
+      // get integer value of current character
       cur = static_cast<int>(res) - 48;
+      // if the character is not a number, exit function
       if(cur < 0 || cur > 9){
         std::cout << "Invalid number entered.\n";
         return;
       }
 
+      // update current value with the most recent character
       choice *= 10;
       choice += cur;
 
+      // get next character
       std::cin.get(res);
 
     }
 
+    // add the current value to the linked list
     temp.insert(choice);
 
   }
 
+  // merge the existing linked list with the entered linked list
   ll.merge2lists(temp);
 
 }
