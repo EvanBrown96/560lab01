@@ -1,3 +1,10 @@
+/**
+ * @author: Evan Brown
+ * @file: NumberParser.cpp
+ * @date: 1/28/19
+ * @brief: implementation of parse method for reading numbers from input stream
+ */
+
 #include <stdexcept>
 #include "NumberParser.hpp"
 
