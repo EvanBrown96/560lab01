@@ -8,6 +8,7 @@
 #include "UserInput.hpp"
 #include <fstream>
 #include "NumberParser.hpp"
+#include "exceptions/NumberParseError.hpp"
 
 int main(int argc, char** argv){
 
@@ -19,7 +20,15 @@ int main(int argc, char** argv){
     std::ifstream f;
     f.open(argv[1]);
     // parse file for numbers and store them in the startoff linked list
-    NumberParser::parse(f, startoff);
+    try{
+      NumberParser::parse(f, startoff);
+    }
+    catch(NumberParseError& err){
+      f.close();
+      std::cout << "Data could not be imported from " << argv[1] << "; error at position " << err.getErrPos() << "\n";
+      return 0;
+    }
+
     f.close();
 
     std::cout << "Imported from " << argv[1] << ":\n";

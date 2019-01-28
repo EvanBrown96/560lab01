@@ -9,6 +9,7 @@
 #include <iostream>
 #include <limits>
 #include "NumberParser.hpp"
+#include "exceptions/NumberParseError.hpp"
 
 UserInput::UserInput(const LinkedList<int>& startoff): ll(startoff){}
 
@@ -156,7 +157,15 @@ void UserInput::userMerge(){
   clearCin();
 
   LinkedList<int> temp;
-  NumberParser::parse(std::cin, temp);
+
+  try{
+    NumberParser::parse(std::cin, temp);
+  }
+  catch(NumberParseError& err){
+    std::cout << "Invalid number entered.\n";
+    clearCin();
+    return;
+  }
 
   // merge the existing linked list with the entered linked list
   ll.merge2lists(temp);

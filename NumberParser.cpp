@@ -7,6 +7,7 @@
 
 #include <stdexcept>
 #include "NumberParser.hpp"
+#include "exceptions/NumberParseError.hpp"
 
 void NumberParser::parse(std::istream& stream, LinkedList<int>& ll){
 
@@ -19,13 +20,18 @@ void NumberParser::parse(std::istream& stream, LinkedList<int>& ll){
   stream.get(res);
 
   // repeat until reach end of line
-  while(res != '\n' && !stream.eof()){
+  while(true){
 
     // reset current value
     value = 0;
     // throw out any whitespace before next number
     while(res == ' ' || res == '\t'){
       stream.get(res);
+    }
+
+    // check if end of input has been reached
+    if(res == '\n' || stream.eof()){
+      return;
     }
 
     // check if first character of input is a minus sign
@@ -36,27 +42,33 @@ void NumberParser::parse(std::istream& stream, LinkedList<int>& ll){
     }
 
     // repeat until we reach space again
-    while(res != ' ' && res != '\t' && res != '\n' && !stream.eof()){
+    do{
 
-      // get integer value of current character
-      cur = static_cast<int>(res) - 48;
-      // if the character is not a number, exit function
-      if(cur < 0 || cur > 9){
-        throw std::logic_error("asdf");
+      if(!isInt(res)){
+        throw NumberParseError(stream);
       }
 
       // update current value with the most recent character
       value *= 10;
-      value += cur;
+      value += toInt(res);
 
       // get next character
       stream.get(res);
 
-    }
+    }while(res != ' ' && res != '\t' && res != '\n' && !stream.eof());
 
     // add the current value to the linked list
     ll.insert(is_neg ? (-1)*value : value);
 
   }
 
+}
+
+bool NumberParser::isInt(char c_val){
+  int ret = toInt(c_val);
+  return(ret >= 0 && ret <= 9);
+}
+
+int NumberParser::toInt(char c_val){
+  return static_cast<int>(c_val) - 48;
 }
