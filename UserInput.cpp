@@ -8,6 +8,7 @@
 #include "UserInput.hpp"
 #include <iostream>
 #include <limits>
+#include "NumberParser.hpp"
 
 UserInput::UserInput(const LinkedList<int>& startoff): ll(startoff){}
 
@@ -154,57 +155,8 @@ void UserInput::userMerge(){
   // clear any previous stuff in input buffer
   clearCin();
 
-  char res;
-  int cur;
   LinkedList<int> temp;
-  bool is_neg;
-
-  // get first character of input
-  std::cin.get(res);
-
-  // repeat until reach end of line
-  while(res != '\n'){
-
-    // reset current value
-    choice = 0;
-    // throw out any whitespace before next number
-    while(res == ' ' || res == '\t'){
-      std::cin.get(res);
-    }
-
-    // check if first character of input is a minus sign
-    is_neg = false;
-    if(res == '-'){
-      is_neg = true;
-      std::cin.get(res);
-    }
-
-    // repeat until we reach space again
-    while(res != ' ' && res != '\t' && res != '\n'){
-
-      // get integer value of current character
-      cur = static_cast<int>(res) - 48;
-      // if the character is not a number, exit function
-      if(cur < 0 || cur > 9){
-        std::cout << "Invalid number entered.\n";
-        // clear rest of input so it doesn't interfere with subsequent operations
-        clearCin();
-        return;
-      }
-
-      // update current value with the most recent character
-      choice *= 10;
-      choice += cur;
-
-      // get next character
-      std::cin.get(res);
-
-    }
-
-    // add the current value to the linked list
-    temp.insert(is_neg ? (-1)*choice : choice);
-
-  }
+  NumberParser::parse(std::cin, temp);
 
   // merge the existing linked list with the entered linked list
   ll.merge2lists(temp);
