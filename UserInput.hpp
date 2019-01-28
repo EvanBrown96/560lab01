@@ -15,6 +15,13 @@ class UserInput{
 public:
 
   /**
+   * constructor
+   * @param startoff: linked list to use as base for program
+   * @post: creates userinput instance with the given linked list
+   */
+  UserInput(const LinkedList<int>& startoff);
+  
+  /**
    * enters menu input loop
    * loops until the user exits the menu
    */

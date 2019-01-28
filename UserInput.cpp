@@ -9,6 +9,8 @@
 #include <iostream>
 #include <limits>
 
+UserInput::UserInput(const LinkedList<int>& startoff): ll(startoff){}
+
 void UserInput::clearCin(){
   std::cin.clear();
   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
