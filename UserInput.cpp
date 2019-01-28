@@ -19,6 +19,7 @@ void UserInput::start(){
   choice = 0;
 
   while(true){
+
     std::cout << "Choose one operation from the options below:\n\n";
     std::cout << "\t1. Insert\n";
     std::cout << "\t2. Delete\n";
@@ -69,6 +70,7 @@ void UserInput::start(){
     }
 
     std::cout << "\n";
+
   }
 
   std::cout << "Done!\n";
@@ -153,6 +155,7 @@ void UserInput::userMerge(){
   char res;
   int cur;
   LinkedList<int> temp;
+  bool is_neg;
 
   // get first character of input
   std::cin.get(res);
@@ -166,6 +169,14 @@ void UserInput::userMerge(){
     while(res == ' ' || res == '\t'){
       std::cin.get(res);
     }
+
+    // check if first character of input is a minus sign
+    is_neg = false;
+    if(res == '-'){
+      is_neg = true;
+      std::cin.get(res);
+    }
+
     // repeat until we reach space again
     while(res != ' ' && res != '\t' && res != '\n'){
 
@@ -174,6 +185,8 @@ void UserInput::userMerge(){
       // if the character is not a number, exit function
       if(cur < 0 || cur > 9){
         std::cout << "Invalid number entered.\n";
+        // clear rest of input so it doesn't interfere with subsequent operations
+        clearCin();
         return;
       }
 
@@ -187,7 +200,7 @@ void UserInput::userMerge(){
     }
 
     // add the current value to the linked list
-    temp.insert(choice);
+    temp.insert(is_neg ? (-1)*choice : choice);
 
   }
 
