@@ -170,4 +170,6 @@ void UserInput::userMerge(){
   // merge the existing linked list with the entered linked list
   ll.merge2lists(temp);
 
+  std::cout << "\nMerged ";
+  ll.print();
 }
