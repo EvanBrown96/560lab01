@@ -60,6 +60,18 @@ void LinkedList<A>::insertBack(const A& value){
 }
 
 template <typename A>
+void LinkedList<A>::insertFront(const A& value){
+
+  Node<A>* new_node = new Node<A>(value, head);
+
+  if(isEmpty()){
+    tail = new_node;
+  }
+  head = new_node;
+
+}
+
+template <typename A>
 void LinkedList<A>::deleteVal(const A& value) throw(ValueNotFound<A>){
 
   Node<A>* prev = nullptr;
@@ -92,6 +104,22 @@ void LinkedList<A>::deleteVal(const A& value) throw(ValueNotFound<A>){
   if(next == nullptr){
     tail = prev;
   }
+
+}
+
+template <typename A>
+bool LinkedList<A>::contains(const A& value) const{
+
+  Node<A>* iter = head;
+
+  while(iter != nullptr){
+    if(value == iter->getValue()){
+      return true;
+    }
+    iter = iter->getNext();
+  }
+
+  return false;
 
 }
 

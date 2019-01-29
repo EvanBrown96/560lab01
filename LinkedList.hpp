@@ -63,6 +63,13 @@ public:
   void insertBack(const A& value);
 
   /**
+   * inserts a given value at the front of the list
+   * @param value: the value to add
+   * @post: the given value is added to the front of the list
+   */
+   void insertFront(const A& value);
+
+  /**
    * deletes the given value from the list
    * @pre: the value to delete exists in the list
    * @param value: the value to remove
@@ -70,6 +77,13 @@ public:
    * @post: the first instance of the given value found in the list is removed
    */
   void deleteVal(const A& value) throw(ValueNotFound<A>);
+
+  /**
+   * checks if the list contains the given value
+   * @param value: the value to check inclusion of
+   * @return: true if the value is in the list, false otherwise
+   */
+  bool contains(const A& value) const;
 
   /**
    * finds the smallest value in the list
