@@ -47,7 +47,7 @@ public:
    * @post: this list contains copy of all data from copy_list
    * @return: reference to this list, for chaining
    */
-  LinkedList<A>& operator =(const LinkedList<A>& copy_list);
+  LinkedList<A>& operator=(const LinkedList<A>& copy_list);
 
   /**
    * tells if this list is empty

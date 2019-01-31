@@ -28,7 +28,7 @@ LinkedList<A>::~LinkedList(){
 }
 
 template <typename A>
-LinkedList<A>& LinkedList<A>::operator =(const LinkedList<A>& copy_list){
+LinkedList<A>& LinkedList<A>::operator=(const LinkedList<A>& copy_list){
 
   removeEverything();
   copyEverything(copy_list);
