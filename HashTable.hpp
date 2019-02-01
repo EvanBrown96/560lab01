@@ -22,13 +22,16 @@ public:
 
   void insert(const T& value); // throw duplicatevalue
   void deleteVal(const T& value); // throw valuenotfound
-  int find(const T& value); // throw valuenotfound
+  int find(const T& value) const; // throw valuenotfound
+
+  void print() const;
 
 private:
 
-  int hash(const T& value);
+  int hash(const T& value) const;
   void rehash();
 
+  int size;
   int (*hash_function)(const T& value);
   LinkedList<int>* buckets;
 

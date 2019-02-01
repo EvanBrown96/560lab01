@@ -22,7 +22,7 @@ LinkedList<A>::LinkedList(const LinkedList<A>& copy_list){
 
 template <typename A>
 LinkedList<A>::~LinkedList(){
-
+  
   removeEverything();
 
 }
@@ -271,10 +271,9 @@ void LinkedList<A>::mergeHelper(LinkedList<A>& operand, A& value){
 template <typename A>
 void LinkedList<A>::print() const{
 
-  std::cout << "List: ";
   Node<A>* iter = head;
   while(iter != nullptr){
-    std::cout << iter->getValue() << " ";
+    std::cout << " -> " << iter->getValue();
     iter = iter->getNext();
   }
   std::cout << "\n";
