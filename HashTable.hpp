@@ -30,6 +30,7 @@ private:
 
   int hash(const T& value) const;
   void rehash();
+  void copyEverything(const HashTable<T>& copy_hash);
 
   int size;
   int (*hash_function)(const T& value);

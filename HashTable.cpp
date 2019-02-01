@@ -17,6 +17,21 @@ HashTable<T>::~HashTable(){
 template <typename T>
 HashTable<T>::HashTable(const HashTable<T>& copy_hash){
 
+  copyEverything(copy_hash);
+
+}
+
+template <typename T>
+HashTable<T>& HashTable<T>::operator=(const HashTable<T>& copy_hash){
+
+  delete[] buckets;
+  copyEverything(copy_hash);
+
+}
+
+template <typename T>
+void HashTable<T>::copyEverything(const HashTable<T>& copy_hash){
+
   size = copy_hash.size;
   hash_function = copy_hash.hash_function;
 
@@ -24,11 +39,6 @@ HashTable<T>::HashTable(const HashTable<T>& copy_hash){
   for(int i = 0; i < size; i++){
     buckets[i] = copy_hash.buckets[i];
   }
-
-}
-
-template <typename T>
-HashTable<T>& HashTable<T>::operator=(const HashTable<T>& copy_hash){
 
 }
 
@@ -93,5 +103,7 @@ int HashTable<T>::hash(const T& value) const{
 
 template <typename T>
 void HashTable<T>::rehash(){
+
+  
 
 }

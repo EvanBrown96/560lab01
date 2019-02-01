@@ -79,6 +79,14 @@ public:
   void deleteVal(const A& value) throw(ValueNotFound<A>);
 
   /**
+   * returns the front value of the list, then removes it from the list
+   * @pre: the list is not empty
+   * @throw EmptyList: if the list is empty
+   * @post: the first element of the list is gone
+   */
+  A popFront() throw(EmptyList);
+
+  /**
    * checks if the list contains the given value
    * @param value: the value to check inclusion of
    * @return: true if the value is in the list, false otherwise

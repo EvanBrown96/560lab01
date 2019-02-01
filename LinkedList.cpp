@@ -22,7 +22,7 @@ LinkedList<A>::LinkedList(const LinkedList<A>& copy_list){
 
 template <typename A>
 LinkedList<A>::~LinkedList(){
-  
+
   removeEverything();
 
 }
@@ -104,6 +104,21 @@ void LinkedList<A>::deleteVal(const A& value) throw(ValueNotFound<A>){
   if(next == nullptr){
     tail = prev;
   }
+
+}
+
+template <typename A>
+A LinkedList<A>::popFront() throw(EmptyList){
+
+  if(isEmpty()){
+    throw EmptyList();
+  }
+
+  A value = head->getValue();
+
+  deleteVal(value);
+
+  return value;
 
 }
 
