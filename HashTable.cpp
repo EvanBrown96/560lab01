@@ -1,7 +1,8 @@
 #include <iostream>
+#include <cmath>
 
 template <typename T>
-HashTable<T>::HashTable(int initial_size, int (*hash_function)(const T& value)): size(initial_size), hash_function(hash_function){
+HashTable<T>::HashTable(int initial_size, int (*hash_function)(const T& value)): current(0), size(initial_size), hash_function(hash_function){
 
   buckets = new LinkedList<int>[size];
 
@@ -32,6 +33,7 @@ HashTable<T>& HashTable<T>::operator=(const HashTable<T>& copy_hash){
 template <typename T>
 void HashTable<T>::copyEverything(const HashTable<T>& copy_hash){
 
+  current = copy_hash.current;
   size = copy_hash.size;
   hash_function = copy_hash.hash_function;
 
@@ -53,6 +55,11 @@ void HashTable<T>::insert(const T& value){ // throw duplicatevalue
   }
 
   bucket.insertFront(value);
+  current++;
+
+  if(current > size){
+    rehash();
+  }
 
 }
 
@@ -67,6 +74,7 @@ void HashTable<T>::deleteVal(const T& value){ // throw valuenotfound
   }
 
   bucket.deleteVal(value);
+  current--;
 
 }
 
@@ -104,6 +112,45 @@ int HashTable<T>::hash(const T& value) const{
 template <typename T>
 void HashTable<T>::rehash(){
 
-  
+  LinkedList<int>* old_buckets = buckets;
+  int old_size = size;
+
+  size = nextPrime(old_size*2);
+  buckets = new LinkedList<int>[size];
+
+  for(int i = 0; i < old_size; i++){
+    while(!old_buckets[i].isEmpty()){
+      insert(old_buckets[i].popFront());
+    }
+  }
+
+}
+
+template <typename T>
+int HashTable<T>::nextPrime(int value) const{
+
+  value += (value%2)+1;
+  while(!isPrime(value)){
+    value += 2;
+  }
+
+  return value;
+
+}
+
+template <typename T>
+bool HashTable<T>::isPrime(int value) const{
+
+  if(value%2 == 0){
+    return false;
+  }
+  for(int i = 3; i < std::sqrt(value)+1; i+=2){
+    std::cout << i << "\n";
+    if(value%i == 0){
+      return false;
+    }
+  }
+
+  return true;
 
 }

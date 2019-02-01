@@ -30,8 +30,11 @@ private:
 
   int hash(const T& value) const;
   void rehash();
+  int nextPrime(int value) const;
+  bool isPrime(int value) const;
   void copyEverything(const HashTable<T>& copy_hash);
 
+  int current;
   int size;
   int (*hash_function)(const T& value);
   LinkedList<int>* buckets;

@@ -22,13 +22,16 @@ int main(int argc, char** argv){
   ht.insert(88);
   ht.insert(14);
   ht.insert(88);
+  ht.insert(100);
 
   ht.print();
 
-  HashTable<int> h2(ht);
-  h2.insert(100);
-  h2.print();
+  ht.insert(21);
   ht.print();
+  // HashTable<int> h2(ht);
+  // h2.insert(100);
+  // h2.print();
+  // ht.print();
 
   return 0;
 
