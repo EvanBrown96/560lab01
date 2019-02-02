@@ -9,6 +9,7 @@
 #include "LinkedList.hpp"
 #include "NumberParser.hpp"
 #include "exceptions/NumberParseError.hpp"
+#include "UserInput.hpp"
 #include <iostream>
 #include <fstream>
 
@@ -52,8 +53,8 @@ int main(int argc, char** argv){
     }
   }
 
-  startoff->print();
-  // do stuff here
+  UserInput inp(*startoff);
+  inp.start();
 
   return 0;
 
