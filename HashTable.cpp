@@ -1,3 +1,10 @@
+/**
+ * @author: Evan Brown
+ * @file: HashTable.cpp
+ * @date: 1/31/19
+ * @brief: implementation of hash table
+ */
+
 #include <iostream>
 #include <cmath>
 
@@ -45,13 +52,12 @@ void HashTable<T>::copyEverything(const HashTable<T>& copy_hash){
 }
 
 template <typename T>
-void HashTable<T>::insert(const T& value){ // throw duplicatevalue
+void HashTable<T>::insert(const T& value) throw(DuplicateValue<T>){
 
   LinkedList<int>& bucket = buckets[hash(value)];
 
   if(bucket.contains(value)){
-    // throw error
-    return;
+    throw DuplicateValue<T>(value);
   }
 
   bucket.insertFront(value);
@@ -64,13 +70,12 @@ void HashTable<T>::insert(const T& value){ // throw duplicatevalue
 }
 
 template <typename T>
-void HashTable<T>::deleteVal(const T& value){ // throw valuenotfound
+void HashTable<T>::deleteVal(const T& value) throw(ValueNotFound<T>){
 
   LinkedList<int>& bucket = buckets[hash(value)];
 
   if(!bucket.contains(value)){
-    // throw error
-    return;
+    throw ValueNotFound<T>(value);
   }
 
   bucket.deleteVal(value);
@@ -79,13 +84,12 @@ void HashTable<T>::deleteVal(const T& value){ // throw valuenotfound
 }
 
 template <typename T>
-int HashTable<T>::find(const T& value) const{ // throw valuenotfound
+int HashTable<T>::find(const T& value) const throw(ValueNotFound<T>){
 
   int hash_val = hash(value);
 
   if(!buckets[hash_val].contains(value)){
-    // throw error
-    return -1;
+    throw ValueNotFound<T>(value);
   }
 
   return hash_val;

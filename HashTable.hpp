@@ -9,6 +9,8 @@
 #define HashTable_hpp
 
 #include "LinkedList.hpp"
+#include "exceptions/DuplicateValue.hpp"
+#include "exceptions/ValueNotFound.hpp"
 
 template <typename T>
 class HashTable{
@@ -20,9 +22,9 @@ public:
   HashTable(const HashTable<T>& copy_hash);
   HashTable<T>& operator=(const HashTable<T>& copy_hash);
 
-  void insert(const T& value); // throw duplicatevalue
-  void deleteVal(const T& value); // throw valuenotfound
-  int find(const T& value) const; // throw valuenotfound
+  void insert(const T& value) throw(DuplicateValue<T>);
+  void deleteVal(const T& value) throw(ValueNotFound<T>);
+  int find(const T& value) const throw(ValueNotFound<T>);
 
   void print() const;
 
