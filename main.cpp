@@ -6,7 +6,11 @@
  */
 
 #include "HashTable.hpp"
+#include "LinkedList.hpp"
+#include "NumberParser.hpp"
+#include "exceptions/NumberParseError.hpp"
 #include <iostream>
+#include <fstream>
 
 int myhash(const int& value){
   return value;
@@ -14,24 +18,42 @@ int myhash(const int& value){
 
 int main(int argc, char** argv){
 
-  HashTable<int> ht(7, myhash);
-  ht.insert(16);
-  ht.insert(17);
-  ht.insert(29);
-  ht.insert(11);
-  ht.insert(88);
-  ht.insert(14);
-  ht.insert(88);
-  ht.insert(100);
+  HashTable<int>* startoff;
 
-  ht.print();
+  if(argc <= 1){
+    std::cout << "No input file provided, exiting.\n";
+    return -1;
+  }
 
-  ht.insert(21);
-  ht.print();
-  // HashTable<int> h2(ht);
-  // h2.insert(100);
-  // h2.print();
-  // ht.print();
+  LinkedList<int> input_data;
+
+  std::ifstream f;
+  f.open(argv[1]);
+
+  try{
+    NumberParser::parse(f, input_data);
+  }
+  catch(NumberParseError& err){
+    f.close();
+    std::cout << "Data could not be imported from " << argv[1] << "; error at position " << err.getErrPos() << "\n";
+    return -1;
+  }
+
+  f.close();
+
+  startoff = new HashTable<int>(input_data.popFront(), myhash);
+
+  while(!input_data.isEmpty()){
+    try{
+      startoff->insert(input_data.popFront());
+    }
+    catch(DuplicateValue<int>& err){
+      // this is fine...
+    }
+  }
+
+  startoff->print();
+  // do stuff here
 
   return 0;
 
