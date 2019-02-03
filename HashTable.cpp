@@ -64,7 +64,6 @@ void HashTable<T>::insert(const T& value) throw(DuplicateValue<T>){
   current++;
 
   if(current > size){
-    std::cout << current << "\t" << size << "\n";
     rehash();
   }
 
