@@ -64,6 +64,7 @@ void HashTable<T>::insert(const T& value) throw(DuplicateValue<T>){
   current++;
 
   if(current > size){
+    std::cout << current << "\t" << size << "\n";
     rehash();
   }
 
@@ -116,9 +117,12 @@ int HashTable<T>::hash(const T& value) const{
 template <typename T>
 void HashTable<T>::rehash(){
 
+  std::cout << "Rehashing table...\n";
+
   LinkedList<int>* old_buckets = buckets;
   int old_size = size;
 
+  current = 0;
   size = nextPrime(old_size*2);
   buckets = new LinkedList<int>[size];
 
@@ -127,6 +131,8 @@ void HashTable<T>::rehash(){
       insert(old_buckets[i].popFront());
     }
   }
+
+  delete[] old_buckets;
 
 }
 
@@ -149,7 +155,6 @@ bool HashTable<T>::isPrime(int value) const{
     return false;
   }
   for(int i = 3; i < std::sqrt(value)+1; i+=2){
-    std::cout << i << "\n";
     if(value%i == 0){
       return false;
     }

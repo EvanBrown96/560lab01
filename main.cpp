@@ -56,6 +56,8 @@ int main(int argc, char** argv){
   UserInput inp(*startoff);
   inp.start();
 
+  delete startoff;
+
   return 0;
 
 }
