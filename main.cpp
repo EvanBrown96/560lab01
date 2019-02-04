@@ -8,7 +8,7 @@
 #include "HashTable.hpp"
 #include "LinkedList.hpp"
 #include "NumberParser.hpp"
-#include "exceptions/NumberParseError.hpp"
+#include "NumberParseError.hpp"
 #include "UserInput.hpp"
 #include <iostream>
 #include <fstream>

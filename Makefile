@@ -1,14 +1,14 @@
 lab: main.o EmptyList.o NumberParseError.o NumberParser.o UserInput.o
 	g++ -std=c++11 main.o EmptyList.o NumberParseError.o NumberParser.o UserInput.o -o lab
 
-main.o: main.cpp HashTable.hpp HashTable.cpp LinkedList.cpp LinkedList.hpp Node.cpp Node.hpp exceptions/ValueNotFound.cpp exceptions/ValueNotFound.hpp exceptions/DuplicateValue.cpp exceptions/DuplicateValue.hpp
+main.o: main.cpp HashTable.hpp HashTable.cpp LinkedList.cpp LinkedList.hpp Node.cpp Node.hpp ValueNotFound.cpp ValueNotFound.hpp DuplicateValue.cpp DuplicateValue.hpp
 	g++ -std=c++11 -c main.cpp
 
-EmptyList.o: exceptions/EmptyList.cpp exceptions/EmptyList.hpp
-	g++ -std=c++11 -c exceptions/EmptyList.cpp
+EmptyList.o: EmptyList.cpp EmptyList.hpp
+	g++ -std=c++11 -c EmptyList.cpp
 
-NumberParseError.o: exceptions/NumberParseError.cpp exceptions/NumberParseError.hpp
-	g++ -std=c++11 -c exceptions/NumberParseError.cpp
+NumberParseError.o: NumberParseError.cpp NumberParseError.hpp
+	g++ -std=c++11 -c NumberParseError.cpp
 
 NumberParser.o: NumberParser.cpp NumberParser.hpp
 	g++ -std=c++11 -c NumberParser.cpp

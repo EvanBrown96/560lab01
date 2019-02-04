@@ -9,8 +9,8 @@
 #define HashTable_hpp
 
 #include "LinkedList.hpp"
-#include "exceptions/DuplicateValue.hpp"
-#include "exceptions/ValueNotFound.hpp"
+#include "DuplicateValue.hpp"
+#include "ValueNotFound.hpp"
 
 template <typename T>
 class HashTable{

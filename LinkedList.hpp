@@ -10,8 +10,8 @@
 #define LinkedList_hpp
 
 #include "Node.hpp"
-#include "exceptions/ValueNotFound.hpp"
-#include "exceptions/EmptyList.hpp"
+#include "ValueNotFound.hpp"
+#include "EmptyList.hpp"
 
 template <typename A>
 class LinkedList{

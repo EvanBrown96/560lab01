@@ -7,7 +7,7 @@
 
 #include <stdexcept>
 #include "NumberParser.hpp"
-#include "exceptions/NumberParseError.hpp"
+#include "NumberParseError.hpp"
 
 void NumberParser::parse(std::istream& stream, LinkedList<int>& ll){
 
