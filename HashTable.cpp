@@ -99,6 +99,7 @@ int HashTable<T>::find(const T& value) const throw(ValueNotFound<T>){
 template <typename T>
 void HashTable<T>::print() const{
 
+  std::cout << "\nHash contents:\n";
   for(int i = 0; i < size; i++){
     std::cout << i << ":";
     buckets[i].print();
