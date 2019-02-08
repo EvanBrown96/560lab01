@@ -11,6 +11,8 @@
 #include "DuplicateValue.hpp"
 #include "ValueNotFound.hpp"
 #include "EmptyLocation.hpp"
+#include "CollisionResolution.hpp"
+#include "HashElement.hpp"
 
 template <typename T>
 class HashTable{
@@ -21,9 +23,10 @@ public:
    * constructor
    * @param initial_size: size to make the hash table to start with
    * @param hash_function: function that takes a value to hash and returns the integer hashed value
+   *
    * @post: new empty hash table instance created with given initial size and hash function
    */
-  HashTable(int initial_size, int (*hash_function)(const T& value)); // also collison strategy
+  HashTable(int initial_size, int (*hash_function)(const T& value), const CollisionResolution& cr);
 
   /**
    * destructor
@@ -127,9 +130,11 @@ private:
    */
   void copyEverything(const HashTable<T>& copy_hash);
 
+  HashElement* buckets;
   int current;
   int size;
   int (*hash_function)(const T& value);
+  CollisionResolution* cr;
 
 };
 
