@@ -80,27 +80,28 @@ void HashTable<T, CR>::insert(const T& value) throw(DuplicateValue<T>){
 template <typename T, typename CR>
 void HashTable<T, CR>::deleteVal(const T& value) throw(ValueNotFound<T>){
 
-  // LinkedList<int>& bucket = buckets[hash(value)];
-  //
-  // if(!bucket.contains(value)){
-  //   throw ValueNotFound<T>(value);
-  // }
-  //
-  // bucket.deleteVal(value);
-  // current--;
+  buckets[find(value)].remove();
+  current--;
 
 }
 
 template <typename T, typename CR>
 int HashTable<T, CR>::find(const T& value) const throw(ValueNotFound<T>){
 
-  // int hash_val = hash(value);
-  //
-  // if(!buckets[hash_val].contains(value)){
-  //   throw ValueNotFound<T>(value);
-  // }
-  //
-  // return hash_val;
+  int hash_val = hash(value);
+  CR hash_resolver(hash_val);
+  HashElement<T>& cur_elem = buckets[hash_resolver.getNewHash()];
+
+  while(cur_elem.getState() != EMPTY){
+    if(cur_elem.getState() == FULL && cur_elem.get() == value){
+      return hash_resolver.getNewHash();
+    }
+
+    hash_resolver.next();
+    cur_elem = buckets[hash_resolver.getNewHash()];
+  }
+
+  throw ValueNotFound<T>(value);
 
 }
 
