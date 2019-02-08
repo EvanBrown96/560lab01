@@ -7,7 +7,9 @@ class LinearProbing: public CollisionResolution{
 
 public:
 
-  int getNewHash();
+  LinearProbing(int initial_hash);
+
+  int getNewHash() const;
 
 };
 

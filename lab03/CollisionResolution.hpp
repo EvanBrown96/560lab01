@@ -5,15 +5,13 @@ class CollisionResolution{
 
 public:
 
-  CollisionResolution();
-
-  void start(int initial_hash);
+  CollisionResolution(int initial_hash);
 
   void next();
 
   virtual int getNewHash() const = 0;
 
-private:
+protected:
 
   int state;
   int initial_hash;

@@ -1,9 +1,6 @@
-CollisionResolution::CollisionResolution(): state(1){}
+#include "CollisionResolution.hpp"
 
-void CollisionResolution::start(int initial_hash){
-  state = 1;
-  this->initial_hash = initial_hash;
-}
+CollisionResolution::CollisionResolution(int initial_hash): initial_hash(initial_hash), state(0){}
 
 void CollisionResolution::next(){
   state++;

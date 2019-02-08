@@ -8,69 +8,77 @@
 #include <iostream>
 #include <cmath>
 
-template <typename T>
-HashTable<T>::HashTable(int initial_size, int (*hash_function)(const T& value), const CollisionResolution& cr): current(0), size(initial_size), hash_function(hash_function){
+template <typename T, typename CR>
+HashTable<T, CR>::HashTable(int initial_size, int (*hash_function)(const T& value)): current(0), size(initial_size), hash_function(hash_function){
 
-  //buckets = new LinkedList<int>[size];
-
-}
-
-template <typename T>
-HashTable<T>::~HashTable(){
-
-  //delete[] buckets;
+  buckets = new HashElement<int>[size];
 
 }
 
-template <typename T>
-HashTable<T>::HashTable(const HashTable<T>& copy_hash){
+template <typename T, typename CR>
+HashTable<T, CR>::~HashTable(){
 
-  //copyEverything(copy_hash);
-
-}
-
-template <typename T>
-HashTable<T>& HashTable<T>::operator=(const HashTable<T>& copy_hash){
-
-  // delete[] buckets;
-  // copyEverything(copy_hash);
+  delete[] buckets;
 
 }
 
-template <typename T>
-void HashTable<T>::copyEverything(const HashTable<T>& copy_hash){
+template <typename T, typename CR>
+HashTable<T, CR>::HashTable(const HashTable<T, CR>& copy_hash){
 
-  // current = copy_hash.current;
-  // size = copy_hash.size;
-  // hash_function = copy_hash.hash_function;
-  //
-  // buckets = new LinkedList<int>[size];
-  // for(int i = 0; i < size; i++){
-  //   buckets[i] = copy_hash.buckets[i];
-  // }
+  copyEverything(copy_hash);
 
 }
 
-template <typename T>
-void HashTable<T>::insert(const T& value) throw(DuplicateValue<T>){
+template <typename T, typename CR>
+HashTable<T, CR>& HashTable<T, CR>::operator=(const HashTable<T, CR>& copy_hash){
 
-  // LinkedList<int>& bucket = buckets[hash(value)];
-  //
-  // if(bucket.contains(value)){
-  //   throw DuplicateValue<T>(value);
-  // }
-  //
-  // bucket.insertFront(value);
-  // current++;
-  //
-  // if(current > size){
-  //   rehash();
-  // }
+  delete[] buckets;
+  copyEverything(copy_hash);
 
 }
 
-template <typename T>
-void HashTable<T>::deleteVal(const T& value) throw(ValueNotFound<T>){
+template <typename T, typename CR>
+void HashTable<T, CR>::copyEverything(const HashTable<T, CR>& copy_hash){
+
+  current = copy_hash.current;
+  size = copy_hash.size;
+  hash_function = copy_hash.hash_function;
+  // collision resolution
+
+  buckets = new HashElement<int>[size];
+  for(int i = 0; i < size; i++){
+    buckets[i] = copy_hash.buckets[i];
+  }
+
+}
+
+template <typename T, typename CR>
+void HashTable<T, CR>::insert(const T& value) throw(DuplicateValue<T>){
+
+  int hash_val = hash(value);
+  CR hash_resolver(hash_val);
+  HashElement<T>& cur_elem = buckets[hash_resolver.getNewHash()];
+
+  while(cur_elem.getState() == FULL){
+    if(cur_elem.get() == value){
+      throw DuplicateValue<T>(value);
+    }
+
+    hash_resolver.next();
+    cur_elem = buckets[hash_resolver.getNewHash()];
+  }
+
+  cur_elem.set(value);
+  current++;
+
+  if(current*2 > size){
+    rehash();
+  }
+
+}
+
+template <typename T, typename CR>
+void HashTable<T, CR>::deleteVal(const T& value) throw(ValueNotFound<T>){
 
   // LinkedList<int>& bucket = buckets[hash(value)];
   //
@@ -83,8 +91,8 @@ void HashTable<T>::deleteVal(const T& value) throw(ValueNotFound<T>){
 
 }
 
-template <typename T>
-int HashTable<T>::find(const T& value) const throw(ValueNotFound<T>){
+template <typename T, typename CR>
+int HashTable<T, CR>::find(const T& value) const throw(ValueNotFound<T>){
 
   // int hash_val = hash(value);
   //
@@ -96,48 +104,51 @@ int HashTable<T>::find(const T& value) const throw(ValueNotFound<T>){
 
 }
 
-template <typename T>
-void HashTable<T>::print() const{
+template <typename T, typename CR>
+void HashTable<T, CR>::print() const{
 
-  // std::cout << "\nHash contents:\n";
-  // for(int i = 0; i < size; i++){
-  //   std::cout << i << ":";
-  //   buckets[i].print();
-  // }
-
-}
-
-template <typename T>
-int HashTable<T>::hash(const T& value) const{
-
-  // return hash_function(value)%size;
+  std::cout << "\nHash contents:\n";
+  for(int i = 0; i < size; i++){
+    std::cout << i << ": ";
+    if(buckets[i].getState() == FULL){
+      std::cout << buckets[i].get();
+    }
+    std::cout << "\n";
+  }
 
 }
 
-template <typename T>
-void HashTable<T>::rehash(){
+template <typename T, typename CR>
+int HashTable<T, CR>::hash(const T& value) const{
 
-  // std::cout << "Rehashing table...\n";
-  //
-  // LinkedList<int>* old_buckets = buckets;
-  // int old_size = size;
-  //
-  // current = 0;
-  // size = nextPrime(old_size*2);
-  // buckets = new LinkedList<int>[size];
-  //
-  // for(int i = 0; i < old_size; i++){
-  //   while(!old_buckets[i].isEmpty()){
-  //     insert(old_buckets[i].popFront());
-  //   }
-  // }
-  //
-  // delete[] old_buckets;
+  return hash_function(value)%size;
 
 }
 
-template <typename T>
-int HashTable<T>::nextPrime(int value) const{
+template <typename T, typename CR>
+void HashTable<T, CR>::rehash(){
+
+  std::cout << "Rehashing table...\n";
+
+  HashElement<int>* old_buckets = buckets;
+  int old_size = size;
+
+  current = 0;
+  size = nextPrime(old_size*2);
+  buckets = new HashElement<int>[size];
+
+  for(int i = 0; i < old_size; i++){
+    if(old_buckets[i].getState() == FULL){
+      insert(old_buckets[i].get());
+    }
+  }
+
+  delete[] old_buckets;
+
+}
+
+template <typename T, typename CR>
+int HashTable<T, CR>::nextPrime(int value) const{
 
   value += (value%2)+1;
   while(!isPrime(value)){
@@ -148,8 +159,8 @@ int HashTable<T>::nextPrime(int value) const{
 
 }
 
-template <typename T>
-bool HashTable<T>::isPrime(int value) const{
+template <typename T, typename CR>
+bool HashTable<T, CR>::isPrime(int value) const{
 
   if(value%2 == 0){
     return false;

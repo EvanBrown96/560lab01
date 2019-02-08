@@ -14,7 +14,7 @@
 #include "CollisionResolution.hpp"
 #include "HashElement.hpp"
 
-template <typename T>
+template <typename T, typename CR> // doubly templated - type stored in hash table and collision resolution subclass
 class HashTable{
 
 public:
@@ -26,7 +26,7 @@ public:
    *
    * @post: new empty hash table instance created with given initial size and hash function
    */
-  HashTable(int initial_size, int (*hash_function)(const T& value), const CollisionResolution& cr);
+  HashTable(int initial_size, int (*hash_function)(const T& value));
 
   /**
    * destructor
@@ -39,14 +39,14 @@ public:
    * @param copy_hash: the hash table to make a copy of
    * @post: new hash table created containing copy of all data in copy_hash
    */
-  HashTable(const HashTable<T>& copy_hash);
+  HashTable(const HashTable<T, CR>& copy_hash);
 
   /**
    * assignment operator
    * @param copy_hash: the hash table whose data to copy
    * @post: all data currently in the hash table deleted, replaced with copy of all data in copy_hash
    */
-  HashTable<T>& operator=(const HashTable<T>& copy_hash);
+  HashTable<T, CR>& operator=(const HashTable<T, CR>& copy_hash);
 
   /**
    * inserts a value into the hash table
@@ -128,13 +128,12 @@ private:
    * @param copy_hash: the hash table to copy values from
    * @post: this hash table contains a copy of all the data in copy_hash
    */
-  void copyEverything(const HashTable<T>& copy_hash);
+  void copyEverything(const HashTable<T, CR>& copy_hash);
 
-  HashElement* buckets;
+  HashElement<T>* buckets;
   int current;
   int size;
   int (*hash_function)(const T& value);
-  CollisionResolution* cr;
 
 };
 

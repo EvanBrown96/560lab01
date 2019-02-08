@@ -2,7 +2,7 @@
 #define HashElement_hpp
 
 
-enum HashStates = {EMPTY, FULL, REMOVED};
+enum HashStates {EMPTY, FULL, REMOVED};
 
 
 template <typename T>
@@ -12,8 +12,12 @@ public:
 
   HashElement();
   ~HashElement();
+  HashElement(const HashElement<T>& copy_elem);
+  HashElement<T>& operator=(const HashElement<T>& copy_elem);
+
   void set(const T& value);
   T get() const;
+  void remove();
 
   enum HashStates getState() const;
 
@@ -23,5 +27,7 @@ private:
   T* value;
 
 };
+
+#include "HashElement.cpp"
 
 #endif
