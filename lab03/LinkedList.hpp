@@ -3,7 +3,7 @@
  * @file: LinkedList.hpp
  * @date: 1/25/19
  * @brief: header file for linked list
- *         adapted from 560 lab 1
+ *         adapted from 560 lab 2
  */
 
 #ifndef LinkedList_hpp

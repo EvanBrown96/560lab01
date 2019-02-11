@@ -3,6 +3,7 @@
  * @file: DuplicateValue.hpp
  * @date: 2/1/19
  * @brief: header file for value not found exception
+ *         adapted from 560 lab 2
  */
 
 #ifndef DuplicateValue_hpp

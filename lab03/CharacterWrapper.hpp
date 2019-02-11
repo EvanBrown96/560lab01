@@ -1,3 +1,10 @@
+/**
+ * @author: Evan Brown
+ * @file: CharacterWrapper.hpp
+ * @date: 2/11/19
+ * @brief: header file for character wrapper class
+ */
+
 #ifndef CharacterWrapper_hpp
 #define CharacterWrapper_hpp
 

@@ -1,3 +1,10 @@
+/**
+ * @author: Evan Brown
+ * @file: CharacterWrapper.cpp
+ * @date: 2/11/19
+ * @brief: implementation of character wrapper class
+ */
+
 #include <iostream>
 #include "CharacterWrapper.hpp"
 

@@ -3,7 +3,7 @@
  * @file: LinkedList.cpp
  * @date: 1/25/19
  * @brief: implementation of linked list methods
- *         adapted from 560 lab 1
+ *         adapted from 560 lab 2
  */
 
 #include <iostream>

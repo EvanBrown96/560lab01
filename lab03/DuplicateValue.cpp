@@ -3,6 +3,7 @@
  * @file: DuplicateValue.cpp
  * @date: 2/1/19
  * @brief: implementation of DuplicateValue exception
+ *         adapted from 560 lab 2
  */
 
 template <typename A>

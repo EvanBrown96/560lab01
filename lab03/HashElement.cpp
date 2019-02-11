@@ -1,3 +1,10 @@
+/**
+ * @author: Evan Brown
+ * @file: HashElement.cpp
+ * @date: 2/8/19
+ * @brief: implementation of wrapper class for hash table elements
+ */
+
 template <typename T>
 HashElement<T>::HashElement(): state(EMPTY){
 

@@ -1,3 +1,10 @@
+/**
+ * @author: Evan Brown
+ * @file: CollisionResolution.hpp
+ * @date: 2/8/19
+ * @brief: header file for collision resolution strategies abstract class
+ */
+
 #ifndef CollisionResolution_hpp
 #define CollisionResolution_hpp
 

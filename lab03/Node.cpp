@@ -3,7 +3,7 @@
  * @file: Node.cpp
  * @date: 1/25/19
  * @brief: implementation of Node methods
- *         adapted from 560 lab 1
+ *         adapted from 560 lab 2
  */
 
 template <typename A>

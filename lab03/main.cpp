@@ -1,10 +1,13 @@
+/**
+ * @author: Evan Brown
+ * @file: main.cpp
+ * @date: 2/11/19
+ * @brief: main entry point to the program
+ */
+
 #include "HashTable.hpp"
 #include "LinearProbing.hpp"
 #include "CharacterWrapper.hpp"
-
-int myhash(const int& value){
-  return value;
-}
 
 int main(int argc, char** argv){
 

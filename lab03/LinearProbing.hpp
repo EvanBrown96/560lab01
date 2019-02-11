@@ -1,3 +1,10 @@
+/**
+ * @author: Evan Brown
+ * @file: LinearProbing.hpp
+ * @date: 2/8/19
+ * @brief: specification of linear probing collision resolution strategy methods
+ */
+
 #ifndef LinearProbing_hpp
 #define LinearProbing_hpp
 

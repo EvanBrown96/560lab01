@@ -1,9 +1,14 @@
+/**
+ * @author: Evan Brown
+ * @file: HashElement.hpp
+ * @date: 2/8/19
+ * @brief: specification of hash element class
+ */
+
 #ifndef HashElement_hpp
 #define HashElement_hpp
 
-
 enum HashStates {EMPTY, FULL, REMOVED};
-
 
 template <typename T>
 class HashElement{

@@ -3,6 +3,7 @@
  * @file: ValueNotFound.hpp
  * @date: 1/26/19
  * @brief: header file for value not found exception
+ *         adapted from 560 lab 2
  */
 
 #ifndef ValueNotFound_hpp
