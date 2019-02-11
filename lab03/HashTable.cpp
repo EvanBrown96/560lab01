@@ -11,7 +11,7 @@
 template <typename T, typename CR>
 HashTable<T, CR>::HashTable(int initial_size, int (*hash_function)(const T& value)): current(0), size(initial_size), hash_function(hash_function){
 
-  buckets = new HashElement<int>[size];
+  buckets = new HashElement<T>[size];
 
 }
 
@@ -43,9 +43,8 @@ void HashTable<T, CR>::copyEverything(const HashTable<T, CR>& copy_hash){
   current = copy_hash.current;
   size = copy_hash.size;
   hash_function = copy_hash.hash_function;
-  // collision resolution
 
-  buckets = new HashElement<int>[size];
+  buckets = new HashElement<T>[size];
   for(int i = 0; i < size; i++){
     buckets[i] = copy_hash.buckets[i];
   }
@@ -106,6 +105,16 @@ int HashTable<T, CR>::find(const T& value) const throw(ValueNotFound<T>){
 }
 
 template <typename T, typename CR>
+void HashTable<T, CR>::findPalindromes() const{
+
+}
+
+template <typename T, typename CR>
+void HashTable<T, CR>::reverseString(int location) throw(EmptyLocation){
+
+}
+
+template <typename T, typename CR>
 void HashTable<T, CR>::print() const{
 
   std::cout << "\nHash contents:\n";
@@ -131,12 +140,12 @@ void HashTable<T, CR>::rehash(){
 
   std::cout << "Rehashing table...\n";
 
-  HashElement<int>* old_buckets = buckets;
+  HashElement<T>* old_buckets = buckets;
   int old_size = size;
 
   current = 0;
   size = nextPrime(old_size*2);
-  buckets = new HashElement<int>[size];
+  buckets = new HashElement<T>[size];
 
   for(int i = 0; i < old_size; i++){
     if(old_buckets[i].getState() == FULL){
