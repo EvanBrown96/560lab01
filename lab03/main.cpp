@@ -20,12 +20,13 @@ int main(int argc, char** argv){
   }
 
   LinkedList<CharacterWrapper> input_data;
+  int hash_size;
 
   std::ifstream f;
   f.open(argv[1]);
 
   try{
-    InputFileParser::parse(f, input_data);
+    hash_size = InputFileParser::parse(f, input_data);
   }
   catch(ParseError& err){
     f.close();
@@ -37,10 +38,15 @@ int main(int argc, char** argv){
 
   input_data.print();
 
-  // HashTable<CharacterWrapper, LinearProbing> ht(7, CharacterWrapper::cwhash);
+  HashTable<CharacterWrapper, LinearProbing> ht(7, CharacterWrapper::cwhash);
+
+  while(!input_data.isEmpty()){
+    CharacterWrapper cw = input_data.popFront();
+    ht.insert(cw);
+  }
   // CharacterWrapper cw("test");
   // ht.insert(cw);
-  // ht.print();
+  ht.print();
 
   return 0;
 }

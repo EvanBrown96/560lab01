@@ -48,6 +48,10 @@ bool CharacterWrapper::operator==(const CharacterWrapper& cw){
   return(cw.string == string);
 }
 
+bool CharacterWrapper::operator!=(const CharacterWrapper& cw){
+  return(cw.string != string);
+}
+
 int CharacterWrapper::cwhash(const CharacterWrapper& cw){
 
   // TODO

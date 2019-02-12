@@ -19,6 +19,7 @@ public:
   CharacterWrapper& operator=(const char* string);
 
   bool operator==(const CharacterWrapper& cw);
+  bool operator!=(const CharacterWrapper& cw);
 
   char* get() const;
 
