@@ -85,9 +85,8 @@ void UserInput::userInsert(){
 
   clearCin();
   char first;
-  InputParser::discardSpaces(std::cin, first);
-
   CharacterWrapper cw = InputParser::parseString(std::cin, first);
+
   if(cw.getLength() != 0){
     try{
       ht_quad.insert(cw);
@@ -107,20 +106,26 @@ void UserInput::userInsert(){
 
 void UserInput::userDelete(){
 
-  // std::cout << "Enter number to be deleted: ";
-  // if(std::cin >> choice){
-  //   try{
-  //     ht.deleteVal(choice);
-  //     std::cout << choice << " is deleted from the hash table.\n";
-  //   }
-  //   catch(ValueNotFound<int>& err){
-  //     std::cout << choice << " can't be found in the hash table.\n";
-  //   }
-  // }
-  // else{
-  //   clearCin();
-  //   std::cout << "Invalid number entered.\n";
-  // }
+  std::cout << "Enter string to be deleted: ";
+
+  clearCin();
+  char first;
+  CharacterWrapper cw = InputParser::parseString(std::cin, first);
+
+  if(cw.getLength() != 0){
+    try{
+      ht_quad.deleteVal(cw);
+      ht_double.deleteVal(cw);
+      std::cout << cw << " is deleted from the hash table.\n";
+    }
+    catch(ValueNotFound<int>& err){
+      std::cout << cw << " can't be found in the hash table.\n";
+    }
+  }
+  else{
+    clearCin();
+    std::cout << "Invalid number entered.\n";
+  }
 
 }
 

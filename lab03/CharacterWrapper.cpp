@@ -69,8 +69,14 @@ int CharacterWrapper::getLength() const{
 
 int CharacterWrapper::cwhash(const CharacterWrapper& cw){
 
-  // TODO
-  return 0;
+  int hash_val = 0;
+
+  for(int i = (cw.length > 7 ? 7 : cw.length); i >= 0; i--){
+    hash_val *= 10;
+    hash_val += static_cast<int>(cw.string[i]);
+  }
+
+  return hash_val;
 
 }
 
