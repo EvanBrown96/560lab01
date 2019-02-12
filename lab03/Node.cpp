@@ -7,15 +7,13 @@
  */
 
 template <typename A>
-Node<A>::Node(const A& value){
-  this->value = value;
-  next = nullptr;
+Node<A>::Node(const A& value): value(value), next(nullptr){
+
 }
 
 template <typename A>
-Node<A>::Node(const A& value, Node<A>* next){
-  this->value = value;
-  this->next = next;
+Node<A>::Node(const A& value, Node<A>* next): value(value), next(next){
+
 }
 
 template <typename A>
