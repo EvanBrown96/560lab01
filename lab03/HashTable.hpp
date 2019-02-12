@@ -96,13 +96,6 @@ public:
 private:
 
   /**
-   * computes the hash function for a value and fits it to the table size
-   * @param value: the value to compute the hash of
-   * @return: the bucket index the value corresponds to
-   */
-  // int hash(const T& value) const;
-
-  /**
    * doubles (approximately) the size of the hash table and reinserts all items
    * @post: hash table is doubled in size and all items moved around according to updated hash values
    */

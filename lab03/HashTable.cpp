@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <cmath>
+#include "CharacterWrapper.hpp"
 
 template <typename T, typename CR>
 HashTable<T, CR>::HashTable(int initial_size, int (*hash_function)(const T& value)): current(0), size(initial_size), hash_function(hash_function){
@@ -107,10 +108,31 @@ int HashTable<T, CR>::find(const T& value) const throw(ValueNotFound<T>){
 template <typename T, typename CR>
 void HashTable<T, CR>::findPalindromes() const{
 
+  std::cout << "Palindrome strings: ";
+
+  for(int i = 0; i < size; i++){
+    if(buckets[i].getState() == FULL){
+      CharacterWrapper cw = buckets[i].get();
+      CharacterWrapper cw2 = CharacterWrapper::getReverse(cw);
+      if(hash_function(cw) == hash_function(cw2)){
+        std::cout << cw << " ";
+      }
+    }
+  }
+
 }
 
 template <typename T, typename CR>
 void HashTable<T, CR>::reverseString(int location) throw(EmptyLocation){
+
+  if(buckets[location].getState() != FULL){
+    throw EmptyLocation();
+  }
+
+  CharacterWrapper cw = buckets[location];
+  deleteVal(cw);
+  CharacterWrapper cw2 = CharacterWrapper::getReverse(cw);
+  insert(cw2);
 
 }
 

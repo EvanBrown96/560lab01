@@ -56,7 +56,7 @@ void UserInput::start(){
         break;
       }
       case 4: {
-        userFindPalindrome();
+        ht_quad.findPalindromes();
         break;
       }
       case 5: {
@@ -86,7 +86,7 @@ void UserInput::userInsert(){
   clearCin();
   char first = std::cin.get();
   CharacterWrapper cw = InputParser::parseString(std::cin, first);
-  
+
   if(cw.getLength() != 0){
     try{
       ht_quad.insert(cw);
@@ -145,10 +145,6 @@ void UserInput::userFind(){
   //   clearCin();
   //   std::cout << "Invalid number entered.\n";
   // }
-
-}
-
-void UserInput::userFindPalindrome(){
 
 }
 

@@ -93,8 +93,10 @@ CharacterWrapper InputParser::parseString(std::istream& stream, char& res){
   for(int i = 0; i < str_size; i++){
     res_string[i] = char_ll.popFront();
   }
-  
-  return CharacterWrapper(res_string);
+
+  CharacterWrapper cw(res_string);
+  delete[] res_string;
+  return cw;
 
 }
 
