@@ -1,18 +1,19 @@
 /**
  * @author: Evan Brown
- * @file: InputFileParser.hpp
+ * @file: InputParser.hpp
  * @date: 2/12/19
- * @brief: header file for input file parser
+ * @brief: header file for input stream parser
  */
 
-#ifndef InputFileParser_hpp
-#define InputFileParser_hpp
+#ifndef InputParser_hpp
+#define InputParser_hpp
 
 #include <istream>
 #include "LinkedList.hpp"
 #include "CharacterWrapper.hpp"
+#include "ParseError.hpp"
 
-class InputFileParser{
+class InputParser{
 public:
 
   /**
@@ -26,7 +27,11 @@ public:
    * @return: the intended size of the hash table (the initial integer read)
    * @post: the linked list contains the strings read from the stream, in order
    */
-  static int parse(std::istream& stream, LinkedList<CharacterWrapper>& ll);
+  static int parse(std::istream& stream, LinkedList<CharacterWrapper>& ll) throw(ParseError);
+
+  static void discardSpaces(std::istream& stream, char& res);
+  static int parseInt(std::istream& stream, char& res) throw(ParseError);
+  static CharacterWrapper parseString(std::istream& stream, char& res);
 
 private:
 

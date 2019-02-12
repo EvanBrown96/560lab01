@@ -74,13 +74,11 @@ void LinkedList<A>::insertFront(const A& value){
 template <typename A>
 void LinkedList<A>::deleteVal(const A& value) throw(ValueNotFound<A>){
 
-  std::cout << value << "\n";
   Node<A>* prev = nullptr;
   Node<A>* iter = head;
 
   // iterate until the item is found or the end of the list is reached.
   while(iter != nullptr && iter->getValue() != value){
-    std::cout << iter->getValue() << "\n";
     prev = iter;
     iter = iter->getNext();
   }

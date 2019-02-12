@@ -1,16 +1,16 @@
 /**
  * @author: Evan Brown
  * @file: main.cpp
- * @date: 2/11/19
+ * @date: 2/12/19
  * @brief: main entry point to the program
  */
 
 #include <fstream>
 #include "HashTable.hpp"
-#include "LinearProbing.hpp"
 #include "CharacterWrapper.hpp"
-#include "InputFileParser.hpp"
+#include "InputParser.hpp"
 #include "ParseError.hpp"
+#include "UserInput.hpp"
 
 int main(int argc, char** argv){
 
@@ -26,7 +26,7 @@ int main(int argc, char** argv){
   f.open(argv[1]);
 
   try{
-    hash_size = InputFileParser::parse(f, input_data);
+    hash_size = InputParser::parse(f, input_data);
   }
   catch(ParseError& err){
     f.close();
@@ -36,19 +36,17 @@ int main(int argc, char** argv){
 
   f.close();
 
-  //input_data.print();
-
-  HashTable<CharacterWrapper, LinearProbing> ht(hash_size, CharacterWrapper::cwhash);
+  HashTable<CharacterWrapper, LinearProbing> startoff_quad(hash_size, CharacterWrapper::cwhash);
+  HashTable<CharacterWrapper, LinearProbing> startoff_double(hash_size, CharacterWrapper::cwhash);
 
   while(!input_data.isEmpty()){
     CharacterWrapper cw = input_data.popFront();
-    input_data.print();
-    ht.insert(cw);
-    ht.print();
+    startoff_quad.insert(cw);
+    startoff_double.insert(cw);
   }
-  // CharacterWrapper cw("test");
-  // ht.insert(cw);
-  ht.print();
+
+  UserInput inp(startoff_quad, startoff_double);
+  inp.start();
 
   return 0;
 }

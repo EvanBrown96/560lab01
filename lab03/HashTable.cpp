@@ -118,7 +118,6 @@ void HashTable<T, CR>::reverseString(int location) throw(EmptyLocation){
 template <typename T, typename CR>
 void HashTable<T, CR>::print() const{
 
-  std::cout << "\nHash contents:\n";
   for(int i = 0; i < size; i++){
     std::cout << i << ": ";
     if(buckets[i].getState() == FULL){

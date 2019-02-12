@@ -50,7 +50,6 @@ bool CharacterWrapper::operator==(const CharacterWrapper& cw){
   }
 
   for(int i = 0; i < 8 && i < length; i++){
-    std::cout << i << "\n";
     if(string[i] != cw.string[i]){
       return false;
     }
@@ -62,6 +61,10 @@ bool CharacterWrapper::operator==(const CharacterWrapper& cw){
 
 bool CharacterWrapper::operator!=(const CharacterWrapper& cw){
   return(!(*this == cw));
+}
+
+int CharacterWrapper::getLength() const{
+  return length;
 }
 
 int CharacterWrapper::cwhash(const CharacterWrapper& cw){

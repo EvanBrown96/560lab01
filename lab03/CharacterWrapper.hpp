@@ -1,7 +1,7 @@
 /**
  * @author: Evan Brown
  * @file: CharacterWrapper.hpp
- * @date: 2/11/19
+ * @date: 2/12/19
  * @brief: header file for character wrapper class
  */
 
@@ -21,7 +21,7 @@ public:
   bool operator==(const CharacterWrapper& cw);
   bool operator!=(const CharacterWrapper& cw);
 
-  char* get() const;
+  int getLength() const;
 
   static int cwhash(const CharacterWrapper& cw);
   static CharacterWrapper getReverse(const CharacterWrapper& cw);
