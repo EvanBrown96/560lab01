@@ -86,7 +86,7 @@ void UserInput::userInsert(){
   clearCin();
   char first = std::cin.get();
   CharacterWrapper cw = InputParser::parseString(std::cin, first);
-  std::cout << cw;
+  
   if(cw.getLength() != 0){
     try{
       ht_quad.insert(cw);

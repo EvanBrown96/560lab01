@@ -73,15 +73,12 @@ int InputParser::parseInt(std::istream& stream, char& res) throw(ParseError){
 
 CharacterWrapper InputParser::parseString(std::istream& stream, char& res){
 
-  std::cout <<"enter";
-
   LinkedList<char> char_ll;
   int str_size = 0;
 
   // repeat until we reach space again
   do{
 
-    std::cout << res;
     char_ll.insertBack(res);
     str_size++;
 
@@ -90,16 +87,13 @@ CharacterWrapper InputParser::parseString(std::istream& stream, char& res){
 
   }while(res != ' ' && res != '\t' && res != '\n' && !stream.eof());
 
-  std::cout <<"done";
-  char_ll.print();
   char* res_string = new char[str_size+1];
   res_string[str_size] = '\0';
 
   for(int i = 0; i < str_size; i++){
     res_string[i] = char_ll.popFront();
   }
-  std::cout << "aaaa";
-  std::cout << res_string;
+  
   return CharacterWrapper(res_string);
 
 }

@@ -127,13 +127,6 @@ void HashTable<T, CR>::print() const{
 
 }
 
-// template <typename T, typename CR>
-// int HashTable<T, CR>::hash(const T& value) const{
-//
-//   return hash_function(value)%size;
-//
-// }
-
 template <typename T, typename CR>
 void HashTable<T, CR>::rehash(){
 
