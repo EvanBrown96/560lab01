@@ -21,8 +21,8 @@ public:
   HashElement<T>& operator=(const HashElement<T>& copy_elem);
 
   void set(const T& value);
-  T get() const;
-  void remove();
+  T get() const throw(EmptyLocation);
+  void remove() throw(EmptyLocation);
 
   enum HashStates getState() const;
 

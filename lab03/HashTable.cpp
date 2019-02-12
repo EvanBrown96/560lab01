@@ -56,18 +56,18 @@ void HashTable<T, CR>::insert(const T& value) throw(DuplicateValue<T>){
 
   int hash_val = hash(value);
   CR hash_resolver(hash_val);
-  HashElement<T> cur_elem = buckets[hash_resolver.getNewHash()];
+  int cur_hash = hash_resolver.getNewHash();
 
-  while(cur_elem.getState() == FULL){
-    if(cur_elem.get() == value){
+  while(buckets[cur_hash].getState() == FULL){
+    if(buckets[cur_hash].get() == value){
       throw DuplicateValue<T>(value);
     }
 
     hash_resolver.next();
-    cur_elem = buckets[hash_resolver.getNewHash()];
+    cur_hash = hash_resolver.getNewHash();
   }
 
-  cur_elem.set(value);
+  buckets[cur_hash].set(value);
   current++;
 
   if(current*2 > size){
@@ -89,15 +89,16 @@ int HashTable<T, CR>::find(const T& value) const throw(ValueNotFound<T>){
 
   int hash_val = hash(value);
   CR hash_resolver(hash_val);
-  HashElement<T> cur_elem = buckets[hash_resolver.getNewHash()];
+  int cur_hash = hash_resolver.getNewHash();
+  //HashElement<T> cur_elem = buckets[hash_resolver.getNewHash()];
 
-  while(cur_elem.getState() != EMPTY){
-    if(cur_elem.getState() == FULL && cur_elem.get() == value){
-      return hash_resolver.getNewHash();
+  while(buckets[cur_hash].getState() != EMPTY){
+    if(buckets[cur_hash].getState() == FULL && buckets[cur_hash].get() == value){
+      return cur_hash;
     }
 
     hash_resolver.next();
-    cur_elem = buckets[hash_resolver.getNewHash()];
+    cur_hash = hash_resolver.getNewHash();
   }
 
   throw ValueNotFound<T>(value);

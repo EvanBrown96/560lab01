@@ -22,7 +22,10 @@ HashElement<T>::~HashElement(){
 template <typename T>
 HashElement<T>::HashElement(const HashElement<T>& copy_elem){
 
-  this->value = new T(*copy_elem.value);
+  if(copy_elem.state == FULL){
+    this->value = new T(*copy_elem.value);
+  }
+
   state = copy_elem.state;
 
 }
@@ -33,8 +36,11 @@ HashElement<T>& HashElement<T>::operator=(const HashElement<T>& copy_elem){
   if(state == FULL){
     delete value;
   }
-  
-  this->value = new T(*copy_elem.value);
+
+  if(copy_elem.state == FULL){
+    this->value = new T(*copy_elem.value);
+  }
+
   state = copy_elem.state;
 
   return *this;
@@ -51,14 +57,22 @@ void HashElement<T>::set(const T& value){
 }
 
 template <typename T>
-T HashElement<T>::get() const{
+T HashElement<T>::get() const throw(EmptyLocation){
+
+  if(state != FULL){
+    throw EmptyLocation();
+  }
 
   return *value;
 
 }
 
 template <typename T>
-void HashElement<T>::remove(){
+void HashElement<T>::remove() throw(EmptyLocation){
+
+  if(state != FULL){
+    throw EmptyLocation();
+  }
 
   delete value;
   state = REMOVED;
