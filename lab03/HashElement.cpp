@@ -30,7 +30,10 @@ HashElement<T>::HashElement(const HashElement<T>& copy_elem){
 template <typename T>
 HashElement<T>& HashElement<T>::operator=(const HashElement<T>& copy_elem){
 
-  delete value;
+  if(state == FULL){
+    delete value;
+  }
+  
   this->value = new T(*copy_elem.value);
   state = copy_elem.state;
 

@@ -56,7 +56,7 @@ void HashTable<T, CR>::insert(const T& value) throw(DuplicateValue<T>){
 
   int hash_val = hash(value);
   CR hash_resolver(hash_val);
-  HashElement<T>& cur_elem = buckets[hash_resolver.getNewHash()];
+  HashElement<T> cur_elem = buckets[hash_resolver.getNewHash()];
 
   while(cur_elem.getState() == FULL){
     if(cur_elem.get() == value){
@@ -89,7 +89,7 @@ int HashTable<T, CR>::find(const T& value) const throw(ValueNotFound<T>){
 
   int hash_val = hash(value);
   CR hash_resolver(hash_val);
-  HashElement<T>& cur_elem = buckets[hash_resolver.getNewHash()];
+  HashElement<T> cur_elem = buckets[hash_resolver.getNewHash()];
 
   while(cur_elem.getState() != EMPTY){
     if(cur_elem.getState() == FULL && cur_elem.get() == value){

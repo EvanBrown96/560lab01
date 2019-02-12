@@ -36,14 +36,15 @@ int main(int argc, char** argv){
 
   f.close();
 
-  input_data.print();
+  //input_data.print();
 
-  HashTable<CharacterWrapper, LinearProbing> ht(7, CharacterWrapper::cwhash);
+  HashTable<CharacterWrapper, LinearProbing> ht(hash_size, CharacterWrapper::cwhash);
 
   while(!input_data.isEmpty()){
     CharacterWrapper cw = input_data.popFront();
     input_data.print();
     ht.insert(cw);
+    ht.print();
   }
   // CharacterWrapper cw("test");
   // ht.insert(cw);
