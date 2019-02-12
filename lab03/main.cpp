@@ -11,6 +11,7 @@
 #include "InputParser.hpp"
 #include "ParseError.hpp"
 #include "UserInput.hpp"
+#include "QuadraticProbing.hpp"
 
 int main(int argc, char** argv){
 
@@ -36,8 +37,8 @@ int main(int argc, char** argv){
 
   f.close();
 
-  HashTable<CharacterWrapper, LinearProbing> startoff_quad(hash_size, CharacterWrapper::cwhash);
-  HashTable<CharacterWrapper, LinearProbing> startoff_double(hash_size, CharacterWrapper::cwhash);
+  HashTable<CharacterWrapper, QuadraticProbing> startoff_quad(hash_size, CharacterWrapper::cwhash);
+  HashTable<CharacterWrapper, DoubleHashing> startoff_double(hash_size, CharacterWrapper::cwhash);
 
   while(!input_data.isEmpty()){
     CharacterWrapper cw = input_data.popFront();

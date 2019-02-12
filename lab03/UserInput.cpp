@@ -10,8 +10,8 @@
 #include <iostream>
 #include <limits>
 
-UserInput::UserInput(const HashTable<CharacterWrapper, LinearProbing>& startoff_quad,
-  const HashTable<CharacterWrapper, LinearProbing>& startoff_double): ht_quad(startoff_quad), ht_double(startoff_double){}
+UserInput::UserInput(const HashTable<CharacterWrapper, QuadraticProbing>& startoff_quad,
+  const HashTable<CharacterWrapper, DoubleHashing>& startoff_double): ht_quad(startoff_quad), ht_double(startoff_double){}
 
 void UserInput::clearCin(){
   std::cin.clear();
@@ -84,9 +84,9 @@ void UserInput::userInsert(){
   std::cout << "Enter a string to insert: ";
 
   clearCin();
-  char first;
+  char first = std::cin.get();
   CharacterWrapper cw = InputParser::parseString(std::cin, first);
-
+  std::cout << cw;
   if(cw.getLength() != 0){
     try{
       ht_quad.insert(cw);
@@ -109,7 +109,7 @@ void UserInput::userDelete(){
   std::cout << "Enter string to be deleted: ";
 
   clearCin();
-  char first;
+  char first = std::cin.get();
   CharacterWrapper cw = InputParser::parseString(std::cin, first);
 
   if(cw.getLength() != 0){

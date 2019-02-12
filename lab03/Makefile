@@ -1,5 +1,5 @@
-lab: main.o UserInput.o CollisionResolution.o LinearProbing.o CharacterWrapper.o InputParser.o ParseError.o EmptyList.o EmptyLocation.o
-	g++ -std=c++11 -g main.o UserInput.o CollisionResolution.o LinearProbing.o CharacterWrapper.o InputParser.o ParseError.o EmptyList.o EmptyLocation.o -o lab
+lab: main.o UserInput.o CollisionResolution.o QuadraticProbing.o DoubleHashing.o CharacterWrapper.o InputParser.o ParseError.o EmptyList.o EmptyLocation.o
+	g++ -std=c++11 -g main.o UserInput.o CollisionResolution.o QuadraticProbing.o DoubleHashing.o CharacterWrapper.o InputParser.o ParseError.o EmptyList.o EmptyLocation.o -o lab
 
 main.o: main.cpp HashTable.hpp HashTable.cpp HashElement.hpp HashElement.cpp
 	g++ -std=c++11 -g -c main.cpp
@@ -10,8 +10,11 @@ UserInput.o: UserInput.cpp UserInput.hpp
 CollisionResolution.o: CollisionResolution.cpp CollisionResolution.hpp
 	g++ -std=c++11 -g -c CollisionResolution.cpp
 
-LinearProbing.o: LinearProbing.cpp LinearProbing.hpp
-	g++ -std=c++11 -g -c LinearProbing.cpp
+QuadraticProbing.o: QuadraticProbing.cpp QuadraticProbing.hpp
+	g++ -std=c++11 -g -c QuadraticProbing.cpp
+
+DoubleHashing.o: DoubleHashing.cpp DoubleHashing.hpp
+	g++ -std=c++11 -g -c DoubleHashing.cpp
 
 CharacterWrapper.o: CharacterWrapper.cpp CharacterWrapper.hpp
 	g++ -std=c++11 -g -c CharacterWrapper.cpp

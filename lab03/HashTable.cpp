@@ -54,9 +54,9 @@ void HashTable<T, CR>::copyEverything(const HashTable<T, CR>& copy_hash){
 template <typename T, typename CR>
 void HashTable<T, CR>::insert(const T& value) throw(DuplicateValue<T>){
 
-  int hash_val = hash(value);
+  int hash_val = hash_function(value);
   CR hash_resolver(hash_val);
-  int cur_hash = hash_resolver.getNewHash();
+  int cur_hash = hash_resolver.getNewHash()%size;
 
   while(buckets[cur_hash].getState() == FULL){
     if(buckets[cur_hash].get() == value){
@@ -64,7 +64,7 @@ void HashTable<T, CR>::insert(const T& value) throw(DuplicateValue<T>){
     }
 
     hash_resolver.next();
-    cur_hash = hash_resolver.getNewHash();
+    cur_hash = hash_resolver.getNewHash()%size;
   }
 
   buckets[cur_hash].set(value);
@@ -87,10 +87,9 @@ void HashTable<T, CR>::deleteVal(const T& value) throw(ValueNotFound<T>){
 template <typename T, typename CR>
 int HashTable<T, CR>::find(const T& value) const throw(ValueNotFound<T>){
 
-  int hash_val = hash(value);
+  int hash_val = hash_function(value);
   CR hash_resolver(hash_val);
-  int cur_hash = hash_resolver.getNewHash();
-  //HashElement<T> cur_elem = buckets[hash_resolver.getNewHash()];
+  int cur_hash = hash_resolver.getNewHash()%size;
 
   while(buckets[cur_hash].getState() != EMPTY){
     if(buckets[cur_hash].getState() == FULL && buckets[cur_hash].get() == value){
@@ -98,7 +97,7 @@ int HashTable<T, CR>::find(const T& value) const throw(ValueNotFound<T>){
     }
 
     hash_resolver.next();
-    cur_hash = hash_resolver.getNewHash();
+    cur_hash = hash_resolver.getNewHash()%size;
   }
 
   throw ValueNotFound<T>(value);
@@ -128,12 +127,12 @@ void HashTable<T, CR>::print() const{
 
 }
 
-template <typename T, typename CR>
-int HashTable<T, CR>::hash(const T& value) const{
-
-  return hash_function(value)%size;
-
-}
+// template <typename T, typename CR>
+// int HashTable<T, CR>::hash(const T& value) const{
+//
+//   return hash_function(value)%size;
+//
+// }
 
 template <typename T, typename CR>
 void HashTable<T, CR>::rehash(){

@@ -10,7 +10,8 @@
 
 #include "HashTable.hpp"
 #include "CharacterWrapper.hpp"
-#include "LinearProbing.hpp"
+#include "QuadraticProbing.hpp"
+#include "DoubleHashing.hpp"
 
 class UserInput{
 
@@ -21,8 +22,8 @@ public:
    * @param startoff: hash table to use as base for program
    * @post: creates userinput instance with the given hash table
    */
-  UserInput(const HashTable<CharacterWrapper, LinearProbing>& startoff_quad,
-    const HashTable<CharacterWrapper, LinearProbing>& startoff_double);
+  UserInput(const HashTable<CharacterWrapper, QuadraticProbing>& startoff_quad,
+    const HashTable<CharacterWrapper, DoubleHashing>& startoff_double);
 
   /**
    * enters menu input loop
@@ -32,8 +33,8 @@ public:
 
 private:
 
-  HashTable<CharacterWrapper, LinearProbing> ht_quad;
-  HashTable<CharacterWrapper, LinearProbing> ht_double;
+  HashTable<CharacterWrapper, QuadraticProbing> ht_quad;
+  HashTable<CharacterWrapper, DoubleHashing> ht_double;
 
   /**
    * ignores any characters still in the input buffer and clears error flags

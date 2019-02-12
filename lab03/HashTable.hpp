@@ -100,7 +100,7 @@ private:
    * @param value: the value to compute the hash of
    * @return: the bucket index the value corresponds to
    */
-  int hash(const T& value) const;
+  // int hash(const T& value) const;
 
   /**
    * doubles (approximately) the size of the hash table and reinserts all items
