@@ -45,11 +45,23 @@ CharacterWrapper& CharacterWrapper::operator=(const char* string){
 }
 
 bool CharacterWrapper::operator==(const CharacterWrapper& cw){
-  return(cw.string == string);
+  if((cw.length < 8 || length < 8) && cw.length != length){
+    return false;
+  }
+
+  for(int i = 0; i < 8 && i < length; i++){
+    std::cout << i << "\n";
+    if(string[i] != cw.string[i]){
+      return false;
+    }
+  }
+
+  return true;
+
 }
 
 bool CharacterWrapper::operator!=(const CharacterWrapper& cw){
-  return(cw.string != string);
+  return(!(*this == cw));
 }
 
 int CharacterWrapper::cwhash(const CharacterWrapper& cw){

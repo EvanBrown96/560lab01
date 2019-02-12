@@ -42,6 +42,7 @@ int main(int argc, char** argv){
 
   while(!input_data.isEmpty()){
     CharacterWrapper cw = input_data.popFront();
+    input_data.print();
     ht.insert(cw);
   }
   // CharacterWrapper cw("test");
