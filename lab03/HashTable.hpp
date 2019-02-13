@@ -74,6 +74,8 @@ public:
    */
   int find(const T& value) const throw(ValueNotFound<T>);
 
+  int findReverse(const T& value) const throw(ValueNotFound<T>);
+
   /**
    * finds all of the palidrome strings in the hash table
    * and prints them out

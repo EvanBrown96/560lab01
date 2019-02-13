@@ -144,12 +144,25 @@ void UserInput::userFind(){
   }
   catch(ValueNotFound<CharacterWrapper>& err){
     try{
-      CharacterWrapper rev_cw = CharacterWrapper::getReverse(cw);
-      int loc = ht_quad.find(rev_cw);
+      int loc = ht_quad.findReverse(cw);
       std::cout << "Quadratic probing: " << cw << " is present in reverse order at location " << loc << "\n";
     }
     catch(ValueNotFound<CharacterWrapper>& err){
-      std::cout << "Quadratic probing: " << cw << " can't be found in the hash table.\n";
+      CharacterWrapper rev_cw = CharacterWrapper::getReverse(cw);
+
+      try{
+        int loc = ht_quad.find(rev_cw);
+        std::cout << "Quadratic probing: " << cw << " is present in reverse order at location " << loc << "\n";
+      }
+      catch(ValueNotFound<CharacterWrapper>& err){
+        try{
+          int loc = ht_quad.findReverse(rev_cw);
+          std::cout << "Quadratic probing: " << cw << " is found at location " << loc << "\n";
+        }
+        catch(ValueNotFound<CharacterWrapper>& err){
+          std::cout << "Quadratic probing: " << cw << " can't be found in the hash table.\n";
+        }
+      }
     }
   }
 
@@ -159,12 +172,25 @@ void UserInput::userFind(){
   }
   catch(ValueNotFound<CharacterWrapper>& err){
     try{
-      CharacterWrapper rev_cw = CharacterWrapper::getReverse(cw);
-      int loc = ht_double.find(rev_cw);
+      int loc = ht_double.findReverse(cw);
       std::cout << "Double hashing: " << cw << " is present in reverse order at location " << loc << "\n";
     }
     catch(ValueNotFound<CharacterWrapper>& err){
-      std::cout << "Double hashing: " << cw << " can't be found in the hash table.\n";
+      CharacterWrapper rev_cw = CharacterWrapper::getReverse(cw);
+
+      try{
+        int loc = ht_double.find(rev_cw);
+        std::cout << "Double hashing: " << cw << " is present in reverse order at location " << loc << "\n";
+      }
+      catch(ValueNotFound<CharacterWrapper>& err){
+        try{
+          int loc = ht_double.findReverse(rev_cw);
+          std::cout << "Double hashing: " << cw << " is found at location " << loc << "\n";
+        }
+        catch(ValueNotFound<CharacterWrapper>& err){
+          std::cout << "Double hashing: " << cw << " can't be found in the hash table.\n";
+        }
+      }
     }
   }
 

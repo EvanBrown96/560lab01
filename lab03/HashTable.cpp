@@ -106,6 +106,28 @@ int HashTable<T, CR>::find(const T& value) const throw(ValueNotFound<T>){
 }
 
 template <typename T, typename CR>
+int HashTable<T, CR>::findReverse(const T& value) const throw(ValueNotFound<T>){
+
+  CharacterWrapper cw = CharacterWrapper::getReverse(value);
+
+  int hash_val = hash_function(value);
+  CR hash_resolver(hash_val);
+  int cur_hash = hash_resolver.getNewHash()%size;
+
+  while(buckets[cur_hash].getState() != EMPTY){
+    if(buckets[cur_hash].getState() == FULL && buckets[cur_hash].get() == cw){
+      return cur_hash;
+    }
+
+    hash_resolver.next();
+    cur_hash = hash_resolver.getNewHash()%size;
+  }
+
+  throw ValueNotFound<T>(value);
+
+}
+
+template <typename T, typename CR>
 void HashTable<T, CR>::findPalindromes() const{
 
   std::cout << "Palindrome strings: ";
@@ -136,9 +158,8 @@ void HashTable<T, CR>::reverseString(int location) throw(EmptyLocation){
   }
 
   CharacterWrapper cw = buckets[location].get();
-  deleteVal(cw);
   CharacterWrapper cw2 = CharacterWrapper::getReverse(cw);
-  insert(cw2);
+  buckets[location].set(cw2);
 
 }
 
