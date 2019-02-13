@@ -89,7 +89,10 @@ CharacterWrapper CharacterWrapper::getReverse(const CharacterWrapper& cw){
     rev_string[i] = cw.string[cw.length-i-1];
   }
 
-  return CharacterWrapper(rev_string);
+  CharacterWrapper cw(rev_string);
+  delete[] rev_string;
+
+  return cw;
 
 }
 
