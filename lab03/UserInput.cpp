@@ -89,11 +89,18 @@ void UserInput::userInsert(){
 
   try{
     ht_quad.insert(cw);
-    ht_double.insert(cw);
-    std::cout << cw << " is added to the hash table.\n";
+    std::cout << "Quadratic probing: " << cw << " is added to the hash table.\n";
   }
   catch(DuplicateValue<CharacterWrapper>& err){
-    std::cout << cw << " is a duplicate, can't be added to hash table.\n";
+    std::cout << "Quadratic probing: " << cw << " is a duplicate, can't be added to hash table.\n";
+  }
+
+  try{
+    ht_double.insert(cw);
+    std::cout << "Double hashing: " << cw << " is added to the hash table.\n";
+  }
+  catch(DuplicateValue<CharacterWrapper>& err){
+    std::cout << "Double hashing: " << cw << " is a duplicate, can't be added to hash table.\n";
   }
 
 }
@@ -108,11 +115,18 @@ void UserInput::userDelete(){
 
   try{
     ht_quad.deleteVal(cw);
-    ht_double.deleteVal(cw);
-    std::cout << cw << " is deleted from the hash table.\n";
+    std::cout << "Quadratic probing: " << cw << " is deleted from the hash table.\n";
   }
-  catch(ValueNotFound<int>& err){
-    std::cout << cw << " can't be found in the hash table.\n";
+  catch(ValueNotFound<CharacterWrapper>& err){
+    std::cout << "Quadratic probing: " << cw << " can't be found in the hash table.\n";
+  }
+
+  try{
+    ht_double.deleteVal(cw);
+    std::cout << "Double hashing: " << cw << " is deleted from the hash table.\n";
+  }
+  catch(ValueNotFound<CharacterWrapper>& err){
+    std::cout << "Double hashing: " << cw << " can't be found in the hash table.\n";
   }
 
 }
@@ -127,24 +141,62 @@ void UserInput::userFind(){
   try{
     int loc = ht_quad.find(cw);
     std::cout << "Quadratic probing: " << cw << " is found at location " << loc << "\n";
-    loc = ht_double.find(cw);
-    std::cout << "Double hashing: " << cw << " is found at location " << loc << "\n";
   }
   catch(ValueNotFound<CharacterWrapper>& err){
     try{
       CharacterWrapper rev_cw = CharacterWrapper::getReverse(cw);
       int loc = ht_quad.find(rev_cw);
       std::cout << "Quadratic probing: " << cw << " is present in reverse order at location " << loc << "\n";
-      loc = ht_double.find(rev_cw);
+    }
+    catch(ValueNotFound<CharacterWrapper>& err){
+      std::cout << "Quadratic probing: " << cw << " can't be found in the hash table.\n";
+    }
+  }
+
+  try{
+    int loc = ht_double.find(cw);
+    std::cout << "Double hashing: " << cw << " is found at location " << loc << "\n";
+  }
+  catch(ValueNotFound<CharacterWrapper>& err){
+    try{
+      CharacterWrapper rev_cw = CharacterWrapper::getReverse(cw);
+      int loc = ht_double.find(rev_cw);
       std::cout << "Double hashing: " << cw << " is present in reverse order at location " << loc << "\n";
     }
     catch(ValueNotFound<CharacterWrapper>& err){
-      std::cout << cw << " can't be found in the hash table.\n";
+      std::cout << "Double hashing: " << cw << " can't be found in the hash table.\n";
     }
   }
 
 }
 
 void UserInput::userReverseString(){
+
+  std::cout << "Enter location of string you want to reverse: ";
+  int loc;
+
+  if(std::cin >> loc){
+    try{
+      CharacterWrapper cw = ht_quad.getByLocation(loc);
+      ht_quad.reverseString(loc);
+      std::cout << "Quadratic probing: string " << cw << " is changed to " << CharacterWrapper::getReverse(cw) << "\n";
+    }
+    catch(EmptyLocation& err){
+      std::cout << "There is no string at location " << loc << " with quadratic probing.";
+    }
+
+    try{
+      CharacterWrapper cw = ht_double.getByLocation(loc);
+      ht_double.reverseString(loc);
+      std::cout << "Double hashing: string " << cw << " is changed to " << CharacterWrapper::getReverse(cw) << "\n";
+    }
+    catch(EmptyLocation& err){
+      std::cout << "There is no string at location " << loc << " with double hashing.";
+    }
+  }
+  else{
+    clearCin();
+    std::cout << "Invalid number entered.\n";
+  }
 
 }

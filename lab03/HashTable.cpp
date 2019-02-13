@@ -127,14 +127,29 @@ void HashTable<T, CR>::findPalindromes() const{
 template <typename T, typename CR>
 void HashTable<T, CR>::reverseString(int location) throw(EmptyLocation){
 
+  if(location < 0 || location >= size){
+    throw EmptyLocation();
+  }
+
   if(buckets[location].getState() != FULL){
     throw EmptyLocation();
   }
 
-  CharacterWrapper cw = buckets[location];
+  CharacterWrapper cw = buckets[location].get();
   deleteVal(cw);
   CharacterWrapper cw2 = CharacterWrapper::getReverse(cw);
   insert(cw2);
+
+}
+
+template <typename T, typename CR>
+T HashTable<T, CR>::getByLocation(int location) throw(EmptyLocation){
+
+  if(location < 0 || location >= size){
+    throw EmptyLocation();
+  }
+
+  return buckets[location].get();
 
 }
 

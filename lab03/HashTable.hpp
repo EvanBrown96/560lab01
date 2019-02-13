@@ -88,6 +88,8 @@ public:
    */
   void reverseString(int location) throw(EmptyLocation);
 
+  T getByLocation(int location) throw(EmptyLocation);
+
   /**
    * prints all of the contents of the hash table
    */
