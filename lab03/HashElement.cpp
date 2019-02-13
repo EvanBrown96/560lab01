@@ -51,6 +51,10 @@ HashElement<T>& HashElement<T>::operator=(const HashElement<T>& copy_elem){
 template <typename T>
 void HashElement<T>::set(const T& value){
 
+  if(state == FULL){
+    delete value;
+  }
+
   this->value = new T(value);
   state = FULL;
 
