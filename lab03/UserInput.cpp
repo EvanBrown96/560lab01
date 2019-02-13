@@ -87,19 +87,13 @@ void UserInput::userInsert(){
   char first = std::cin.get();
   CharacterWrapper cw = InputParser::parseString(std::cin, first);
 
-  if(cw.getLength() != 0){
-    try{
-      ht_quad.insert(cw);
-      ht_double.insert(cw);
-      std::cout << cw << " is added to the hash table.\n";
-    }
-    catch(DuplicateValue<CharacterWrapper>& err){
-      std::cout << cw << " is a duplicate, can't be added to hash table.\n";
-    }
+  try{
+    ht_quad.insert(cw);
+    ht_double.insert(cw);
+    std::cout << cw << " is added to the hash table.\n";
   }
-  else{
-    clearCin();
-    std::cout << "Invalid string entered.\n";
+  catch(DuplicateValue<CharacterWrapper>& err){
+    std::cout << cw << " is a duplicate, can't be added to hash table.\n";
   }
 
 }
@@ -112,39 +106,42 @@ void UserInput::userDelete(){
   char first = std::cin.get();
   CharacterWrapper cw = InputParser::parseString(std::cin, first);
 
-  if(cw.getLength() != 0){
-    try{
-      ht_quad.deleteVal(cw);
-      ht_double.deleteVal(cw);
-      std::cout << cw << " is deleted from the hash table.\n";
-    }
-    catch(ValueNotFound<int>& err){
-      std::cout << cw << " can't be found in the hash table.\n";
-    }
+  try{
+    ht_quad.deleteVal(cw);
+    ht_double.deleteVal(cw);
+    std::cout << cw << " is deleted from the hash table.\n";
   }
-  else{
-    clearCin();
-    std::cout << "Invalid number entered.\n";
+  catch(ValueNotFound<int>& err){
+    std::cout << cw << " can't be found in the hash table.\n";
   }
 
 }
 
 void UserInput::userFind(){
 
-  // std::cout << "Enter a number to be found: ";
-  // if(std::cin >> choice){
-  //   try{
-  //     int loc = ht.find(choice);
-  //     std::cout << choice << " is found at location " << loc << "\n";
-  //   }
-  //   catch(ValueNotFound<int>& err){
-  //     std::cout << choice << " can't be found in the hash table.\n";
-  //   }
-  // }
-  // else{
-  //   clearCin();
-  //   std::cout << "Invalid number entered.\n";
-  // }
+  std::cout << "Enter a string to be found: ";
+  clearCin();
+  char first = std::cin.get();
+  CharacterWrapper cw = InputParser::parseString(std::cin, first);
+
+  try{
+    int loc = ht_quad.find(cw);
+    std::cout << "Quadratic probing: " << cw << " is found at location " << loc << "\n";
+    loc = ht_double.find(cw);
+    std::cout << "Double hashing: " << cw << " is found at location " << loc << "\n";
+  }
+  catch(ValueNotFound<CharacterWrapper>& err){
+    try{
+      CharacterWrapper rev_cw = CharacterWrapper::getReverse(cw);
+      int loc = ht_quad.find(rev_cw);
+      std::cout << "Quadratic probing: " << cw << " is present in reverse order at location " << loc << "\n";
+      loc = ht_double.find(rev_cw);
+      std::cout << "Double hashing: " << cw << " is present in reverse order at location " << loc << "\n";
+    }
+    catch(ValueNotFound<CharacterWrapper>& err){
+      std::cout << cw << " can't be found in the hash table.\n";
+    }
+  }
 
 }
 

@@ -120,6 +120,8 @@ void HashTable<T, CR>::findPalindromes() const{
     }
   }
 
+  std::cout << "\n";
+
 }
 
 template <typename T, typename CR>
