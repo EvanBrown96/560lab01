@@ -42,3 +42,7 @@ clock_t Timer::get() const{
   return saved_time;
 
 }
+
+float Timer::getMS() const{
+  return static_cast<float>(get())*1000/CLOCKS_PER_SEC;
+}

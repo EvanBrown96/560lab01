@@ -24,6 +24,8 @@ public:
 
   clock_t get() const;
 
+  float getMS() const;
+
 private:
 
   clock_t saved_time;

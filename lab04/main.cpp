@@ -13,10 +13,6 @@
 #include "NumberParser.hpp"
 #include "NumberParseError.hpp"
 
-int myhash(const int& val){
-  return val;
-}
-
 int main(int argc, char** argv){
   // OpenHashTable<int> oht(7, myhash);
   // ClosedHashTable<int, QuadraticProbing> cht(7, myhash);

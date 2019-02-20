@@ -14,6 +14,10 @@
 #include "QuadraticProbing.hpp"
 #include "DoubleHashing.hpp"
 
+int TABLE_SIZE = 1000003;
+
+int myhash(const int& val);
+
 class UserInput{
 
 public:
@@ -44,6 +48,8 @@ private:
    * @post: std::cin is ready for input again
    */
   void clearCin();
+
+  void column();
 
   void userTest();
 

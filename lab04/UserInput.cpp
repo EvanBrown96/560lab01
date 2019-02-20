@@ -8,7 +8,16 @@
 
 #include "UserInput.hpp"
 #include <iostream>
+#include <iomanip>
 #include <limits>
+#include <time.h>
+#include <cmath>
+#include "Timer.hpp"
+#include "RandomGenerator.hpp"
+
+int myhash(const int& val){
+  return val;
+}
 
 UserInput::UserInput(const OpenHashTable<int>& startoff_open,
   const ClosedHashTable<int, QuadraticProbing>& startoff_quad,
@@ -71,26 +80,93 @@ void UserInput::userTest(){
 
 void UserInput::userPerformance(){
 
-  // std::cout << "Enter string to be deleted: ";
-  //
-  // clearCin();
-  // char first = std::cin.get();
-  // CharacterWrapper cw = InputParser::parseString(std::cin, first);
-  //
-  // try{
-  //   ht_quad.deleteVal(cw);
-  //   std::cout << "Quadratic probing: " << cw << " is deleted from the hash table.\n";
-  // }
-  // catch(ValueNotFound<CharacterWrapper>& err){
-  //   std::cout << "Quadratic probing: " << cw << " can't be found in the hash table.\n";
-  // }
-  //
-  // try{
-  //   ht_double.deleteVal(cw);
-  //   std::cout << "Double hashing: " << cw << " is deleted from the hash table.\n";
-  // }
-  // catch(ValueNotFound<CharacterWrapper>& err){
-  //   std::cout << "Double hashing: " << cw << " can't be found in the hash table.\n";
-  // }
+  Timer build_times[5];
+  Timer found_times[5];
+  Timer not_found_times[5];
 
+  for(int i = 0; i < 5; i++){
+
+    for(int j = 0; j < 5; j++){
+
+      OpenHashTable<int> oht(TABLE_SIZE, myhash);
+      RandomGenerator::seedTime();
+
+      int size = floor(TABLE_SIZE * (static_cast<float>(i+1)/10));
+
+      build_times[i].start();
+      for(int k = 0; k < size; k++){
+        try{
+          oht.insert(RandomGenerator::getFromOne(5000000));
+        }
+        catch(DuplicateValue<int>& err){}
+      }
+      build_times[i].stop();
+
+      int finds = floor(0.01 * TABLE_SIZE);
+
+      for(int k = 0; k < finds; k++){
+        int to_find = RandomGenerator::getFromOne(5000000);
+        try{
+          // test the find to see if item is in the table
+          oht.find(to_find);
+
+          // item was found, run found_times timer
+          found_times[i].start();
+          oht.find(to_find);
+          found_times[i].stop();
+
+        }
+        catch(ValueNotFound<int>& err){
+          // item was not found, run not_found_times timer
+          try{
+            not_found_times[i].start();
+            oht.find(to_find);
+          }
+          catch(ValueNotFound<int>& err){
+            not_found_times[i].stop();
+          }
+        }
+      }
+    }
+
+  }
+
+  std::cout << "Performance (Open hashing):\n";
+  column();
+  std::cout << "";
+  for(int i = 0; i < 5; i++){
+    column();
+    std::cout << floor(TABLE_SIZE * (static_cast<float>(i+1)/10));
+  }
+  std::cout << "\n";
+
+  column();
+  std::cout << "Build";
+  for(int i = 0; i < 5; i++){
+    column();
+    std::cout << build_times[i].getMS()/5;
+  }
+  std::cout << "\n";
+
+  column();
+  std::cout << "Found";
+  for(int i = 0; i < 5; i++){
+    column();
+    std::cout << found_times[i].getMS()/5;
+  }
+  std::cout << "\n";
+
+  column();
+  std::cout << "Not Found";
+  for(int i = 0; i < 5; i++){
+    column();
+    std::cout << not_found_times[i].getMS()/5;
+  }
+  std::cout << "\n";
+
+}
+
+void UserInput::column(){
+  std::cout << std::setw(12);
+  std::cout << std::left;
 }
