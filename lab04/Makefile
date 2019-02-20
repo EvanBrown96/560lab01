@@ -1,5 +1,5 @@
-lab: main.o CollisionResolution.o QuadraticProbing.o DoubleHashing.o EmptyList.o EmptyLocation.o
-	g++ -std=c++11 -g main.o CollisionResolution.o QuadraticProbing.o DoubleHashing.o EmptyList.o EmptyLocation.o -o lab
+lab: main.o CollisionResolution.o QuadraticProbing.o DoubleHashing.o EmptyList.o EmptyLocation.o RandomGenerator.o Timer.o
+	g++ -std=c++11 -g main.o CollisionResolution.o QuadraticProbing.o DoubleHashing.o EmptyList.o EmptyLocation.o RandomGenerator.o Timer.o -o lab
 
 main.o: main.cpp ClosedHashTable.cpp ClosedHashTable.hpp HashElement.cpp HashElement.hpp OpenHashTable.cpp OpenHashTable.hpp LinkedList.cpp LinkedList.hpp Node.cpp Node.hpp DuplicateValue.cpp DuplicateValue.hpp ValueNotFound.cpp ValueNotFound.hpp
 	g++ -std=c++11 -g -c main.cpp
@@ -18,6 +18,12 @@ EmptyList.o: EmptyList.cpp EmptyList.hpp
 
 EmptyLocation.o: EmptyLocation.cpp EmptyLocation.hpp
 	g++ -std=c++11 -g -c EmptyLocation.cpp
+
+RandomGenerator.o: RandomGenerator.cpp RandomGenerator.hpp
+	g++ -std=c++11 -g -c RandomGenerator.cpp
+
+Timer.o: Timer.cpp Timer.hpp
+	g++ -std=c++11 -g -c Timer.cpp
 
 clean:
 	rm -f lab *.o
