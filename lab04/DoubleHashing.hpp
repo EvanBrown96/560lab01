@@ -11,6 +11,7 @@
 
 #include "CollisionResolution.hpp"
 
+template <int Num>
 class DoubleHashing: public CollisionResolution{
 
 public:
@@ -20,5 +21,7 @@ public:
   int getNewHash() const;
 
 };
+
+#include "DoubleHashing.cpp"
 
 #endif

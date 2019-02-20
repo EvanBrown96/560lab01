@@ -6,10 +6,12 @@
  *         adapted from 560 lab 3
  */
 
-#include "DoubleHashing.hpp"
+//#include "DoubleHashing.hpp"
 
-DoubleHashing::DoubleHashing(int initial_hash): CollisionResolution(initial_hash){}
+template <int Num>
+DoubleHashing<Num>::DoubleHashing(int initial_hash): CollisionResolution(initial_hash){}
 
-int DoubleHashing::getNewHash() const{
-  return initial_hash+(state * (5-initial_hash%5));
+template <int Num>
+int DoubleHashing<Num>::getNewHash() const{
+  return initial_hash+(state * (Num-initial_hash%5));
 }

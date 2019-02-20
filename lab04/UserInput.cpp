@@ -21,7 +21,7 @@ int myhash(const int& val){
 
 UserInput::UserInput(const OpenHashTable<int>& startoff_open,
   const ClosedHashTable<int, QuadraticProbing>& startoff_quad,
-  const ClosedHashTable<int, DoubleHashing>& startoff_double): test_open(startoff_open), test_quad(startoff_quad), test_double(startoff_double){}
+  const ClosedHashTable<int, DoubleHashing<5>>& startoff_double): test_open(startoff_open), test_quad(startoff_quad), test_double(startoff_double){}
 
 void UserInput::clearCin(){
   std::cin.clear();

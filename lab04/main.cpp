@@ -25,7 +25,7 @@ int main(int argc, char** argv){
   OpenHashTable<int> startoff_open(7, myhash);
   ClosedHashTable<int, QuadraticProbing> startoff_quad(7, myhash);
   startoff_quad.disableRehashing();
-  ClosedHashTable<int, DoubleHashing> startoff_double(7, myhash);
+  ClosedHashTable<int, DoubleHashing<5>> startoff_double(7, myhash);
   startoff_double.disableRehashing();
 
   LinkedList<int> input_data;

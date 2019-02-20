@@ -29,7 +29,7 @@ public:
    */
   UserInput(const OpenHashTable<int>& startoff_open,
     const ClosedHashTable<int, QuadraticProbing>& startoff_quad,
-    const ClosedHashTable<int, DoubleHashing>& startoff_double);
+    const ClosedHashTable<int, DoubleHashing<5>>& startoff_double);
 
   /**
    * enters menu input loop
@@ -41,7 +41,7 @@ private:
 
   OpenHashTable<int> test_open;
   ClosedHashTable<int, QuadraticProbing> test_quad;
-  ClosedHashTable<int, DoubleHashing> test_double;
+  ClosedHashTable<int, DoubleHashing<5>> test_double;
 
   /**
    * ignores any characters still in the input buffer and clears error flags
