@@ -80,11 +80,12 @@ void UserInput::userTest(){
 
 void UserInput::userPerformanceOpenHashing(){
 
-  int FINDS = floor(0.01 * TABLE_SIZE);
   int MAX_RAND = 5 * TABLE_SIZE;
   int SIZES[5];
+  int FINDS[5];
   for(int i = 0; i < 5; i++){
     SIZES[i] = floor(TABLE_SIZE * (static_cast<float>(i+1)/10));
+    FINDS[i] = floor(0.1 * SIZES[i]);
   }
 
   Timer build_times[5];
@@ -107,7 +108,7 @@ void UserInput::userPerformanceOpenHashing(){
       }
       build_times[i].stop();
 
-      for(int k = 0; k < FINDS; k++){
+      for(int k = 0; k < FINDS[i]; k++){
         int to_find = RandomGenerator::getFromOneTo(MAX_RAND);
         try{
           // test the find to see if item is in the table
