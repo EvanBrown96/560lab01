@@ -101,14 +101,14 @@ void UserInput::userPerformanceOpenHashing(){
       build_times[i].start();
       for(int k = 0; k < SIZES[i]; k++){
         try{
-          oht.insert(RandomGenerator::getFromOne(MAX_RAND));
+          oht.insert(RandomGenerator::getFromOneTo(MAX_RAND));
         }
         catch(DuplicateValue<int>& err){}
       }
       build_times[i].stop();
 
       for(int k = 0; k < FINDS; k++){
-        int to_find = RandomGenerator::getFromOne(MAX_RAND);
+        int to_find = RandomGenerator::getFromOneTo(MAX_RAND);
         try{
           // test the find to see if item is in the table
           oht.find(to_find);

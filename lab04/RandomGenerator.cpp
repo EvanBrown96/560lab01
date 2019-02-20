@@ -19,14 +19,14 @@ int RandomGenerator::get(){
   return rand();
 }
 
-int RandomGenerator::getFromZero(unsigned int max, enum bound b){
+int RandomGenerator::getFromZeroTo(unsigned int max, enum bound b){
   if(b == EXCLUSIVE){
     return rand() % max;
   }
   return rand() % (max+1);
 }
 
-int RandomGenerator::getFromOne(unsigned int max, enum bound b){
+int RandomGenerator::getFromOneTo(unsigned int max, enum bound b){
   if(b == INCLUSIVE){
     return (rand() % max) + 1;
   }

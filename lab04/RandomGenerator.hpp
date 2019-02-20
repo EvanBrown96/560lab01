@@ -23,9 +23,9 @@ public:
 
   static int get();
 
-  static int getFromZero(unsigned int max, enum bound b = EXCLUSIVE);
+  static int getFromZeroTo(unsigned int max, enum bound b = EXCLUSIVE);
 
-  static int getFromOne(unsigned int max, enum bound b = INCLUSIVE);
+  static int getFromOneTo(unsigned int max, enum bound b = INCLUSIVE);
 
   static int getRange(int min, enum bound b_low, int max, enum bound b_high);
 
