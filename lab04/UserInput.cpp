@@ -54,7 +54,7 @@ void UserInput::start(){
         break;
       }
       default: {
-        userPerformance();
+        userPerformanceOpenHashing();
         break;
       }
     }
@@ -78,7 +78,14 @@ void UserInput::userTest(){
 
 }
 
-void UserInput::userPerformance(){
+void UserInput::userPerformanceOpenHashing(){
+
+  int FINDS = floor(0.01 * TABLE_SIZE);
+  int MAX_RAND = 5 * TABLE_SIZE;
+  int SIZES[5];
+  for(int i = 0; i < 5; i++){
+    SIZES[i] = floor(TABLE_SIZE * (static_cast<float>(i+1)/10));
+  }
 
   Timer build_times[5];
   Timer found_times[5];
@@ -91,21 +98,17 @@ void UserInput::userPerformance(){
       OpenHashTable<int> oht(TABLE_SIZE, myhash);
       RandomGenerator::seedTime();
 
-      int size = floor(TABLE_SIZE * (static_cast<float>(i+1)/10));
-
       build_times[i].start();
-      for(int k = 0; k < size; k++){
+      for(int k = 0; k < SIZES[i]; k++){
         try{
-          oht.insert(RandomGenerator::getFromOne(5000000));
+          oht.insert(RandomGenerator::getFromOne(MAX_RAND));
         }
         catch(DuplicateValue<int>& err){}
       }
       build_times[i].stop();
 
-      int finds = floor(0.01 * TABLE_SIZE);
-
-      for(int k = 0; k < finds; k++){
-        int to_find = RandomGenerator::getFromOne(5000000);
+      for(int k = 0; k < FINDS; k++){
+        int to_find = RandomGenerator::getFromOne(MAX_RAND);
         try{
           // test the find to see if item is in the table
           oht.find(to_find);
@@ -136,7 +139,7 @@ void UserInput::userPerformance(){
   std::cout << "";
   for(int i = 0; i < 5; i++){
     column();
-    std::cout << floor(TABLE_SIZE * (static_cast<float>(i+1)/10));
+    std::cout << SIZES[i];
   }
   std::cout << "\n";
 

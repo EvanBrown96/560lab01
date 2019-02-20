@@ -14,7 +14,7 @@
 #include "QuadraticProbing.hpp"
 #include "DoubleHashing.hpp"
 
-int TABLE_SIZE = 1000003;
+#define TABLE_SIZE 1000003
 
 int myhash(const int& val);
 
@@ -53,7 +53,7 @@ private:
 
   void userTest();
 
-  void userPerformance();
+  void userPerformanceOpenHashing();
 
 };
 
