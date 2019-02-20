@@ -76,6 +76,9 @@ public:
    */
   void print() const;
 
+  void disableRehashing();
+  void enableRehashing();
+
 private:
 
   /**
@@ -117,6 +120,7 @@ private:
   int size;
   int (*hash_function)(const T& value);
   LinkedList<int>* buckets;
+  bool do_rehashing;
 
 };
 

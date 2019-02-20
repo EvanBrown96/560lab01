@@ -1,7 +1,7 @@
 /**
  * @author: Evan Brown
  * @file: OpenHashTable.cpp
- * @date: 1/31/19
+ * @date: 2/19/19
  * @brief: implementation of hash table
  *         adapted from 560 lab 2
  */
@@ -10,7 +10,7 @@
 #include <cmath>
 
 template <typename T>
-OpenHashTable<T>::OpenHashTable(int initial_size, int (*hash_function)(const T& value)): current(0), size(initial_size), hash_function(hash_function){
+OpenHashTable<T>::OpenHashTable(int initial_size, int (*hash_function)(const T& value)): current(0), size(initial_size), hash_function(hash_function), do_rehashing(true){
 
   buckets = new LinkedList<int>[size];
 
@@ -64,7 +64,7 @@ void OpenHashTable<T>::insert(const T& value) throw(DuplicateValue<T>){
   bucket.insertFront(value);
   current++;
 
-  if(current > size){
+  if(do_rehashing && current > size){
     rehash();
   }
 
@@ -100,12 +100,21 @@ int OpenHashTable<T>::find(const T& value) const throw(ValueNotFound<T>){
 template <typename T>
 void OpenHashTable<T>::print() const{
 
-  std::cout << "\nHash contents:\n";
   for(int i = 0; i < size; i++){
     std::cout << i << ":";
     buckets[i].print();
   }
 
+}
+
+template <typename T>
+void OpenHashTable<T>::disableRehashing(){
+  do_rehashing = false;
+}
+
+template <typename T>
+void OpenHashTable<T>::enableRehashing(){
+  do_rehashing = true;
 }
 
 template <typename T>

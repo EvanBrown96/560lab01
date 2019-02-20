@@ -11,7 +11,7 @@
 // #include "CharacterWrapper.hpp"
 
 template <typename T, typename CR>
-ClosedHashTable<T, CR>::ClosedHashTable(int initial_size, int (*hash_function)(const T& value)): current(0), size(initial_size), hash_function(hash_function){
+ClosedHashTable<T, CR>::ClosedHashTable(int initial_size, int (*hash_function)(const T& value)): current(0), size(initial_size), hash_function(hash_function), do_rehashing(true){
 
   buckets = new HashElement<T>[size];
 
@@ -72,7 +72,7 @@ void ClosedHashTable<T, CR>::insert(const T& value) throw(DuplicateValue<T>){
   buckets[cur_hash].set(value);
   current++;
 
-  if(current*2 > size){
+  if(do_rehashing && current*2 > size){
     rehash();
   }
 
@@ -186,6 +186,16 @@ void ClosedHashTable<T, CR>::print() const{
     std::cout << "\n";
   }
 
+}
+
+template <typename T, typename CR>
+void ClosedHashTable<T, CR>::disableRehashing(){
+  do_rehashing = false;
+}
+
+template <typename T, typename CR>
+void ClosedHashTable<T, CR>::enableRehashing(){
+  do_rehashing = true;
 }
 
 template <typename T, typename CR>

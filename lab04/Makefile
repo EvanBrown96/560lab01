@@ -1,8 +1,17 @@
-lab: main.o CollisionResolution.o QuadraticProbing.o DoubleHashing.o EmptyList.o EmptyLocation.o RandomGenerator.o Timer.o
-	g++ -std=c++11 -g main.o CollisionResolution.o QuadraticProbing.o DoubleHashing.o EmptyList.o EmptyLocation.o RandomGenerator.o Timer.o -o lab
+lab: main.o UserInput.o NumberParser.o NumberParseError.o CollisionResolution.o QuadraticProbing.o DoubleHashing.o EmptyList.o EmptyLocation.o RandomGenerator.o Timer.o
+	g++ -std=c++11 -g main.o UserInput.o NumberParser.o NumberParseError.o CollisionResolution.o QuadraticProbing.o DoubleHashing.o EmptyList.o EmptyLocation.o RandomGenerator.o Timer.o -o lab
 
 main.o: main.cpp ClosedHashTable.cpp ClosedHashTable.hpp HashElement.cpp HashElement.hpp OpenHashTable.cpp OpenHashTable.hpp LinkedList.cpp LinkedList.hpp Node.cpp Node.hpp DuplicateValue.cpp DuplicateValue.hpp ValueNotFound.cpp ValueNotFound.hpp
 	g++ -std=c++11 -g -c main.cpp
+
+UserInput.o: UserInput.cpp ClosedHashTable.cpp ClosedHashTable.hpp HashElement.cpp HashElement.hpp OpenHashTable.cpp OpenHashTable.hpp LinkedList.cpp LinkedList.hpp Node.cpp Node.hpp DuplicateValue.cpp DuplicateValue.hpp ValueNotFound.cpp ValueNotFound.hpp
+	g++ -std=c++11 -g -c UserInput.cpp
+
+NumberParser.o: NumberParser.cpp NumberParser.hpp NumberParseError.hpp
+	g++ -std=c++11 -g -c NumberParser.cpp
+
+NumberParseError.o: NumberParseError.cpp NumberParseError.hpp
+	g++ -std=c++11 -g -c NumberParseError.cpp
 
 CollisionResolution.o: CollisionResolution.cpp CollisionResolution.hpp
 	g++ -std=c++11 -g -c CollisionResolution.cpp

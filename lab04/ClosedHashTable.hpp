@@ -97,6 +97,9 @@ public:
    */
   void print() const;
 
+  void disableRehashing();
+  void enableRehashing();
+
 private:
 
   /**
@@ -131,6 +134,7 @@ private:
   int current;
   int size;
   int (*hash_function)(const T& value);
+  bool do_rehashing;
 
 };
 
