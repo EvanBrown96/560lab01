@@ -12,7 +12,6 @@
 #include <limits>
 #include <time.h>
 #include <cmath>
-#include "Timer.hpp"
 #include "RandomGenerator.hpp"
 
 int myhash(const int& val){
@@ -20,8 +19,16 @@ int myhash(const int& val){
 }
 
 UserInput::UserInput(const OpenHashTable<int>& startoff_open,
-  const ClosedHashTable<int, QuadraticProbing>& startoff_quad,
-  const ClosedHashTable<int, DoubleHashing<5>>& startoff_double): test_open(startoff_open), test_quad(startoff_quad), test_double(startoff_double){}
+                     const ClosedHashTable<int, QuadraticProbing>& startoff_quad,
+                     const ClosedHashTable<int, DoubleHashing<5>>& startoff_double):
+                     test_open(startoff_open), test_quad(startoff_quad), test_double(startoff_double){
+
+  MAX_RAND = 5 * TABLE_SIZE;
+  for(int i = 0; i < 5; i++){
+    SIZES[i] = floor(TABLE_SIZE * (static_cast<float>(i+1)/10));
+    FINDS[i] = floor(0.1 * SIZES[i]);
+  }
+}
 
 void UserInput::clearCin(){
   std::cin.clear();
@@ -55,6 +62,8 @@ void UserInput::start(){
       }
       default: {
         userPerformanceOpenHashing();
+        userPerformanceClosedHashingQuadraticProbing();
+        userPerformanceClosedHashingDoubleHashing();
         break;
       }
     }
@@ -79,14 +88,6 @@ void UserInput::userTest(){
 }
 
 void UserInput::userPerformanceOpenHashing(){
-
-  int MAX_RAND = 5 * TABLE_SIZE;
-  int SIZES[5];
-  int FINDS[5];
-  for(int i = 0; i < 5; i++){
-    SIZES[i] = floor(TABLE_SIZE * (static_cast<float>(i+1)/10));
-    FINDS[i] = floor(0.1 * SIZES[i]);
-  }
 
   Timer build_times[5];
   Timer found_times[5];
@@ -136,6 +137,120 @@ void UserInput::userPerformanceOpenHashing(){
   }
 
   std::cout << "Performance (Open hashing):\n";
+  printTable(build_times, found_times, not_found_times);
+
+}
+
+void UserInput::userPerformanceClosedHashingQuadraticProbing(){
+
+  Timer build_times[5];
+  Timer found_times[5];
+  Timer not_found_times[5];
+
+  for(int i = 0; i < 5; i++){
+
+    for(int j = 0; j < 5; j++){
+
+      ClosedHashTable<int, QuadraticProbing> ht(TABLE_SIZE, myhash);
+      RandomGenerator::seedTime();
+
+      build_times[i].start();
+      for(int k = 0; k < SIZES[i]; k++){
+        try{
+          ht.insert(RandomGenerator::getFromOneTo(MAX_RAND));
+        }
+        catch(DuplicateValue<int>& err){}
+      }
+      build_times[i].stop();
+
+      for(int k = 0; k < FINDS[i]; k++){
+        int to_find = RandomGenerator::getFromOneTo(MAX_RAND);
+        try{
+          // test the find to see if item is in the table
+          ht.find(to_find);
+
+          // item was found, run found_times timer
+          found_times[i].start();
+          ht.find(to_find);
+          found_times[i].stop();
+
+        }
+        catch(ValueNotFound<int>& err){
+          // item was not found, run not_found_times timer
+          try{
+            not_found_times[i].start();
+            ht.find(to_find);
+          }
+          catch(ValueNotFound<int>& err){
+            not_found_times[i].stop();
+          }
+        }
+      }
+    }
+
+  }
+
+  std::cout << "Performance (Closed hashing with quadratic probing):\n";
+  printTable(build_times, found_times, not_found_times);
+
+}
+
+void UserInput::userPerformanceClosedHashingDoubleHashing(){
+
+  Timer build_times[5];
+  Timer found_times[5];
+  Timer not_found_times[5];
+
+  for(int i = 0; i < 5; i++){
+
+    for(int j = 0; j < 5; j++){
+
+      ClosedHashTable<int, DoubleHashing<DOUBLE_HASHING_VAL>> ht(TABLE_SIZE, myhash);
+      RandomGenerator::seedTime();
+
+      build_times[i].start();
+      for(int k = 0; k < SIZES[i]; k++){
+        try{
+          ht.insert(RandomGenerator::getFromOneTo(MAX_RAND));
+        }
+        catch(DuplicateValue<int>& err){}
+      }
+      build_times[i].stop();
+
+      for(int k = 0; k < FINDS[i]; k++){
+        int to_find = RandomGenerator::getFromOneTo(MAX_RAND);
+        try{
+          // test the find to see if item is in the table
+          ht.find(to_find);
+
+          // item was found, run found_times timer
+          found_times[i].start();
+          ht.find(to_find);
+          found_times[i].stop();
+
+        }
+        catch(ValueNotFound<int>& err){
+          // item was not found, run not_found_times timer
+          try{
+            not_found_times[i].start();
+            ht.find(to_find);
+          }
+          catch(ValueNotFound<int>& err){
+            not_found_times[i].stop();
+          }
+        }
+      }
+    }
+
+  }
+
+  std::cout << "Performance (Closed hashing with quadratic probing):\n";
+  printTable(build_times, found_times, not_found_times);
+
+}
+
+void UserInput::printTable(Timer* build_times, Timer* found_times, Timer* not_found_times) const{
+
   column();
   std::cout << "";
   for(int i = 0; i < 5; i++){
@@ -167,10 +282,9 @@ void UserInput::userPerformanceOpenHashing(){
     std::cout << not_found_times[i].getMS()/5;
   }
   std::cout << "\n";
-
 }
 
-void UserInput::column(){
+void UserInput::column() const{
   std::cout << std::setw(12);
   std::cout << std::left;
 }

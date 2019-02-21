@@ -13,8 +13,10 @@
 #include "ClosedHashTable.hpp"
 #include "QuadraticProbing.hpp"
 #include "DoubleHashing.hpp"
+#include "Timer.hpp"
 
 #define TABLE_SIZE 1000003
+#define DOUBLE_HASHING_VAL 100003
 
 int myhash(const int& val);
 
@@ -49,11 +51,21 @@ private:
    */
   void clearCin();
 
-  void column();
+  void column() const;
+
+  void printTable(Timer* build_times, Timer* found_times, Timer* not_found_times) const;
 
   void userTest();
 
   void userPerformanceOpenHashing();
+
+  void userPerformanceClosedHashingQuadraticProbing();
+
+  void userPerformanceClosedHashingDoubleHashing();
+
+  int MAX_RAND;
+  int SIZES[5];
+  int FINDS[5];
 
 };
 
