@@ -71,6 +71,8 @@ public:
    */
   int find(const T& value) const throw(ValueNotFound<T>);
 
+
+  bool findNoExcept(const T& value, int& loc) const;
   /**
    * prints all of the contents of the hash table
    */

@@ -106,6 +106,26 @@ int ClosedHashTable<T, CR>::find(const T& value) const throw(ValueNotFound<T>){
 
 }
 
+template <typename T, typename CR>
+bool ClosedHashTable<T, CR>::findNoExcept(const T& value, int& loc) const{
+
+  int hash_val = hash_function(value);
+  CR hash_resolver(hash_val);
+  loc = hash_resolver.getNewHash()%size;
+
+  while(buckets[loc].getState() != EMPTY){
+    if(buckets[loc].getState() == FULL && buckets[loc].get() == value){
+      return true;
+    }
+
+    hash_resolver.next();
+    loc = hash_resolver.getNewHash()%size;
+  }
+
+  return false;
+
+}
+
 // template <typename T, typename CR>
 // int ClosedHashTable<T, CR>::findReverse(const T& value) const throw(ValueNotFound<T>){
 //

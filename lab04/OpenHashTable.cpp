@@ -98,6 +98,19 @@ int OpenHashTable<T>::find(const T& value) const throw(ValueNotFound<T>){
 }
 
 template <typename T>
+bool OpenHashTable<T>::findNoExcept(const T& value, int& loc) const{
+
+  loc = hash(value);
+
+  if(!buckets[loc].contains(value)){
+    return false;
+  }
+
+  return true;
+
+}
+
+template <typename T>
 void OpenHashTable<T>::print() const{
 
   for(int i = 0; i < size; i++){

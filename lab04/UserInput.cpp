@@ -92,6 +92,8 @@ void UserInput::userPerformanceOpenHashing(){
   Timer build_times[5];
   Timer found_times[5];
   Timer not_found_times[5];
+  int location;
+  bool found;
 
   for(int i = 0; i < 5; i++){
 
@@ -100,36 +102,30 @@ void UserInput::userPerformanceOpenHashing(){
       OpenHashTable<int> oht(TABLE_SIZE, myhash);
       RandomGenerator::seedTime();
 
-      build_times[i].start();
       for(int k = 0; k < SIZES[i]; k++){
-        try{
-          oht.insert(RandomGenerator::getFromOneTo(MAX_RAND));
+        int to_insert = RandomGenerator::getFromOneTo(MAX_RAND);
+        found = oht.findNoExcept(to_insert, location);
+        // if the item was found successfully, don't do anything, since it is a duplicate
+
+        if(!found){
+          build_times[i].start();
+          oht.insert(to_insert);
+          build_times[i].stop();
         }
-        catch(DuplicateValue<int>& err){}
       }
-      build_times[i].stop();
 
       for(int k = 0; k < FINDS[i]; k++){
         int to_find = RandomGenerator::getFromOneTo(MAX_RAND);
-        try{
-          // test the find to see if item is in the table
-          oht.find(to_find);
-
-          // item was found, run found_times timer
+        found = oht.findNoExcept(to_find, location);
+        if(found){
           found_times[i].start();
-          oht.find(to_find);
+          oht.findNoExcept(to_find, location);
           found_times[i].stop();
-
         }
-        catch(ValueNotFound<int>& err){
-          // item was not found, run not_found_times timer
-          try{
-            not_found_times[i].start();
-            oht.find(to_find);
-          }
-          catch(ValueNotFound<int>& err){
-            not_found_times[i].stop();
-          }
+        else{
+          not_found_times[i].start();
+          oht.findNoExcept(to_find, location);
+          not_found_times[i].stop();
         }
       }
     }
@@ -146,6 +142,8 @@ void UserInput::userPerformanceClosedHashingQuadraticProbing(){
   Timer build_times[5];
   Timer found_times[5];
   Timer not_found_times[5];
+  int location;
+  bool found;
 
   for(int i = 0; i < 5; i++){
 
@@ -154,36 +152,30 @@ void UserInput::userPerformanceClosedHashingQuadraticProbing(){
       ClosedHashTable<int, QuadraticProbing> ht(TABLE_SIZE, myhash);
       RandomGenerator::seedTime();
 
-      build_times[i].start();
       for(int k = 0; k < SIZES[i]; k++){
-        try{
-          ht.insert(RandomGenerator::getFromOneTo(MAX_RAND));
+        int to_insert = RandomGenerator::getFromOneTo(MAX_RAND);
+        found = ht.findNoExcept(to_insert, location);
+        // if the item was found successfully, don't do anything, since it is a duplicate
+
+        if(!found){
+          build_times[i].start();
+          ht.insert(to_insert);
+          build_times[i].stop();
         }
-        catch(DuplicateValue<int>& err){}
       }
-      build_times[i].stop();
 
       for(int k = 0; k < FINDS[i]; k++){
         int to_find = RandomGenerator::getFromOneTo(MAX_RAND);
-        try{
-          // test the find to see if item is in the table
-          ht.find(to_find);
-
-          // item was found, run found_times timer
+        found = ht.findNoExcept(to_find, location);
+        if(found){
           found_times[i].start();
-          ht.find(to_find);
+          ht.findNoExcept(to_find, location);
           found_times[i].stop();
-
         }
-        catch(ValueNotFound<int>& err){
-          // item was not found, run not_found_times timer
-          try{
-            not_found_times[i].start();
-            ht.find(to_find);
-          }
-          catch(ValueNotFound<int>& err){
-            not_found_times[i].stop();
-          }
+        else{
+          not_found_times[i].start();
+          ht.findNoExcept(to_find, location);
+          not_found_times[i].stop();
         }
       }
     }
@@ -200,6 +192,8 @@ void UserInput::userPerformanceClosedHashingDoubleHashing(){
   Timer build_times[5];
   Timer found_times[5];
   Timer not_found_times[5];
+  int location;
+  bool found;
 
   for(int i = 0; i < 5; i++){
 
@@ -208,36 +202,30 @@ void UserInput::userPerformanceClosedHashingDoubleHashing(){
       ClosedHashTable<int, DoubleHashing<DOUBLE_HASHING_VAL>> ht(TABLE_SIZE, myhash);
       RandomGenerator::seedTime();
 
-      build_times[i].start();
       for(int k = 0; k < SIZES[i]; k++){
-        try{
-          ht.insert(RandomGenerator::getFromOneTo(MAX_RAND));
+        int to_insert = RandomGenerator::getFromOneTo(MAX_RAND);
+        found = ht.findNoExcept(to_insert, location);
+        // if the item was found successfully, don't do anything, since it is a duplicate
+
+        if(!found){
+          build_times[i].start();
+          ht.insert(to_insert);
+          build_times[i].stop();
         }
-        catch(DuplicateValue<int>& err){}
       }
-      build_times[i].stop();
 
       for(int k = 0; k < FINDS[i]; k++){
         int to_find = RandomGenerator::getFromOneTo(MAX_RAND);
-        try{
-          // test the find to see if item is in the table
-          ht.find(to_find);
-
-          // item was found, run found_times timer
+        found = ht.findNoExcept(to_find, location);
+        if(found){
           found_times[i].start();
-          ht.find(to_find);
+          ht.findNoExcept(to_find, location);
           found_times[i].stop();
-
         }
-        catch(ValueNotFound<int>& err){
-          // item was not found, run not_found_times timer
-          try{
-            not_found_times[i].start();
-            ht.find(to_find);
-          }
-          catch(ValueNotFound<int>& err){
-            not_found_times[i].stop();
-          }
+        else{
+          not_found_times[i].start();
+          ht.findNoExcept(to_find, location);
+          not_found_times[i].stop();
         }
       }
     }
@@ -281,7 +269,7 @@ void UserInput::printTable(Timer* build_times, Timer* found_times, Timer* not_fo
     column();
     std::cout << not_found_times[i].getMS()/5;
   }
-  std::cout << "\n";
+  std::cout << "\n\n";
 }
 
 void UserInput::column() const{

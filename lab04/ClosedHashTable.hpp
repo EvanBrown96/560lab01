@@ -74,6 +74,8 @@ public:
    */
   int find(const T& value) const throw(ValueNotFound<T>);
 
+  bool findNoExcept(const T& value, int& loc) const;
+
   //int findReverse(const T& value) const throw(ValueNotFound<T>);
 
   /**
