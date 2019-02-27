@@ -1,5 +1,5 @@
 template <typename T>
-Preorder<T>::Preorder(const BinarySearchTree<T>& bst):
+Levelorder<T>::Levelorder(const BinarySearchTree<T>& bst):
   Traversal<T>(bst){
 
   int index = 0;
@@ -7,7 +7,7 @@ Preorder<T>::Preorder(const BinarySearchTree<T>& bst):
 }
 
 template <typename T>
-void Preorder<T>::creationHelper(BSTNode<T>* st, int& index){
+void Levelorder<T>::creationHelper(BSTNode<T>* st, int& index){
   if(st != nullptr){
     this->values[index] = new T(st->getValue());
     index += 1;

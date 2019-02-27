@@ -8,7 +8,10 @@
 #ifndef BINARYSEARCHTREE_HPP
 #define BINARYSEARCHTREE_HPP
 
+template <typename T> class Traversal;
 template <typename T> class Preorder;
+template <typename T> class Inorder;
+template <typename T> class Levelorder;
 
 #include "BSTNode.hpp"
 #include "ValueNotFound.hpp"
@@ -34,7 +37,11 @@ public:
 
     Preorder<T> preorder() const;
 
+    friend class Traversal<T>;
     friend class Preorder<T>;
+    friend class Inorder<T>;
+    friend class Postorder<T>;
+    friend class Levelorder<T>;
 
 private:
 

@@ -10,6 +10,7 @@ template <typename T>
 class Traversal{
 public:
 
+  Traversal(const BinarySearchTree<T>& bst);
   ~Traversal();
 
   template <typename U>
@@ -20,7 +21,7 @@ protected:
   T** values;
   int size;
 
-  Traversal();
+  virtual void creationHelper(BSTNode<T>* st, int& index) = 0;
 
 };
 

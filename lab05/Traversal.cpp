@@ -1,7 +1,4 @@
 template <typename T>
-Traversal<T>::Traversal(): values(nullptr), size(0){}
-
-template <typename T>
 Traversal<T>::~Traversal(){
   if(values != nullptr){
     for(int i = 0; i < size; i++){
@@ -10,6 +7,10 @@ Traversal<T>::~Traversal(){
     delete[] values;
   }
 }
+
+template <typename T>
+Traversal<T>::Traversal(const BinarySearchTree<T>& bst):
+  size(bst.size), values(new T*[bst.size]){}
 
 template <typename T>
 std::ostream& operator<<(std::ostream& stream, const Traversal<T>& t){
