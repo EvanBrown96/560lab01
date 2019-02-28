@@ -11,11 +11,12 @@
 template <typename T> class Traversal;
 template <typename T> class Preorder;
 template <typename T> class Inorder;
+template <typename T> class Postorder;
 template <typename T> class Levelorder;
 
 #include "BSTNode.hpp"
 #include "ValueNotFound.hpp"
-#include "EmptyTree.hpp"
+#include "EmptyStructure.hpp"
 #include "Preorder.hpp"
 
 template <typename T>
@@ -32,10 +33,13 @@ public:
     void deleteVal(const T& value) throw(ValueNotFound<T>);
     bool find(const T& value);
 
-    T findMin() throw(EmptyTree);
-    T findMax() throw(EmptyTree);
+    T findMin() throw(EmptyStructure);
+    T findMax() throw(EmptyStructure);
 
     Preorder<T> preorder() const;
+    Inorder<T> inorder() const;
+    Postorder<T> postorder() const;
+    Levelorder<T> levelorder() const;
 
     friend class Traversal<T>;
     friend class Preorder<T>;

@@ -1,3 +1,5 @@
+#include "QuickQueue.hpp"
+
 template <typename T>
 Levelorder<T>::Levelorder(const BinarySearchTree<T>& bst):
   Traversal<T>(bst){
@@ -8,10 +10,20 @@ Levelorder<T>::Levelorder(const BinarySearchTree<T>& bst):
 
 template <typename T>
 void Levelorder<T>::creationHelper(BSTNode<T>* st, int& index){
-  if(st != nullptr){
-    this->values[index] = new T(st->getValue());
-    index += 1;
-    creationHelper(st->getLeft(), index);
-    creationHelper(st->getRight(), index);
+
+  QuickQueue<Node<T>*> qq(this->size);
+  qq.push(st);
+
+  while(!qq.isEmpty()){
+    BSTNode<T>* next = qq.pop();
+
+    if(next != nullptr){
+      this->values[index] = new T(next->getValue());
+      index += 1;
+
+      qq.push(next->getLeft());
+      qq.push(next->getRight());
+    }
   }
+
 }

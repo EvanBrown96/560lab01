@@ -48,8 +48,8 @@ bool BinarySearchTree<T>::find(const T& value){
 }
 
 template <typename T>
-T BinarySearchTree<T>::findMin() throw(EmptyTree){
-  if(root == nullptr) throw EmptyTree();
+T BinarySearchTree<T>::findMin() throw(EmptyStructure){
+  if(root == nullptr) throw EmptyStructure();
 
   BSTNode<T>* leftmost = root;
   while(leftmost->getLeft() != nullptr){
@@ -60,8 +60,8 @@ T BinarySearchTree<T>::findMin() throw(EmptyTree){
 }
 
 template <typename T>
-T BinarySearchTree<T>::findMax() throw(EmptyTree){
-  if(root == nullptr) throw EmptyTree();
+T BinarySearchTree<T>::findMax() throw(EmptyStructure){
+  if(root == nullptr) throw EmptyStructure();
 
   BSTNode<T>* rightmost = root;
   while(rightmost->getRight() != nullptr){
@@ -74,6 +74,21 @@ T BinarySearchTree<T>::findMax() throw(EmptyTree){
 template <typename T>
 Preorder<T> BinarySearchTree<T>::preorder() const{
   return Preorder<T>(*this);
+}
+
+template <typename T>
+Inorder<T> BinarySearchTree<T>::inorder() const{
+  return Inorder<T>(*this);
+}
+
+template <typename T>
+Postorder<T> BinarySearchTree<T>::postorder() const{
+  return Postorder<T>(*this);
+}
+
+template <typename T>
+Levelorder<T> BinarySearchTree<T>::levelorder() const{
+  return Levelorder<T>(*this);
 }
 
 template <typename T>
