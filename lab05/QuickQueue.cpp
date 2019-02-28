@@ -36,6 +36,8 @@ T QuickQueue<T>::pop() throw(EmptyStructure){
   start = (start+1)%size;
   count--;
 
+  return ret;
+
 }
 
 template <typename T>
