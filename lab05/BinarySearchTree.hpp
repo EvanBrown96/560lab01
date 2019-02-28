@@ -18,6 +18,9 @@ template <typename T> class Levelorder;
 #include "ValueNotFound.hpp"
 #include "EmptyStructure.hpp"
 #include "Preorder.hpp"
+#include "Postorder.hpp"
+#include "Inorder.hpp"
+#include "Levelorder.hpp"
 
 template <typename T>
 class BinarySearchTree{

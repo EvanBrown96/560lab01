@@ -1,3 +1,6 @@
+#include <iostream>
+
+
 template <typename T>
 QuickQueue<T>::QuickQueue(int size):
   size(size), start(0), count(0), contents(new T*[size]){}
@@ -13,7 +16,7 @@ QuickQueue<T>::QuickQueue(const QuickQueue<T>& qq){
 }
 
 template <typename T>
-QuickQueue<T>::QuickQueue<T>& operator=(const QuickQueue<T>& qq){
+QuickQueue<T>& QuickQueue<T>::operator=(const QuickQueue<T>& qq){
   destroyQueue();
 }
 
@@ -40,6 +43,10 @@ void QuickQueue<T>::push(const T& item) throw(FullStructure){
   if(count == size) throw FullStructure();
 
   contents[start+count] = new T(item);
+  if(item != nullptr){
+    std::cout << "inserting " << item->getValue() << " into position " << start+count << "\n";
+    std::cout << "inserted " << contents[start+count]->getValue() << "\n";
+  }
   count++;
 
 }
@@ -51,7 +58,7 @@ bool QuickQueue<T>::isEmpty() const{
 
 template <typename T>
 void QuickQueue<T>::destroyQueue(){
-  for(i = start; i < start+count; i=(i+1)%size){
+  for(int i = start; i < start+count; i=(i+1)%size){
     delete contents[i];
   }
   delete[] contents;

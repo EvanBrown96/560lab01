@@ -1,6 +1,7 @@
 #ifndef QUICKQUEUE_HPP
 #define QUICKQUEUE_HPP
 
+#include "FullStructure.hpp"
 #include "EmptyStructure.hpp"
 
 template <typename T>
@@ -33,5 +34,7 @@ private:
   void destroyQueue();
 
 };
+
+#include "QuickQueue.cpp"
 
 #endif

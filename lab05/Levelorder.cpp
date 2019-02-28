@@ -11,7 +11,7 @@ Levelorder<T>::Levelorder(const BinarySearchTree<T>& bst):
 template <typename T>
 void Levelorder<T>::creationHelper(BSTNode<T>* st, int& index){
 
-  QuickQueue<Node<T>*> qq(this->size);
+  QuickQueue<BSTNode<T>*> qq((this->size)*2);
   qq.push(st);
 
   while(!qq.isEmpty()){
