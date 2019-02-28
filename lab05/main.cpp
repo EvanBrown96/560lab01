@@ -1,24 +1,43 @@
 #include "Preorder.hpp"
 #include "BinarySearchTree.hpp"
+#include "NumberParser.hpp"
+#include "NumberParseError.hpp"
 #include <iostream>
+#include <fstream>
 
 int main(int argc, char** argv){
 
-  BinarySearchTree<int> bst;
-  bst.insert(7);
-  bst.insert(3);
-  bst.insert(8);
-  bst.insert(1);
-  bst.insert(6);
-  bst.insert(8);
-  bst.insert(13);
-  bst.insert(9);
-  bst.insert(15);
-  bst.insert(10);
-  std::cout << bst.preorder();
-  std::cout << bst.inorder();
-  std::cout << bst.postorder();
-  std::cout << bst.levelorder();
+  if(argc <= 1){
+    std::cout << "No input file provided, exiting.\n";
+    return -1;
+  }
+
+  BinarySearchTree<int> startoff;
+
+  LinkedList<int> input_data;
+
+  std::ifstream f;
+  f.open(argv[1]);
+
+  try{
+    NumberParser::parse(f, input_data);
+  }
+  catch(NumberParseError& err){
+    f.close();
+    std::cout << "Data could not be imported from " << argv[1] << "; error at position " << err.getErrPos() << "\n";
+    return -1;
+  }
+
+  f.close();
+
+  while(!input_data.isEmpty()){
+    int latest = input_data.popFront();
+    startoff.insert(latest);
+  }
+
+  std::cout << startoff.inorder();
+  // UserInput inp(startoff_open, startoff_quad, startoff_double);
+  // inp.start();
 
   return 0;
 }
