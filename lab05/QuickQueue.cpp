@@ -43,10 +43,10 @@ void QuickQueue<T>::push(const T& item) throw(FullStructure){
   if(count == size) throw FullStructure();
 
   contents[start+count] = new T(item);
-  if(item != nullptr){
-    std::cout << "inserting " << item->getValue() << " into position " << start+count << "\n";
-    std::cout << "inserted " << contents[start+count]->getValue() << "\n";
-  }
+  // if(item != nullptr){
+  //   std::cout << "inserting " << item->getValue() << " into position " << start+count << "\n";
+  //   std::cout << "inserted " << contents[start+count]->getValue() << "\n";
+  // }
   count++;
 
 }
