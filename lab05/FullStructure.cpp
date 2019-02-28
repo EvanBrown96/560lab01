@@ -7,4 +7,4 @@
 
 #include "FullStructure.hpp"
 
-FullStructure::FullStructure(): std::logic_error("Empty Structure"){}
+FullStructure::FullStructure(): std::logic_error("Full Structure"){}
