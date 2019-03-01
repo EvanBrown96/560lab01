@@ -53,7 +53,7 @@ void UserInput::start(){
     std::cout << "\t9. Levelorder\n";
     std::cout << "\t10. Exit\n";
 
-    while(!(std::cin >> choice && choice > 0 && choice < 11)){
+    while(!(std::cin >> choice && choice > -1 && choice < 11)){
       clearCin();
       std::cout << "Invalid choice, try again: ";
     }
@@ -63,6 +63,10 @@ void UserInput::start(){
     }
 
     switch(choice){
+      case 0: {
+        test_bst.printVisual();
+        break;
+      }
       case 1: {
         userInsert();
         break;

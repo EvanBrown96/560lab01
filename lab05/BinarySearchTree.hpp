@@ -44,6 +44,8 @@ public:
     Postorder<T> postorder() const;
     Levelorder<T> levelorder() const;
 
+    void printVisual() const;
+
     friend class Traversal<T>;
     friend class Preorder<T>;
     friend class Inorder<T>;
@@ -60,6 +62,9 @@ private:
 
   BSTNode<T>* insertHelper(BSTNode<T>* st, const T& value);
   bool findHelper(BSTNode<T>* st, const T& value) const;
+
+  BSTNode<T>* deleteFinder(BSTNode<T>* st, const T& value) throw(ValueNotFound<T>);
+  BSTNode<T>* deleteHelper(BSTNode<T>* st);
 
 };
 

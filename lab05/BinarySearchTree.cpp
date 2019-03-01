@@ -37,7 +37,7 @@ void BinarySearchTree<T>::insert(const T& value){
 
 template <typename T>
 void BinarySearchTree<T>::deleteVal(const T& value) throw(ValueNotFound<T>){
-
+  root = deleteFinder(root, value);
   size--;
 }
 
@@ -91,6 +91,29 @@ Levelorder<T> BinarySearchTree<T>::levelorder() const{
 }
 
 template <typename T>
+void BinarySearchTree<T>::printVisual() const{
+  if(root != nullptr){
+    QuickQueue<BSTNode<T>>* qq = new QuickQueue<BSTNode<T>>(size);
+    QuickQueue<BSTNode<T>>* qq2 = new QuickQueue<BSTNode<T>>(size);
+    qq->push(*root);
+    while(!qq->isEmpty()){
+      while(!qq->isEmpty()){
+        BSTNode<T> next = qq->pop();
+        std::cout << next.getValue() << "\t";
+        if(next.getLeft() != nullptr) qq2->push(*next.getLeft());
+        if(next.getRight() != nullptr) qq2->push(*next.getRight());
+      }
+      delete qq;
+      qq = qq2;
+      qq2 = new QuickQueue<BSTNode<T>>(size);
+      std::cout << "\n";
+    }
+    delete qq;
+    delete qq2;
+  }
+}
+
+template <typename T>
 void BinarySearchTree<T>::destroySubtree(BSTNode<T>* st){
   if(st != nullptr){
     destroySubtree(st->getLeft());
@@ -132,4 +155,40 @@ bool BinarySearchTree<T>::findHelper(BSTNode<T>* st, const T& value) const{
   if(value < st->getValue()) return findHelper(st->getLeft(), value);
 
   return findHelper(st->getRight(), value);
+}
+
+template <typename T>
+BSTNode<T>* BinarySearchTree<T>::deleteFinder(BSTNode<T>* st, const T& value) throw(ValueNotFound<T>){
+  if(st == nullptr) throw ValueNotFound<T>();
+
+  if(st->getValue() == value) return deleteHelper(st);
+
+  if(value < st->getValue()) st->setLeft(deleteFinder(st->getLeft(), value));
+  else st->setRight(deleteFinder(st->getRight(), value));
+
+  return st;
+}
+
+template <typename T>
+BSTNode<T>* BinarySearchTree<T>::deleteHelper(BSTNode<T>* st){
+
+  BSTNode<T>* right = st->getRight();
+
+  if(right == nullptr){
+    BSTNode<T>* save = st->getLeft();
+    delete st;
+    return save;
+  }
+
+  if(right->getLeft() == nullptr){
+    delete st;
+    return right;
+  }
+
+  BSTNode<T>* save = right;
+  while(save->getLeft()->getLeft() != nullptr) save = save->getLeft();
+  st->setValue(save->getLeft()->getValue());
+  save->setLeft(deleteHelper(save->getLeft()));
+  return st;
+
 }
