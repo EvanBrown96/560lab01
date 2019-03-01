@@ -33,6 +33,8 @@ private:
 
   void destroyQueue();
 
+  void copyQueue(const QuickQueue<T> copy);
+
 };
 
 #include "QuickQueue.cpp"

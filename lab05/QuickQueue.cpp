@@ -12,12 +12,13 @@ QuickQueue<T>::~QuickQueue(){
 
 template <typename T>
 QuickQueue<T>::QuickQueue(const QuickQueue<T>& qq){
-
+  copyQueue(qq);
 }
 
 template <typename T>
 QuickQueue<T>& QuickQueue<T>::operator=(const QuickQueue<T>& qq){
   destroyQueue();
+  copyQueue(qq);
 }
 
 template <typename T>
@@ -60,4 +61,15 @@ void QuickQueue<T>::destroyQueue(){
     delete contents[i];
   }
   delete[] contents;
+}
+
+template <typename T>
+void QuickQueue<T>::copyQueue(const QuickQueue<T> copy){
+  size = copy.size;
+  start = copy.start;
+  count = copy.count;
+  contents = new T*[size];
+  for(int i = start; i < start+count; i=(i+1)%size){
+    contents[i] = new T(*copy.contents[i]);
+  }
 }

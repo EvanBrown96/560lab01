@@ -16,7 +16,6 @@ BinarySearchTree<T>::~BinarySearchTree(){
 
 template <typename T>
 BinarySearchTree<T>::BinarySearchTree(const BinarySearchTree<T>& bst){
-  destroySubtree(root);
   root = copySubtree(bst.root);
   size = bst.size;
 }
@@ -44,7 +43,7 @@ void BinarySearchTree<T>::deleteVal(const T& value) throw(ValueNotFound<T>){
 
 template <typename T>
 bool BinarySearchTree<T>::find(const T& value){
-  findHelper(root, value);
+  return findHelper(root, value);
 }
 
 template <typename T>
@@ -127,6 +126,8 @@ BSTNode<T>* BinarySearchTree<T>::insertHelper(BSTNode<T>* st, const T& value){
 template <typename T>
 bool BinarySearchTree<T>::findHelper(BSTNode<T>* st, const T& value) const{
   if(st == nullptr) return false;
+
+  if(st->getValue() == value) return true;
 
   if(value < st->getValue()) return findHelper(st->getLeft(), value);
 

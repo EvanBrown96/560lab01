@@ -92,16 +92,19 @@ void UserInput::start(){
         break;
       }
       case 6: {
-
+        std::cout << "Preorder traversal: " << test_bst.preorder() << "\n";
+        break;
       }
       case 7: {
-
+        std::cout << "Inorder traversal: " << test_bst.inorder() << "\n";
+        break;
       }
       case 8: {
-
+        std::cout << "Postorder traversal: " << test_bst.postorder() << "\n";
+        break;
       }
       default: {
-
+        std::cout << "Levelorder traversal: " << test_bst.levelorder() << "\n";
         break;
       }
     }
@@ -130,6 +133,14 @@ void UserInput::userDelete(){
 
 void UserInput::userFind(){
 
+  int find;
+  if(!queryNumber("Enter number to be found: ", find)) return;
 
+  if(test_bst.find(find)){
+    std::cout << "Number is present in the tree.\n";
+  }
+  else{
+    std::cout << "Number is not present in the tree.\n";
+  }
 
 }

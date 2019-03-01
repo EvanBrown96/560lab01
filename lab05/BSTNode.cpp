@@ -48,4 +48,5 @@ BSTNode<T>* BSTNode<T>::getChildlessCopy() const{
   BSTNode<T>* copy = new BSTNode<T>(*this);
   copy->lst = nullptr;
   copy->rst = nullptr;
+  return copy;
 }
