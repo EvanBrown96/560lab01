@@ -172,20 +172,20 @@ BSTNode<T>* BinarySearchTree<T>::deleteFinder(BSTNode<T>* st, const T& value) th
 template <typename T>
 BSTNode<T>* BinarySearchTree<T>::deleteHelper(BSTNode<T>* st){
 
-  BSTNode<T>* right = st->getRight();
+  BSTNode<T>* save = st->getRight();
 
-  if(right == nullptr){
-    BSTNode<T>* save = st->getLeft();
+  if(save == nullptr){
+    save = st->getLeft();
     delete st;
     return save;
   }
 
-  if(right->getLeft() == nullptr){
+  if(save->getLeft() == nullptr){
+    save->setLeft(st->getLeft());
     delete st;
-    return right;
+    return save;
   }
 
-  BSTNode<T>* save = right;
   while(save->getLeft()->getLeft() != nullptr) save = save->getLeft();
   st->setValue(save->getLeft()->getValue());
   save->setLeft(deleteHelper(save->getLeft()));
