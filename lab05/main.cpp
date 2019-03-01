@@ -2,6 +2,7 @@
 #include "BinarySearchTree.hpp"
 #include "NumberParser.hpp"
 #include "NumberParseError.hpp"
+#include "UserInput.hpp"
 #include <iostream>
 #include <fstream>
 
@@ -35,9 +36,9 @@ int main(int argc, char** argv){
     startoff.insert(latest);
   }
 
-  std::cout << startoff.inorder();
-  // UserInput inp(startoff_open, startoff_quad, startoff_double);
-  // inp.start();
+  //std::cout << startoff.inorder();
+  UserInput inp(startoff);
+  inp.start();
 
   return 0;
 }

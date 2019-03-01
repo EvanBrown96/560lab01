@@ -107,6 +107,7 @@ BSTNode<T>* BinarySearchTree<T>::copySubtree(BSTNode<T>* st){
   BSTNode<T>* new_st = st->getChildlessCopy();
   new_st->setLeft(copySubtree(st->getLeft()));
   new_st->setRight(copySubtree(st->getRight()));
+  return new_st;
 }
 
 template <typename T>
