@@ -133,6 +133,17 @@ void UserInput::userInsert(){
 
 void UserInput::userDelete(){
 
+  int del;
+  if(!queryNumber("Enter number to delete from BST: ", del)) return;
+
+  try{
+    test_bst.deleteVal(del);
+    std::cout << "Delete was successful.\n";
+  }
+  catch(ValueNotFound<int>& err){
+    std::cout << "Delete failed; number was not found in tree.\n";
+  }
+
 }
 
 void UserInput::userFind(){

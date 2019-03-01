@@ -159,7 +159,7 @@ bool BinarySearchTree<T>::findHelper(BSTNode<T>* st, const T& value) const{
 
 template <typename T>
 BSTNode<T>* BinarySearchTree<T>::deleteFinder(BSTNode<T>* st, const T& value) throw(ValueNotFound<T>){
-  if(st == nullptr) throw ValueNotFound<T>();
+  if(st == nullptr) throw ValueNotFound<T>(value);
 
   if(st->getValue() == value) return deleteHelper(st);
 
