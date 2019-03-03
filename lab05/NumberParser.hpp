@@ -26,10 +26,6 @@ public:
    */
   static void parse(std::istream& stream, LinkedList<int>& ll);
 
-private:
-
-  NumberParser(){}
-
   /**
    * checks if the character is 0-9
    * @param c_val: the character to check
@@ -43,6 +39,10 @@ private:
    * @return: ascii value of character minus 48
    */
   static int toInt(char c_val);
+
+private:
+
+  NumberParser(){}
 
 };
 

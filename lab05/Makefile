@@ -19,6 +19,24 @@ NumberParser.o: NumberParser.cpp NumberParser.hpp NumberParseError.hpp
 NumberParseError.o: NumberParseError.cpp NumberParseError.hpp
 	g++ -std=c++11 -g -c NumberParseError.cpp
 
+NUMTESTS = 3
+
+test:
+	make testmake
+	echo create > results.txt
+	rm results.txt
+	for ((i=1;i<=$(NUMTESTS);i++)); \
+		do ./tester $$i >> results.txt; \
+	done;
+	rm -f *.o tester
+
+testmake: test.o NumberParser.o NumberParseError.o
+	g++ -std=c++11 -g test.o NumberParser.o NumberParseError.o -o tester
+
+test.o: test.cpp NumberParser.hpp Traversal.hpp Traversal.cpp BinarySearchTree.hpp BinarySearchTree.cpp BSTNode.hpp BSTNode.cpp ValueNotFound.hpp ValueNotFound.cpp
+	g++ -std=c++11 -g -c test.cpp
 
 clean:
-	rm -f lab *.o
+	rm -f lab *.o tester results.txt
+
+.PHONY: test testmake
