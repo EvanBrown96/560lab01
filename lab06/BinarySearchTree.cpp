@@ -3,7 +3,11 @@
  * @file: BinarySearchTree.cpp
  * @date: 2/27/19
  * @brief: implementation of binary search tree
+ *         adapted from 560 lab 5
  */
+
+#include "ClosedHashTable.hpp"
+#include "QuadraticProbing.hpp"
 
 template <typename T>
 BinarySearchTree<T>::BinarySearchTree():
@@ -30,6 +34,12 @@ BinarySearchTree<T>& BinarySearchTree<T>::operator=(const BinarySearchTree<T>& b
 }
 
 template <typename T>
+BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size){
+  OptimalItemData(data[0], 1, 1);
+  // count occurances of each item in the data to get probabilities
+}
+
+template <typename T>
 void BinarySearchTree<T>::insert(const T& value){
   root = insertHelper(root, value);
   size++;
@@ -42,12 +52,12 @@ void BinarySearchTree<T>::deleteVal(const T& value) throw(ValueNotFound<T>){
 }
 
 template <typename T>
-bool BinarySearchTree<T>::find(const T& value){
+bool BinarySearchTree<T>::find(const T& value) const{
   return findHelper(root, value);
 }
 
 template <typename T>
-T BinarySearchTree<T>::findMin() throw(EmptyStructure){
+T BinarySearchTree<T>::findMin() const throw(EmptyStructure){
   if(root == nullptr) throw EmptyStructure();
 
   BSTNode<T>* leftmost = root;
@@ -59,7 +69,7 @@ T BinarySearchTree<T>::findMin() throw(EmptyStructure){
 }
 
 template <typename T>
-T BinarySearchTree<T>::findMax() throw(EmptyStructure){
+T BinarySearchTree<T>::findMax() const throw(EmptyStructure){
   if(root == nullptr) throw EmptyStructure();
 
   BSTNode<T>* rightmost = root;

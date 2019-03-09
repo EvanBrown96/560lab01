@@ -1,3 +1,11 @@
+/**
+ * @author: Evan Brown
+ * @file: QuickQueue.hpp
+ * @date: 2/28/19
+ * @brief: definition of simple queue class
+ *         adapted from 560 lab 5
+ */
+
 #ifndef QUICKQUEUE_HPP
 #define QUICKQUEUE_HPP
 

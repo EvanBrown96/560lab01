@@ -3,6 +3,7 @@
  * @file: EmptyStructure.cpp
  * @date: 2/27/19
  * @brief: implementation of EmptyStructure exception methods
+ *         adapted from 560 lab 5
  */
 
 #include "EmptyStructure.hpp"

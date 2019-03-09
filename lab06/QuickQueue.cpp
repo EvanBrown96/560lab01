@@ -1,5 +1,13 @@
-#include <iostream>
+/**
+ * @author: Evan Brown
+ * @file: QuickQueue.cpp
+ * @date: 2/28/19
+ * @brief: implementation of a simple queue class
+ *         adapted from 560 lab 5
+ */
 
+#include <iostream>
+#include "ClosedHashTable.hpp"
 
 template <typename T>
 QuickQueue<T>::QuickQueue(int size):

@@ -1,3 +1,11 @@
+/**
+ * @author: Evan Brown
+ * @file: Levelorder.cpp
+ * @date: 2/27/19
+ * @brief: definition of how to create an level order traversal from a bst
+ *         adapted from 560 lab 5
+ */
+
 #include "QuickQueue.hpp"
 
 template <typename T>

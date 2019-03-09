@@ -3,6 +3,7 @@
  * @file: BSTNode.hpp
  * @date: 2/27/19
  * @brief: declaration of binary search tree node methods
+ *         adapted from 560 lab 5
  */
 
 #ifndef BSTNODE_HPP
@@ -12,6 +13,9 @@ template <typename T>
 class BSTNode{
 public:
 
+  /**
+   * constructor
+   */
   BSTNode(const T& value);
   BSTNode(const T& value, BSTNode<T>* lst, BSTNode<T>* rst);
 

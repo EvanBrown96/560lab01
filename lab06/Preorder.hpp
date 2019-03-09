@@ -1,3 +1,11 @@
+/**
+ * @author: Evan Brown
+ * @file: Preorder.hpp
+ * @date: 2/27/19
+ * @brief: definition of pre order traversal methods
+ *         adapted from 560 lab 5
+ */
+
 #ifndef PREORDER_HPP
 #define PREORDER_HPP
 

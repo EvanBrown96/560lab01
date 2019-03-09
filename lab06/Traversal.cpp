@@ -1,3 +1,11 @@
+/**
+ * @author: Evan Brown
+ * @file: Traversal.cpp
+ * @date: 2/27/19
+ * @brief: implementation of destructor and output for all traversals
+ *         adapted from 560 lab 5
+ */
+
 template <typename T>
 Traversal<T>::~Traversal(){
   if(values != nullptr){

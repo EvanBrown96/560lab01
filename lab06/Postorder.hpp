@@ -1,3 +1,11 @@
+/**
+ * @author: Evan Brown
+ * @file: Postorder.hpp
+ * @date: 2/27/19
+ * @brief: definition of post order traversal methods
+ *         adapted from 560 lab 5
+ */
+
 #ifndef POSTORDER_HPP
 #define POSTORDER_HPP
 

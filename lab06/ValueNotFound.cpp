@@ -3,7 +3,7 @@
  * @file: ValueNotFound.cpp
  * @date: 1/26/19
  * @brief: implementation of ValueNotFound exception
- *         adapted from 560 lab 3
+ *         adapted from 560 lab 5
  */
 
 template <typename A>

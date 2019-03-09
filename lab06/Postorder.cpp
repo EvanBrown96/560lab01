@@ -1,3 +1,11 @@
+/**
+ * @author: Evan Brown
+ * @file: Postorder.cpp
+ * @date: 2/27/19
+ * @brief: definition of how to create a post order traversal from a bst
+ *         adapted from 560 lab 5
+ */
+
 template <typename T>
 Postorder<T>::Postorder(const BinarySearchTree<T>& bst):
   Traversal<T>(bst){
