@@ -145,20 +145,7 @@ private:
   BSTNode<T>* deleteFinder(BSTNode<T>* st, const T& value) throw(ValueNotFound<T>);
   BSTNode<T>* deleteHelper(BSTNode<T>* st);
 
-  struct OptimalItemData{
-  public:
-    T data;
-    int pos;
-
-    OptimalItemData(const T& data, int pos): data(data), pos(pos){}
-
-    bool operator ==(const OptimalItemData& cmp){ return (data == cmp.data); }
-    bool operator !=(const OptimalItemData& cmp){ return (data != cmp.data); }
-    bool operator >(const OptimalItemData& cmp){ return (data > cmp.data); }
-    bool operator <(const OptimalItemData& cmp){ return (data < cmp.data); }
-    bool operator >=(const OptimalItemData& cmp){ return (data >= cmp.data); }
-    bool operator <=(const OptimalItemData& cmp){ return (data <= cmp.data); }
-  };
+  static void createSubtree(BinarySearchTree<T>& bst, T** unique_data, int** choices, int lower, int upper);
 
 };
 

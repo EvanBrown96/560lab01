@@ -10,11 +10,5 @@ EmptyStructure.o: EmptyStructure.cpp EmptyStructure.hpp
 FullStructure.o: FullStructure.cpp FullStructure.hpp
 	g++ -std=c++11 -g -c FullStructure.cpp
 
-QuadraticProbing.o: QuadraticProbing.cpp QuadraticProbing.hpp
-	g++ -std=c++11 -g -c QuadraticProbing.cpp
-
-CollisionResolution.o: CollisionResolution.cpp CollisionResolution.hpp
-	g++ -std=c++11 -g -c CollisionResolution.cpp
-
 clean:
 	rm -f lab *.o

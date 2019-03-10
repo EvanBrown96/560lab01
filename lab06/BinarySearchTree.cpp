@@ -52,32 +52,19 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size, i
       unique++;
     }
   }
-  // // count occurances of each item in the data to get probabilities
-  // for(int i = 0; i < size; i++){
-  //   if(hash.isInTable(data[i])){
-  //     // increment the frequency of the current data item
-  //     freqs[hash.find(data[i]).pos]++;
-  //   }
-  //   else{
-  //     // add the value to the hash table with its position
-  //     hash.insert(data[i], OptimalItemData(data[i], unique));
-  //     // add the value to the list of unique values, with frequency 1
-  //     unique_data[unique] = &data[i];
-  //     freqs[unique] = 1;
   //
-  //     unique++;
-  //   }
-  // }
-
-  std::cout << unique << "\n\n";
-
-        for(int i = 0; i < unique; i++){
-          std::cout << *unique_data[i] << "\t\t" << freqs[i] << "\n";
-        }
+  // std::cout << unique << "\n\n";
+  //
+  //       for(int i = 0; i < unique; i++){
+  //         std::cout << *unique_data[i] << "\t\t" << freqs[i] << "\n";
+  //       }
 
   // create arrays of costs and choices
   int costs[unique][unique];
-  int choices[unique][unique];
+  int** choices = new int*[unique];
+  for(int i = 0; i < unique; i++){
+    choices[i] = new int[unique];
+  }
 
   // initialize costs and choices for trees of size 1
   for(int i = 0; i < unique; i++){
@@ -85,14 +72,14 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size, i
     choices[i][i] = i;
   }
 
-  //initialize bottom left of cost array to 0
-  for(int i = 1; i < unique; i++){
-    for(int j = 0; j < unique-i; j++){
-      //std::cout << j << "," << i << "\n";
-      costs[i+j][j] = 0;
-      choices[i+j][j] = 0;
-    }
-  }
+  // //initialize bottom left of cost array to 0
+  // for(int i = 1; i < unique; i++){
+  //   for(int j = 0; j < unique-i; j++){
+  //     //std::cout << j << "," << i << "\n";
+  //     costs[i+j][j] = 0;
+  //     choices[i+j][j] = 0;
+  //   }
+  // }
 
   // go through each amount of nodes in tree (minus 1): from 2 to 4, since size 1 is already calculated
   for(int i = 1; i < unique; i++){
@@ -105,7 +92,7 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size, i
         sum += freqs[s];
       }
 
-      std::cout << "index " << j << ", " << k << "\nsum:" << sum << "\n";
+      // std::cout << "index " << j << ", " << k << "\nsum:" << sum << "\n";
 
       // find min of possible subtree costs
       bool first = true;
@@ -120,21 +107,21 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size, i
           min_index = s;
           first = false;
         }
-        std::cout << "test min: " << test_cost << "\n";
+        // std::cout << "test min: " << test_cost << "\n";
       }
 
-      std::cout << "found min: " << min_cost << " at " << min_index << "\n";
+      // std::cout << "found min: " << min_cost << " at " << min_index << "\n";
       costs[j][k] = min_cost + sum;
       choices[j][k] = min_index;
     }
   }
 
-  for(int i = 0; i < unique; i++){
-    for(int j = 0; j < unique; j++){
-      std::cout << costs[i][j] << "\t";
-    }
-    std::cout << "\n";
-  }
+  // for(int i = 0; i < unique; i++){
+  //   for(int j = 0; j < unique; j++){
+  //     std::cout << costs[i][j] << "\t";
+  //   }
+  //   std::cout << "\n";
+  // }
 
   std::cout << "\n";
 
@@ -146,8 +133,24 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size, i
   }
 
   BinarySearchTree<T> res_bst;
+  // insert the root choice for the entire tree
+  int root = choices[0][unique-1];
+  res_bst.insert(*unique_data[root]);
+  createSubtree(res_bst, unique_data, choices, 0, root);
+  createSubtree(res_bst, unique_data, choices, root+1, unique);
 
+  return res_bst;
 
+}
+
+template <typename T>
+void BinarySearchTree<T>::createSubtree(BinarySearchTree<T>& bst, T** unique_data, int* choices[], int lower, int upper){
+  if(lower == upper) return;
+
+  int root = choices[lower][upper-1];
+  bst.insert(*unique_data[root]);
+  createSubtree(bst, unique_data, choices, lower, root);
+  createSubtree(bst, unique_data, choices, root+1, upper);
 }
 
 template <typename T>
