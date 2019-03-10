@@ -9,91 +9,105 @@
 #include <iostream>
 #include <cmath>
 
-template <typename T, typename CR>
-ClosedHashTable<T, CR>::ClosedHashTable(int initial_size, int (*hash_function)(const T& value)): current(0), size(initial_size), hash_function(hash_function), do_rehashing(true){
+template <typename K, typename V, typename CR>
+ClosedHashTable<K, V, CR>::ClosedHashTable(int initial_size, int (*hash_function)(const K& value)): current(0), size(initial_size), hash_function(hash_function), do_rehashing(true){
 
-  buckets = new HashElement<T>[size];
+  buckets = new HashElement<K, V>[size];
 
 }
 
-template <typename T, typename CR>
-ClosedHashTable<T, CR>::~ClosedHashTable(){
+template <typename K, typename V, typename CR>
+ClosedHashTable<K, V, CR>::~ClosedHashTable(){
 
   delete[] buckets;
 
 }
 
-template <typename T, typename CR>
-ClosedHashTable<T, CR>::ClosedHashTable(const ClosedHashTable<T, CR>& copy_hash){
+template <typename K, typename V, typename CR>
+ClosedHashTable<K, V, CR>::ClosedHashTable(const ClosedHashTable<K, V, CR>& copy_hash){
 
   copyEverything(copy_hash);
 
 }
 
-template <typename T, typename CR>
-ClosedHashTable<T, CR>& ClosedHashTable<T, CR>::operator=(const ClosedHashTable<T, CR>& copy_hash){
+template <typename K, typename V, typename CR>
+ClosedHashTable<K, V, CR>& ClosedHashTable<K, V, CR>::operator=(const ClosedHashTable<K, V, CR>& copy_hash){
 
   delete[] buckets;
   copyEverything(copy_hash);
 
 }
 
-template <typename T, typename CR>
-void ClosedHashTable<T, CR>::copyEverything(const ClosedHashTable<T, CR>& copy_hash){
+template <typename K, typename V, typename CR>
+void ClosedHashTable<K, V, CR>::copyEverything(const ClosedHashTable<K, V, CR>& copy_hash){
 
   current = copy_hash.current;
   size = copy_hash.size;
   hash_function = copy_hash.hash_function;
 
-  buckets = new HashElement<T>[size];
+  buckets = new HashElement<K, V>[size];
   for(int i = 0; i < size; i++){
     buckets[i] = copy_hash.buckets[i];
   }
 
 }
 
-template <typename T, typename CR>
-void ClosedHashTable<T, CR>::insert(const T& value) throw(DuplicateValue<T>){
+template <typename K, typename V, typename CR>
+void ClosedHashTable<K, V, CR>::insert(const K& key, const V& value) throw(DuplicateValue<K>){
 
-  int hash_val = hash_function(value);
+  int hash_val = hash_function(key);
   CR hash_resolver(hash_val);
   int cur_hash = hash_resolver.getNewHash()%size;
 
   while(buckets[cur_hash].getState() == FULL){
-    if(buckets[cur_hash].get() == value){
-      throw DuplicateValue<T>(value);
+    if(buckets[cur_hash].getKey() == key){
+      throw DuplicateValue<K>(key);
     }
 
     hash_resolver.next();
     cur_hash = hash_resolver.getNewHash()%size;
   }
 
-  buckets[cur_hash].set(value);
+  buckets[cur_hash].set(key, value);
   current++;
 
-  if(do_rehashing && current*2 > size){
+  if(current*2 > size){
     rehash();
   }
 
 }
 
-template <typename T, typename CR>
-void ClosedHashTable<T, CR>::deleteVal(const T& value) throw(ValueNotFound<T>){
+template <typename K, typename V, typename CR>
+void ClosedHashTable<K, V, CR>::remove(const K& key) throw(ValueNotFound<K>){
 
-  buckets[find(value)].remove();
+  int loc = findLocation(key);
+  if(loc < 0) throw(ValueNotFound<K>(key));
+
+  buckets[loc].remove();
   current--;
 
 }
 
-template <typename T, typename CR>
-int ClosedHashTable<T, CR>::find(const T& value) const throw(ValueNotFound<T>){
 
-  int hash_val = hash_function(value);
+template <typename K, typename V, typename CR>
+V ClosedHashTable<K, V, CR>::find(const K& key) const throw(ValueNotFound<K>){
+
+  int loc = findLocation(key);
+  if(loc < 0) throw(ValueNotFound<K>(key));
+
+  return buckets[loc].get();
+
+}
+
+template <typename K, typename V, typename CR>
+int ClosedHashTable<K, V, CR>::findLocation(const K& key) const{
+
+  int hash_val = hash_function(key);
   CR hash_resolver(hash_val);
   int cur_hash = hash_resolver.getNewHash()%size;
 
   while(buckets[cur_hash].getState() != EMPTY){
-    if(buckets[cur_hash].getState() == FULL && buckets[cur_hash].get() == value){
+    if(buckets[cur_hash].getState() == FULL && buckets[cur_hash].getKey() == key){
       return cur_hash;
     }
 
@@ -101,48 +115,23 @@ int ClosedHashTable<T, CR>::find(const T& value) const throw(ValueNotFound<T>){
     cur_hash = hash_resolver.getNewHash()%size;
   }
 
-  throw ValueNotFound<T>(value);
+  return -1;
 
 }
 
-template <typename T, typename CR>
-void ClosedHashTable<T, CR>::print() const{
+template <typename K, typename V, typename CR>
+void ClosedHashTable<K, V, CR>::rehash(){
 
-  for(int i = 0; i < size; i++){
-    std::cout << i << ": ";
-    if(buckets[i].getState() == FULL){
-      std::cout << buckets[i].get();
-    }
-    std::cout << "\n";
-  }
-
-}
-
-template <typename T, typename CR>
-void ClosedHashTable<T, CR>::disableRehashing(){
-  do_rehashing = false;
-}
-
-template <typename T, typename CR>
-void ClosedHashTable<T, CR>::enableRehashing(){
-  do_rehashing = true;
-}
-
-template <typename T, typename CR>
-void ClosedHashTable<T, CR>::rehash(){
-
-  std::cout << "Rehashing table...\n";
-
-  HashElement<T>* old_buckets = buckets;
+  HashElement<K, V>* old_buckets = buckets;
   int old_size = size;
 
   current = 0;
   size = nextPrime(old_size*2);
-  buckets = new HashElement<T>[size];
+  buckets = new HashElement<K, V>[size];
 
   for(int i = 0; i < old_size; i++){
     if(old_buckets[i].getState() == FULL){
-      insert(old_buckets[i].get());
+      insert(old_buckets[i].getKey(), old_buckets[i].get());
     }
   }
 
@@ -150,8 +139,8 @@ void ClosedHashTable<T, CR>::rehash(){
 
 }
 
-template <typename T, typename CR>
-int ClosedHashTable<T, CR>::nextPrime(int value) const{
+template <typename K, typename V, typename CR>
+int ClosedHashTable<K, V, CR>::nextPrime(int value) const{
 
   value += (value%2)+1;
   while(!isPrime(value)){
@@ -162,8 +151,8 @@ int ClosedHashTable<T, CR>::nextPrime(int value) const{
 
 }
 
-template <typename T, typename CR>
-bool ClosedHashTable<T, CR>::isPrime(int value) const{
+template <typename K, typename V, typename CR>
+bool ClosedHashTable<K, V, CR>::isPrime(int value) const{
 
   if(value%2 == 0){
     return false;

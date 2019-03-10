@@ -13,18 +13,19 @@
 
 enum HashStates {EMPTY, FULL, REMOVED};
 
-template <typename T>
+template <typename K, typename V>
 class HashElement{
 
 public:
 
   HashElement();
   ~HashElement();
-  HashElement(const HashElement<T>& copy_elem);
-  HashElement<T>& operator=(const HashElement<T>& copy_elem);
+  HashElement(const HashElement<K, V>& copy_elem);
+  HashElement<K, V>& operator=(const HashElement<K, V>& copy_elem);
 
-  void set(const T& value);
-  T get() const throw(EmptyStructure);
+  void set(const K& key, const V& value);
+  V get() const throw(EmptyStructure);
+  K getKey() const throw(EmptyStructure);
   void remove() throw(EmptyStructure);
 
   enum HashStates getState() const;
@@ -32,7 +33,8 @@ public:
 private:
 
   enum HashStates state;
-  T* value;
+  K* key;
+  V* value;
 
 };
 

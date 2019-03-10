@@ -34,7 +34,8 @@ BinarySearchTree<T>& BinarySearchTree<T>::operator=(const BinarySearchTree<T>& b
 }
 
 template <typename T>
-BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size){
+BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size, int (*data_hash)(const T& value)){
+  ClosedHashTable<T, OptimalItemData, QuadraticProbing> hash(size, data_hash);
   OptimalItemData(data[0], 1, 1);
   // count occurances of each item in the data to get probabilities
 }

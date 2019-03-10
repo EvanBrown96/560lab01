@@ -6,40 +6,44 @@
  *         adapted from 560 lab 3
  */
 
-template <typename T>
-HashElement<T>::HashElement(): state(EMPTY){
+template <typename K, typename V>
+HashElement<K, V>::HashElement(): state(EMPTY){
 
 }
 
-template <typename T>
-HashElement<T>::~HashElement(){
+template <typename K, typename V>
+HashElement<K, V>::~HashElement(){
 
   if(state == FULL){
     delete value;
+    delete key;
   }
 
 }
 
-template <typename T>
-HashElement<T>::HashElement(const HashElement<T>& copy_elem){
+template <typename K, typename V>
+HashElement<K, V>::HashElement(const HashElement<K, V>& copy_elem){
 
   if(copy_elem.state == FULL){
-    this->value = new T(*copy_elem.value);
+    this->key = new K(*copy_elem.key);
+    this->value = new V(*copy_elem.value);
   }
 
   state = copy_elem.state;
 
 }
 
-template <typename T>
-HashElement<T>& HashElement<T>::operator=(const HashElement<T>& copy_elem){
+template <typename K, typename V>
+HashElement<K, V>& HashElement<K, V>::operator=(const HashElement<K, V>& copy_elem){
 
   if(state == FULL){
+    delete key;
     delete value;
   }
 
   if(copy_elem.state == FULL){
-    this->value = new T(*copy_elem.value);
+    this->key = new K(*copy_elem.key);
+    this->value = new V(*copy_elem.value);
   }
 
   state = copy_elem.state;
@@ -49,20 +53,22 @@ HashElement<T>& HashElement<T>::operator=(const HashElement<T>& copy_elem){
 }
 
 
-template <typename T>
-void HashElement<T>::set(const T& value){
+template <typename K, typename V>
+void HashElement<K, V>::set(const K& key, const V& value){
 
   if(state == FULL){
+    delete this->key;
     delete this->value;
   }
 
-  this->value = new T(value);
+  this->key = new K(key);
+  this->value = new V(value);
   state = FULL;
 
 }
 
-template <typename T>
-T HashElement<T>::get() const throw(EmptyStructure){
+template <typename K, typename V>
+V HashElement<K, V>::get() const throw(EmptyStructure){
 
   if(state != FULL){
     throw EmptyStructure();
@@ -72,19 +78,30 @@ T HashElement<T>::get() const throw(EmptyStructure){
 
 }
 
-template <typename T>
-void HashElement<T>::remove() throw(EmptyStructure){
+template <typename K, typename V>
+K HashElement<K, V>::getKey() const throw(EmptyStructure){
 
   if(state != FULL){
     throw EmptyStructure();
   }
 
+  return *key;
+}
+
+template <typename K, typename V>
+void HashElement<K, V>::remove() throw(EmptyStructure){
+
+  if(state != FULL){
+    throw EmptyStructure();
+  }
+
+  delete key;
   delete value;
   state = REMOVED;
 
 }
 
-template <typename T>
-enum HashStates HashElement<T>::getState() const{
+template <typename K, typename V>
+enum HashStates HashElement<K, V>::getState() const{
   return state;
 }

@@ -60,7 +60,7 @@ public:
      * @param data: linked list containing data to create optimal bst with
      * @return: a binary search tree with optimal search complexity for the given data
      */
-    static BinarySearchTree<T> OptimalBSTFactory(T data[], int size);
+    static BinarySearchTree<T> OptimalBSTFactory(T data[], int size, int (*data_hash)(const T& value));
 
     /**
      * puts a value into the tree
@@ -151,6 +151,11 @@ private:
     int pos;
     int freq;
 
+    static int hash(const OptimalItemData& item){
+      return 2;
+    }
+
+    OptimalItemData(const T& data, int pos): data(data), pos(pos), freq(0){}
     OptimalItemData(const T& data, int pos, int freq): data(data), pos(pos), freq(freq){}
 
     bool operator ==(const OptimalItemData& cmp){ return (data == cmp.data); }
