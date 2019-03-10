@@ -33,10 +33,12 @@ BinarySearchTree<T>& BinarySearchTree<T>::operator=(const BinarySearchTree<T>& b
 }
 
 template <typename T>
-BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size, int (*data_hash)(const T& value)){
+BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size){
 
+  // first sort the data
   quicksort<T>(data, size);
 
+  // now count the frequencies of everyrhing
   int unique = 1;
   T* unique_data[size];
   int freqs[size];
@@ -52,12 +54,6 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size, i
       unique++;
     }
   }
-  //
-  // std::cout << unique << "\n\n";
-  //
-  //       for(int i = 0; i < unique; i++){
-  //         std::cout << *unique_data[i] << "\t\t" << freqs[i] << "\n";
-  //       }
 
   // create arrays of costs and choices
   int costs[unique][unique];
@@ -72,15 +68,6 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size, i
     choices[i][i] = i;
   }
 
-  // //initialize bottom left of cost array to 0
-  // for(int i = 1; i < unique; i++){
-  //   for(int j = 0; j < unique-i; j++){
-  //     //std::cout << j << "," << i << "\n";
-  //     costs[i+j][j] = 0;
-  //     choices[i+j][j] = 0;
-  //   }
-  // }
-
   // go through each amount of nodes in tree (minus 1): from 2 to 4, since size 1 is already calculated
   for(int i = 1; i < unique; i++){
     // go through each index in this amount (j and k)
@@ -91,8 +78,6 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size, i
       for(int s = j; s <= k; s++){
         sum += freqs[s];
       }
-
-      // std::cout << "index " << j << ", " << k << "\nsum:" << sum << "\n";
 
       // find min of possible subtree costs
       bool first = true;
@@ -107,23 +92,12 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size, i
           min_index = s;
           first = false;
         }
-        // std::cout << "test min: " << test_cost << "\n";
       }
 
-      // std::cout << "found min: " << min_cost << " at " << min_index << "\n";
       costs[j][k] = min_cost + sum;
       choices[j][k] = min_index;
     }
   }
-
-  // for(int i = 0; i < unique; i++){
-  //   for(int j = 0; j < unique; j++){
-  //     std::cout << costs[i][j] << "\t";
-  //   }
-  //   std::cout << "\n";
-  // }
-
-  std::cout << "\n";
 
   for(int i = 0; i < unique; i++){
     for(int j = 0; j < unique; j++){
