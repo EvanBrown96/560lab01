@@ -121,8 +121,12 @@ T LinkedList<T>::popFront() throw(EmptyStructure){
   }
 
   T value = head->getValue();
+  Node<T>* next = head->getNext();
 
-  deleteVal(value);
+  delete head;
+  head = next;
+  
+  length--;
 
   return value;
 

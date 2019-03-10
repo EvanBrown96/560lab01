@@ -7,6 +7,7 @@
  */
 
 #include "quicksort.cpp"
+#include "LinkedList.hpp"
 
 template <typename T>
 BinarySearchTree<T>::BinarySearchTree():
@@ -33,7 +34,7 @@ BinarySearchTree<T>& BinarySearchTree<T>::operator=(const BinarySearchTree<T>& b
 }
 
 template <typename T>
-BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T** data, int size){
+BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T** data, int size, bool print_info){
 
   // first sort the data
   quicksort<T>(data, size);
@@ -102,12 +103,12 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T** data, int size){
     }
   }
 
-  for(int i = 0; i < unique; i++){
-    for(int j = 0; j < unique; j++){
-      std::cout << choices[i][j] << "\t";
-    }
-    std::cout << "\n";
-  }
+  // for(int i = 0; i < unique; i++){
+  //   for(int j = 0; j < unique; j++){
+  //     std::cout << choices[i][j] << "\t";
+  //   }
+  //   std::cout << "\n";
+  // }
 
   BinarySearchTree<T> res_bst;
   // insert the root choice for the entire tree
@@ -122,6 +123,11 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T** data, int size){
     delete[] choices[i];
   }
   delete[] choices;
+
+  if(print_info){
+    std::cout << "The minimal cost is: " << static_cast<float>(costs[0][unique-1])/size << "\n";
+    res_bst.printVisual();
+  }
 
   return res_bst;
 
@@ -201,23 +207,41 @@ Levelorder<T> BinarySearchTree<T>::levelorder() const{
 template <typename T>
 void BinarySearchTree<T>::printVisual() const{
   if(root != nullptr){
-    QuickQueue<BSTNode<T>>* qq = new QuickQueue<BSTNode<T>>(size);
-    QuickQueue<BSTNode<T>>* qq2 = new QuickQueue<BSTNode<T>>(size);
-    qq->push(*root);
-    while(!qq->isEmpty()){
-      while(!qq->isEmpty()){
-        BSTNode<T> next = qq->pop();
-        std::cout << next.getValue() << "\t";
-        if(next.getLeft() != nullptr) qq2->push(*next.getLeft());
-        if(next.getRight() != nullptr) qq2->push(*next.getRight());
+    LinkedList<LinkedList<BSTNode<T>*>> layers;
+    LinkedList<BSTNode<T>*>* cur_layer = new LinkedList<BSTNode<T>*>();
+    LinkedList<BSTNode<T>*>* store = new LinkedList<BSTNode<T>*>();
+    store->insertBack(root);
+
+    bool notNull = true;
+    while(notNull){
+      store->print();
+      layers.insertBack(*store);
+      cur_layer = store;
+      store = new LinkedList<BSTNode<T>*>();
+      notNull = false;
+      while(!cur_layer->isEmpty()){
+        BSTNode<T>* next = cur_layer->popFront();
+        BSTNode<T>* l = (next==nullptr ? nullptr : next->getLeft());
+        BSTNode<T>* r = (next==nullptr ? nullptr : next->getRight());
+        store->insertBack(l);
+        store->insertBack(r);
+        if(l != nullptr || r != nullptr) notNull = true;
+        //store->print();
       }
-      delete qq;
-      qq = qq2;
-      qq2 = new QuickQueue<BSTNode<T>>(size);
+      //store->print();
+    }
+
+    while(!layers.isEmpty()){
+      LinkedList<BSTNode<T>*> cur = layers.popFront();
+      while(!cur.isEmpty()){
+        BSTNode<T>* node = cur.popFront();
+        if(node != nullptr){
+          std::cout << node->getValue();
+        }
+        std::cout << "\t";
+      }
       std::cout << "\n";
     }
-    delete qq;
-    delete qq2;
   }
 }
 

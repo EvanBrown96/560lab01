@@ -7,24 +7,33 @@
 
 int main(int argc, char** argv){
 
-  LinkedList<String> ll;
+  if(argc <= 1){
+    std::cout << "No input file provided, exiting.\n";
+    return -1;
+  }
+
+  LinkedList<String> input_data;
 
   std::ifstream f;
-  f.open("data.txt");
+  f.open(argv[1]);
 
-  InputParser::parse(f, ll);
+  try{
+    InputParser::parse(f, input_data);
+  }
+  catch(ParseError& err){
+    f.close();
+    std::cout << "Data could not be imported from " << argv[1] << "; error at position " << err.getErrPos() << "\n";
+    return -1;
+  }
+
   f.close();
 
-  //ll.print();
-  //int data[] = {20, 99, 15, 19, 45, 10, 13, 106, 99, 99, 19, 45, 45, 45, 100, 78, 15, 1, 4, 5, 45};
-  int num_data = ll.getLength();
-  String** data = ll.getArray();
-  for(int i = 0; i < num_data; i++){
-    std::cout << *data[i];
-  }
-  BinarySearchTree<String> bst = BinarySearchTree<String>::OptimalBSTFactory(data, num_data);
+  int num_data = input_data.getLength();
+  String** data = input_data.getArray();
+  // for(int i = 0; i < num_data; i++){
+  //   std::cout << *data[i];
+  // }
+  BinarySearchTree<String> bst = BinarySearchTree<String>::OptimalBSTFactory(data, num_data, true);
 
-  std::cout << bst.inorder();
-  std::cout << bst.preorder();
   return 0;
 }
