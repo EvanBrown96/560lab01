@@ -54,13 +54,21 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size, i
       // add the value to the list of unique values, with frequency 1
       unique_data[unique] = &data[i];
       freqs[unique] = 1;
+
+      unique++;
     }
+  }
+
+  for(int i = 0; i < unique; i++){
+    std::cout << *unique_data[i] << "\t\t" << freqs[i] << "\n";
   }
 
   // create arrays of costs and choices
   int costs[unique][unique];
   int choices[unique][unique];
-  
+
+  return BinarySearchTree<T>();
+
 }
 
 template <typename T>
