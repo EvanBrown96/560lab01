@@ -2,20 +2,20 @@
 #define QUICKSORT_CPP
 
 template <typename T>
-void swap(T* a, T* b){
-  T x = *a;
+void swap(T** a, T** b){
+  T** x = new T*(*a);
   *a = *b;
-  *b = x;
+  *b = *x;
 }
 
 template <typename T>
-void quicksort(T* arr, int length){
+void quicksort(T** arr, int length){
   if(length < 2) return;
 
   int larger = 1;
 
   for(int i = 1; i < length; i++){
-    if(arr[i] < arr[0]){
+    if(*arr[i] < *arr[0]){
       swap(arr+i, arr+larger);
       larger++;
     }

@@ -60,7 +60,7 @@ public:
      * @param data: linked list containing data to create optimal bst with
      * @return: a binary search tree with optimal search complexity for the given data
      */
-    static BinarySearchTree<T> OptimalBSTFactory(T data[], int size);
+    static BinarySearchTree<T> OptimalBSTFactory(T** data, int size);
 
     /**
      * puts a value into the tree

@@ -33,7 +33,7 @@ BinarySearchTree<T>& BinarySearchTree<T>::operator=(const BinarySearchTree<T>& b
 }
 
 template <typename T>
-BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size){
+BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T** data, int size){
 
   // first sort the data
   quicksort<T>(data, size);
@@ -43,13 +43,13 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size){
   T* unique_data[size];
   int freqs[size];
 
-  unique_data[0] = &data[0];
+  unique_data[0] = data[0];
   freqs[0] = 1;
 
   for(int i = 1; i < size; i++){
-    if(*unique_data[unique-1] == data[i]) freqs[unique-1]++;
+    if(*unique_data[unique-1] == *data[i]) freqs[unique-1]++;
     else{
-      unique_data[unique] = &data[i];
+      unique_data[unique] = data[i];
       freqs[unique] = 1;
       unique++;
     }
@@ -73,6 +73,8 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size){
     // go through each index in this amount (j and k)
     for(int j = 0; j < unique-i; j++){
       int k = i+j;
+      // initialize choice on other side of array to 0
+      choices[k][j] = 0;
       // calculate sum of costs between indices
       int sum = 0;
       for(int s = j; s <= k; s++){
@@ -94,6 +96,7 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size){
         }
       }
 
+      // set the cost and choice for this index
       costs[j][k] = min_cost + sum;
       choices[j][k] = min_index;
     }
@@ -110,8 +113,15 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size){
   // insert the root choice for the entire tree
   int root = choices[0][unique-1];
   res_bst.insert(*unique_data[root]);
+  // create subtrees left and right of the root
   createSubtree(res_bst, unique_data, choices, 0, root);
   createSubtree(res_bst, unique_data, choices, root+1, unique);
+
+  // cleanup
+  for(int i = 0; i < unique; i++){
+    delete[] choices[i];
+  }
+  delete[] choices;
 
   return res_bst;
 
