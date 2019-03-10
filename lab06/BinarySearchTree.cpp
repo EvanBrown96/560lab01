@@ -6,8 +6,7 @@
  *         adapted from 560 lab 5
  */
 
-#include "ClosedHashTable.hpp"
-#include "QuadraticProbing.hpp"
+#include "quicksort.cpp"
 
 template <typename T>
 BinarySearchTree<T>::BinarySearchTree():
@@ -36,38 +35,118 @@ BinarySearchTree<T>& BinarySearchTree<T>::operator=(const BinarySearchTree<T>& b
 template <typename T>
 BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size, int (*data_hash)(const T& value)){
 
-  ClosedHashTable<T, OptimalItemData, QuadraticProbing> hash(size, data_hash);
+  quicksort<T>(data, size);
 
-  int unique = 0;
+  int unique = 1;
   T* unique_data[size];
   int freqs[size];
 
-  // count occurances of each item in the data to get probabilities
-  for(int i = 0; i < size; i++){
-    if(hash.isInTable(data[i])){
-      // increment the frequency of the current data item
-      freqs[hash.find(data[i]).pos]++;
-    }
+  unique_data[0] = &data[0];
+  freqs[0] = 1;
+
+  for(int i = 1; i < size; i++){
+    if(*unique_data[unique-1] == data[i]) freqs[unique-1]++;
     else{
-      // add the value to the hash table with its position
-      hash.insert(data[i], OptimalItemData(data[i], unique));
-      // add the value to the list of unique values, with frequency 1
       unique_data[unique] = &data[i];
       freqs[unique] = 1;
-
       unique++;
     }
   }
+  // // count occurances of each item in the data to get probabilities
+  // for(int i = 0; i < size; i++){
+  //   if(hash.isInTable(data[i])){
+  //     // increment the frequency of the current data item
+  //     freqs[hash.find(data[i]).pos]++;
+  //   }
+  //   else{
+  //     // add the value to the hash table with its position
+  //     hash.insert(data[i], OptimalItemData(data[i], unique));
+  //     // add the value to the list of unique values, with frequency 1
+  //     unique_data[unique] = &data[i];
+  //     freqs[unique] = 1;
+  //
+  //     unique++;
+  //   }
+  // }
 
-  for(int i = 0; i < unique; i++){
-    std::cout << *unique_data[i] << "\t\t" << freqs[i] << "\n";
-  }
+  std::cout << unique << "\n\n";
+
+        for(int i = 0; i < unique; i++){
+          std::cout << *unique_data[i] << "\t\t" << freqs[i] << "\n";
+        }
 
   // create arrays of costs and choices
   int costs[unique][unique];
   int choices[unique][unique];
 
-  return BinarySearchTree<T>();
+  // initialize costs and choices for trees of size 1
+  for(int i = 0; i < unique; i++){
+    costs[i][i] = freqs[i];
+    choices[i][i] = i;
+  }
+
+  //initialize bottom left of cost array to 0
+  for(int i = 1; i < unique; i++){
+    for(int j = 0; j < unique-i; j++){
+      //std::cout << j << "," << i << "\n";
+      costs[i+j][j] = 0;
+      choices[i+j][j] = 0;
+    }
+  }
+
+  // go through each amount of nodes in tree (minus 1): from 2 to 4, since size 1 is already calculated
+  for(int i = 1; i < unique; i++){
+    // go through each index in this amount (j and k)
+    for(int j = 0; j < unique-i; j++){
+      int k = i+j;
+      // calculate sum of costs between indices
+      int sum = 0;
+      for(int s = j; s <= k; s++){
+        sum += freqs[s];
+      }
+
+      std::cout << "index " << j << ", " << k << "\nsum:" << sum << "\n";
+
+      // find min of possible subtree costs
+      bool first = true;
+      int min_cost, min_index;
+      for(int s = j; s <= k; s++){
+        int test_cost = 0;
+        if(s-1 >= j) test_cost += costs[j][s-1];
+        if(k >= s+1) test_cost += costs[s+1][k];
+
+        if(first || test_cost < min_cost){
+          min_cost = test_cost;
+          min_index = s;
+          first = false;
+        }
+        std::cout << "test min: " << test_cost << "\n";
+      }
+
+      std::cout << "found min: " << min_cost << " at " << min_index << "\n";
+      costs[j][k] = min_cost + sum;
+      choices[j][k] = min_index;
+    }
+  }
+
+  for(int i = 0; i < unique; i++){
+    for(int j = 0; j < unique; j++){
+      std::cout << costs[i][j] << "\t";
+    }
+    std::cout << "\n";
+  }
+
+  std::cout << "\n";
+
+  for(int i = 0; i < unique; i++){
+    for(int j = 0; j < unique; j++){
+      std::cout << choices[i][j] << "\t";
+    }
+    std::cout << "\n";
+  }
+
+  BinarySearchTree<T> res_bst;
+
 
 }
 

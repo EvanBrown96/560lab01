@@ -7,7 +7,6 @@
  */
 
 #include <iostream>
-#include "ClosedHashTable.hpp"
 
 template <typename T>
 QuickQueue<T>::QuickQueue(int size):
