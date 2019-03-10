@@ -149,14 +149,8 @@ private:
   public:
     T data;
     int pos;
-    int freq;
 
-    static int hash(const OptimalItemData& item){
-      return 2;
-    }
-
-    OptimalItemData(const T& data, int pos): data(data), pos(pos), freq(0){}
-    OptimalItemData(const T& data, int pos, int freq): data(data), pos(pos), freq(freq){}
+    OptimalItemData(const T& data, int pos): data(data), pos(pos){}
 
     bool operator ==(const OptimalItemData& cmp){ return (data == cmp.data); }
     bool operator !=(const OptimalItemData& cmp){ return (data != cmp.data); }

@@ -100,6 +100,13 @@ V ClosedHashTable<K, V, CR>::find(const K& key) const throw(ValueNotFound<K>){
 }
 
 template <typename K, typename V, typename CR>
+bool ClosedHashTable<K, V, CR>::isInTable(const K& key) const{
+  int loc = findLocation(key);
+  return (loc >= 0);
+}
+
+
+template <typename K, typename V, typename CR>
 int ClosedHashTable<K, V, CR>::findLocation(const K& key) const{
 
   int hash_val = hash_function(key);

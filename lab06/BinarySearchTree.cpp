@@ -35,9 +35,32 @@ BinarySearchTree<T>& BinarySearchTree<T>::operator=(const BinarySearchTree<T>& b
 
 template <typename T>
 BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T data[], int size, int (*data_hash)(const T& value)){
+
   ClosedHashTable<T, OptimalItemData, QuadraticProbing> hash(size, data_hash);
-  OptimalItemData(data[0], 1, 1);
+
+  int unique = 0;
+  T* unique_data[size];
+  int freqs[size];
+
   // count occurances of each item in the data to get probabilities
+  for(int i = 0; i < size; i++){
+    if(hash.isInTable(data[i])){
+      // increment the frequency of the current data item
+      freqs[hash.find(data[i]).pos]++;
+    }
+    else{
+      // add the value to the hash table with its position
+      hash.insert(data[i], OptimalItemData(data[i], unique));
+      // add the value to the list of unique values, with frequency 1
+      unique_data[unique] = &data[i];
+      freqs[unique] = 1;
+    }
+  }
+
+  // create arrays of costs and choices
+  int costs[unique][unique];
+  int choices[unique][unique];
+  
 }
 
 template <typename T>

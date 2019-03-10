@@ -73,6 +73,8 @@ public:
    */
   V find(const K& key) const throw(ValueNotFound<K>);
 
+  bool isInTable(const K& key) const;
+
 private:
 
   /**
