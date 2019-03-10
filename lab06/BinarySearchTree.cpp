@@ -8,6 +8,7 @@
 
 #include "quicksort.cpp"
 #include "LinkedList.hpp"
+#include <cmath>
 
 template <typename T>
 BinarySearchTree<T>::BinarySearchTree():
@@ -214,7 +215,7 @@ void BinarySearchTree<T>::printVisual() const{
 
     bool notNull = true;
     while(notNull){
-      store->print();
+      //store->print();
       layers.insertBack(*store);
       cur_layer = store;
       store = new LinkedList<BSTNode<T>*>();
@@ -231,16 +232,26 @@ void BinarySearchTree<T>::printVisual() const{
       //store->print();
     }
 
+    int layer_index = layers.getLength();
+    //std::cout << layer_index << "\n";
     while(!layers.isEmpty()){
+      for(int i = 0; i < pow(2, layer_index-1)-1; i++){
+        std::cout << "\t";
+      }
       LinkedList<BSTNode<T>*> cur = layers.popFront();
       while(!cur.isEmpty()){
         BSTNode<T>* node = cur.popFront();
         if(node != nullptr){
           std::cout << node->getValue();
         }
-        std::cout << "\t";
+        //if(!cur.isEmpty()){
+          for(int i = 0; i < pow(2, layer_index); i++){
+            std::cout << "\t";
+          }
+        //}
       }
       std::cout << "\n";
+      layer_index--;
     }
   }
 }
