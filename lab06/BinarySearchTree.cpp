@@ -227,13 +227,11 @@ void BinarySearchTree<T>::printVisual() const{
         store->insertBack(l);
         store->insertBack(r);
         if(l != nullptr || r != nullptr) notNull = true;
-        //store->print();
       }
-      //store->print();
     }
 
     int layer_index = layers.getLength();
-    //std::cout << layer_index << "\n";
+    
     while(!layers.isEmpty()){
       for(int i = 0; i < pow(2, layer_index-1)-1; i++){
         std::cout << "\t";
@@ -244,13 +242,14 @@ void BinarySearchTree<T>::printVisual() const{
         if(node != nullptr){
           std::cout << node->getValue();
         }
-        //if(!cur.isEmpty()){
-          for(int i = 0; i < pow(2, layer_index); i++){
-            std::cout << "\t";
-          }
-        //}
+        for(int i = 0; i < pow(2, layer_index); i++){
+          std::cout << "\t";
+        }
       }
-      std::cout << "\n";
+      for(int i = 0; i < pow(2, layer_index-1); i++){
+        std::cout << "\n";
+      }
+
       layer_index--;
     }
   }
