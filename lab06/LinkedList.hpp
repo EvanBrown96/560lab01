@@ -86,6 +86,8 @@ public:
    */
   T popFront() throw(EmptyStructure);
 
+  T getFront() throw(EmptyStructure);
+
   /**
    * checks if the list contains the given value
    * @param value: the value to check inclusion of
@@ -96,7 +98,7 @@ public:
   int getLength() const;
 
   T** getArray() const;
-  
+
   /**
    * finds the smallest value in the list
    * @pre: the list is not empty

@@ -9,6 +9,7 @@
 #include "quicksort.cpp"
 #include "LinkedList.hpp"
 #include <cmath>
+#include <iomanip>
 
 template <typename T>
 BinarySearchTree<T>::BinarySearchTree():
@@ -126,8 +127,8 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T** data, int size, b
   delete[] choices;
 
   if(print_info){
-    std::cout << "The minimal cost is: " << static_cast<float>(costs[0][unique-1])/size << "\n";
     res_bst.printVisual();
+    std::cout << "The minimal cost is: " << static_cast<float>(costs[0][unique-1])/size << "\n";
   }
 
   return res_bst;
@@ -231,27 +232,61 @@ void BinarySearchTree<T>::printVisual() const{
     }
 
     int layer_index = layers.getLength();
-    
+
     while(!layers.isEmpty()){
-      for(int i = 0; i < pow(2, layer_index-1)-1; i++){
-        std::cout << "\t";
+      int lines = DISPLAY_LEN*pow(2, layer_index-1)/2;
+
+      for(int i = 0; i < lines; i++){
+        int opp_i = lines-i-1;
+        LinkedList<BSTNode<T>*> cur = layers.getFront();
+        if(cur.getLength() <= 1) break;
+        printSpace(DISPLAY_LEN * (pow(2, layer_index-1)-1));
+        int isleft = true;
+        while(!cur.isEmpty()){
+          BSTNode<T>* node = cur.popFront();
+          if(node != nullptr){
+            if(isleft){
+              printSpace(opp_i*2+4);
+              std::cout << "/";
+              printSpace(i*2+1);
+            }
+            else{
+              printSpace(i*2+1);
+              std::cout << "\\";
+              printSpace(opp_i*2+4);
+            }
+          }
+          else{
+            printSpace(i*2+opp_i*2+6);
+          }
+          if(!isleft) printSpace(DISPLAY_LEN * (pow(2, layer_index)-1));
+          isleft = !isleft;
+        }
+        std::cout << "\n";
       }
+
+      printSpace(DISPLAY_LEN * (pow(2, layer_index-1)-1));
       LinkedList<BSTNode<T>*> cur = layers.popFront();
       while(!cur.isEmpty()){
         BSTNode<T>* node = cur.popFront();
         if(node != nullptr){
-          std::cout << node->getValue();
+          node->getValue().printMaxLen(DISPLAY_LEN);
         }
-        for(int i = 0; i < pow(2, layer_index); i++){
-          std::cout << "\t";
+        else{
+          printSpace(DISPLAY_LEN);
         }
+        printSpace(DISPLAY_LEN * (pow(2, layer_index)-1));
       }
-      for(int i = 0; i < pow(2, layer_index-1); i++){
-        std::cout << "\n";
-      }
-
+      std::cout << "\n";
       layer_index--;
     }
+  }
+}
+
+template <typename T>
+void BinarySearchTree<T>::printSpace(int count) const{
+  for(int i = 0; i < count; i++){
+    std::cout << " ";
   }
 }
 

@@ -9,6 +9,8 @@
 #ifndef BINARYSEARCHTREE_HPP
 #define BINARYSEARCHTREE_HPP
 
+#define DISPLAY_LEN 8
+
 template <typename T> class Traversal;
 template <typename T> class Preorder;
 template <typename T> class Inorder;
@@ -61,6 +63,8 @@ public:
      * @return: a binary search tree with optimal search complexity for the given data
      */
     static BinarySearchTree<T> OptimalBSTFactory(T** data, int size, bool print_info=false);
+
+    void printVisual() const;
 
     /**
      * puts a value into the tree
@@ -133,8 +137,7 @@ private:
   BSTNode<T>* root;
   int size;
 
-  // unused
-  void printVisual() const;
+  void printSpace(int count) const;
 
   void destroySubtree(BSTNode<T>* st);
   BSTNode<T>* copySubtree(BSTNode<T>* st);

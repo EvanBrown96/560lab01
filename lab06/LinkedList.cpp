@@ -125,11 +125,21 @@ T LinkedList<T>::popFront() throw(EmptyStructure){
 
   delete head;
   head = next;
-  
+
   length--;
 
   return value;
 
+}
+
+template <typename T>
+T LinkedList<T>::getFront() throw(EmptyStructure){
+  if(isEmpty()){
+    throw EmptyStructure();
+  }
+
+  return head->getValue();
+  
 }
 
 template <typename T>

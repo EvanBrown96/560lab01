@@ -29,6 +29,7 @@ public:
 
   int getLength() const;
 
+  void printMaxLen(int max) const;
   friend std::ostream& operator<<(std::ostream& stream, const String& cw);
 
 private:

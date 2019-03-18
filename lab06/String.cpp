@@ -103,6 +103,24 @@ void String::readString(const char* string){
 
 }
 
+void String::printMaxLen(int max) const{
+  if(length <= max){
+    int side = (max-length)/2;
+    for(int i = 0; i < side; i++){
+      std::cout << " ";
+    }
+    std::cout << *this;
+    for(int i = 0; i < max - length - side; i++){
+      std::cout << " ";
+    }
+    return;
+  }
+  for(int i = 0; i < max-3; i++){
+    std::cout << string[i];
+  }
+  std::cout << "...";
+}
+
 std::ostream& operator<<(std::ostream& stream, const String& cw){
 
   stream << cw.string;
