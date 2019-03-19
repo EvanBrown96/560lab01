@@ -105,13 +105,6 @@ BinarySearchTree<T> BinarySearchTree<T>::OptimalBSTFactory(T** data, int size, b
     }
   }
 
-  // for(int i = 0; i < unique; i++){
-  //   for(int j = 0; j < unique; j++){
-  //     std::cout << choices[i][j] << "\t";
-  //   }
-  //   std::cout << "\n";
-  // }
-
   BinarySearchTree<T> res_bst;
   // insert the root choice for the entire tree
   int root = choices[0][unique-1];
@@ -218,6 +211,7 @@ void BinarySearchTree<T>::printVisual() const{
     while(notNull){
       //store->print();
       layers.insertBack(*store);
+      delete cur_layer;
       cur_layer = store;
       store = new LinkedList<BSTNode<T>*>();
       notNull = false;
@@ -230,6 +224,8 @@ void BinarySearchTree<T>::printVisual() const{
         if(l != nullptr || r != nullptr) notNull = true;
       }
     }
+    delete cur_layer;
+    delete store;
 
     int layer_index = layers.getLength();
 

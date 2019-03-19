@@ -3,9 +3,9 @@
 
 template <typename T>
 void swap(T** a, T** b){
-  T** x = new T*(*a);
+  T* x = *a;
   *a = *b;
-  *b = *x;
+  *b = x;
 }
 
 template <typename T>

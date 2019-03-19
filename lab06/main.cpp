@@ -30,10 +30,14 @@ int main(int argc, char** argv){
 
   int num_data = input_data.getLength();
   String** data = input_data.getArray();
-  // for(int i = 0; i < num_data; i++){
-  //   std::cout << *data[i];
-  // }
+
   BinarySearchTree<String> bst = BinarySearchTree<String>::OptimalBSTFactory(data, num_data, true);
+
+  //cleanup
+  for(int i = 0; i < num_data; i++){
+    delete data[i];
+  }
+  delete[] data;
 
   return 0;
 }
