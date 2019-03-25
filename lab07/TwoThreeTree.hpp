@@ -8,6 +8,7 @@
 #ifndef TWOTHREETREE_HPP
 #define TWOTHREETREE_HPP
 
+#include "TwoThreeNode.hpp"
 #include "ValueNotFound.hpp"
 #include "EmptyStructure.hpp"
 
