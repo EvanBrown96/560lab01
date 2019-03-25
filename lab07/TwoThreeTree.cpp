@@ -14,7 +14,8 @@ TwoThreeTree<T>::TwoThreeTree(const TwoThreeTree<T>& copy){
 
 template <typename T>
 TwoThreeTree<T>& TwoThreeTree<T>::operator=(const TwoThreeTree<T>& copy){
-
+  destroyTree(root);
+  root = copyTree(copy->root);
 }
 
 template <typename T>
@@ -44,12 +45,22 @@ bool TwoThreeTree<T>::find(const T& value) const{
 
 template <typename T>
 T TwoThreeTree<T>::findMin() const throw(EmptyStructure){
+  if(root == nullptr) throw EmptyStructure();
 
+  TwoThreeNode<T>* iter = root;
+  while(iter->getLeftTree() != nullptr) iter = iter->getLeftTree();
+
+  return iter->getLeftVal();
 }
 
 template <typename T>
 T TwoThreeTree<T>::findMax() const throw(EmptyStructure){
+  if(root == nullptr) throw EmptyStructure();
 
+  TwoThreeNode<T>* iter = root;
+  while(iter->getRightTree() != nullptr) iter = iter->getRightTree();
+
+  return iter->getRightVal();
 }
 
 template <typename T>
