@@ -8,6 +8,9 @@
 #ifndef TWOTHREETREE_HPP
 #define TWOTHREETREE_HPP
 
+#include "ValueNotFound.hpp"
+#include "EmptyStructure.hpp"
+
 template <typename T>
 class TwoThreeTree{
 public:
@@ -19,7 +22,7 @@ public:
   TwoThreeTree<T>& operator=(const TwoThreeTree<T>& copy);
 
   void insert(const T& value);
-  void remove(const T& value) throw(ValueNotFound);
+  void remove(const T& value) throw(ValueNotFound<T>);
   void removeMin() throw(EmptyStructure);
   void removeMax() throw(EmptyStructure);
   bool find(const T& value) const;
@@ -28,5 +31,7 @@ public:
 
   // List<T> levelOrder() const;
 };
+
+#include "TwoThreeTree.cpp"
 
 #endif
