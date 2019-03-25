@@ -31,6 +31,14 @@ public:
   T findMax() const throw(EmptyStructure);
 
   // List<T> levelOrder() const;
+
+private:
+
+  TwoThreeNode<T>* root;
+
+  void destroyTree(TwoThreeNode<T>* tree);
+  TwoThreeNode<T>* copyTree(TwoThreeNode<T>* tree);
+
 };
 
 #include "TwoThreeTree.cpp"

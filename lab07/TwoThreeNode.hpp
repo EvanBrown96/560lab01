@@ -8,70 +8,42 @@
 #ifndef TWOTHREENODE_HPP
 #define TWOTHREENODE_HPP
 
-enum NodeType { TWO, THREE };
+#include "InvalidNodeType.hpp"
 
-// typedef NodeType enum NodeType;
+enum NodeType { TWO, THREE };
 
 template <typename T>
 class TwoThreeNode{
 public:
 
-  TwoThreeNode(enum NodeType ntype);
+  TwoThreeNode(const T& value);
+  TwoThreeNode(const T& lvalue, const T& rvalue);
 
   enum NodeType getType() const;
+
+  // 2-node only
+  T getVal() const throw(InvalidNodeType);
+  void setVal(const T& value) throw(InvalidNodeType);
+
+  // 3-node only
+  T getLeftVal() const throw(InvalidNodeType);
+  T getRightVal() const throw(InvalidNodeType);
+  void setLeftVal(const T& value) throw(InvalidNodeType);
+  void setRightVal(const T& value) throw(InvalidNodeType);
+
+  TwoThreeNode<T>* getMiddleTree() const throw(InvalidNodeType);
+  void setMiddleTree(TwoThreeNode<T>* tree) throw(InvalidNodeType);
+
+  // both
+  TwoThreeNode<T>* getLeftTree() const;
+  TwoThreeNode<T>* getRightTree() const;
+
+  void setLeftTree(TwoThreeNode<T>* tree);
+  void setRightTree(TwoThreeNode<T>* tree);
 
 private:
 
   enum NodeType ntype;
-
-};
-
-
-template <typename T>
-class TwoNode: public TwoThreeNode<T>{
-public:
-
-  TwoNode(const T& value);
-
-  T getVal() const;
-
-  TwoThreeNode<T>* getLeftTree() const;
-  TwoThreeNode<T>* getRightTree() const;
-
-  void setVal(const T& value);
-
-  void setLeftTree(TwoThreeNode<T>* tree);
-  void setRightTree(TwoThreeNode<T>* tree);
-
-private:
-
-  T value;
-  TwoThreeNode<T>* ltree;
-  TwoThreeNode<T>* rtree;
-
-};
-
-template <typename T>
-class ThreeNode: public TwoThreeNode<T>{
-public:
-
-  ThreeNode(const T& lvalue, const T& rvalue);
-
-  T getLeftVal() const;
-  T getRightVal() const;
-
-  TwoThreeNode<T>* getLeftTree() const;
-  TwoThreeNode<T>* getMiddleTree() const;
-  TwoThreeNode<T>* getRightTree() const;
-
-  void setLeftVal(const T& value);
-  void setRightVal(const T& value);
-
-  void setLeftTree(TwoThreeNode<T>* tree);
-  void setMiddleTree(TwoThreeNode<T>* tree);
-  void setRightTree(TwoThreeNode<T>* tree);
-
-private:
 
   T lvalue;
   T rvalue;
