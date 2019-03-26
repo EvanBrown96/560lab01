@@ -11,6 +11,7 @@
 #include "TwoThreeNode.hpp"
 #include "ValueNotFound.hpp"
 #include "EmptyStructure.hpp"
+#include "DuplicateValue.hpp"
 
 template <typename T>
 class TwoThreeTree{
@@ -22,7 +23,7 @@ public:
   TwoThreeTree(const TwoThreeTree<T>& copy);
   TwoThreeTree<T>& operator=(const TwoThreeTree<T>& copy);
 
-  void insert(const T& value);
+  void insert(const T& value) throw(DuplicateValue<T>);
   void remove(const T& value) throw(ValueNotFound<T>);
   void removeMin() throw(EmptyStructure);
   void removeMax() throw(EmptyStructure);
@@ -38,6 +39,8 @@ private:
 
   void destroyTree(TwoThreeNode<T>* tree);
   TwoThreeNode<T>* copyTree(TwoThreeNode<T>* tree);
+
+  TwoThreeNode<T>* insertHelper(const T& value, TwoThreeNode<T>* tree, bool& kick_up);
 
 };
 

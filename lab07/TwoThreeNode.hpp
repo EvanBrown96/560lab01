@@ -9,6 +9,7 @@
 #define TWOTHREENODE_HPP
 
 #include "InvalidNodeType.hpp"
+#include "EmptyStructure.hpp"
 
 enum NodeType { TWO, THREE };
 
@@ -34,12 +35,17 @@ public:
   TwoThreeNode<T>* getMiddleTree() const throw(InvalidNodeType);
   void setMiddleTree(TwoThreeNode<T>* tree) throw(InvalidNodeType);
 
+  void absorbMiddleKickUp() throw(InvalidNodeType, EmptyStructure);
+
   // both
   TwoThreeNode<T>* getLeftTree() const;
   TwoThreeNode<T>* getRightTree() const;
 
   void setLeftTree(TwoThreeNode<T>* tree);
   void setRightTree(TwoThreeNode<T>* tree);
+
+  void absorbLeftKickUp() throw(InvalidNodeType, EmptyStructure);
+  void absorbRightKickUp() throw(InvalidNodeType, EmptyStructure);
 
 private:
 
