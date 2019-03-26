@@ -44,59 +44,33 @@ TwoThreeNode<T>* TwoThreeTree<T>::insertHelper(const T& value, TwoThreeNode<T>* 
   }
 
   if(tree->getType() == TWO){
-    if(value == tree->getVal()) throw DuplicateValue<T>(value);
     if(value < tree->getVal()){
-      //tree->setLeftTree(insertHelper(value, tree->getLeftTree()));
       TwoThreeNode<T>* res = insertHelper(value, tree->getLeftTree(), kick_up);
       tree->setLeftTree(res);
       if(kick_up) tree->absorbLeftKickUp();
-        // res->toThreeNodeWithRightVal(tree->getValue());
-        // res->setRightTree(tree->getRightTree());
-        // delete tree;
-        // kick_up = false;
-        // TwoThreeNode<T>* ret = new TwoThreeNode<T>(value, tree->getValue());
-        // ret->setLeftTree(res->getLeftTree());
-        // ret->setMiddleTree(res->getRightTree());
-        // ret->setRightTree(tree->getRightTree());
-        // delete res;
-        // return ret;
-      // }
     }
-    else{
-      //tree->setRightTree(insertHelper(value, tree->getRightTree()));
+    else if(value > tree->getVal()){
       TwoThreeNode<T>* res = insertHelper(value, tree->getRightTree(), kick_up);
       tree->setRightTree(res);
       if(kick_up) tree->absorbRightKickUp();
-      //   res->toThreeNodeWithLeftVal(tree->getValue());
-      //   res->setLeftTree(tree->getLeftTree());
-      //   delete tree;
-      //   kick_up = false;
-      //   // TwoThreeNode<T>* ret = new TwoThreeNode<T>(value, tree->getValue());
-      //   // ret->setLeftTree(tree->getLeftTree());
-      //   // ret->setMiddleTree(res->getLeftTree());
-      //   // ret->setRightTree(res->getRightTree());
-      //   // delete res;
-      //   // return ret;
-      // }
-      // return res;
     }
+    else throw DuplicateValue<T>(value);
+    // if we encounter a 2-node, we know that the kick-up will be absorbed completely
+    // and we don't need to kick up anything else
     kick_up = false;
-    //return tree;
-
   }
   else{
-    if(value < tree->getLeftVal()){ //tree->setLeftTree(insertHelper(value, tree->getLeftTree()));
+    if(value < tree->getLeftVal()){
       TwoThreeNode<T>* res = insertHelper(value, tree->getLeftTree(), kick_up);
       tree->setLeftTree(res);
       if(kick_up) tree->absorbLeftKickUp();
     }
-    else if(value > tree->getRightVal()){ //tree->setRightTree(insertHelper(value, tree->getRightTree()));
+    else if(value > tree->getRightVal()){
       TwoThreeNode<T>* res = insertHelper(value, tree->getRightTree(), kick_up);
       tree->setRightTree(res);
       if(kick_up) tree->absorbRightKickUp();
     }
     else if(value > tree->getLeftVal() && value < tree->getRightVal()){
-      //tree->setMiddleTree(insertHelper(value, tree->getMiddleTree()));
       TwoThreeNode<T>* res = insertHelper(value, tree->getMiddleTree(), kick_up);
       tree->setMiddleTree(res);
       if(kick_up) tree->absorbMiddleKickUp();
