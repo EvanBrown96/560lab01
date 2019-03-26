@@ -22,23 +22,17 @@ TwoThreeTree<T>& TwoThreeTree<T>::operator=(const TwoThreeTree<T>& copy){
 
 template <typename T>
 void TwoThreeTree<T>::insert(const T& value) throw(DuplicateValue<T>){
-  // if tree is empty, make root a new 2-node
-
-  // TwoThreeNode<T>* newNode = new TwoThreeNode<T>(value);
 
   bool kick_up = false;
   root = insertHelper(value, root, kick_up);
-  // if(root == nullptr){
-  //   root = new TwoThreeNode<T>(value);
-  //   return;
-  // }
-
 
 }
 
 template <typename T>
 TwoThreeNode<T>* TwoThreeTree<T>::insertHelper(const T& value, TwoThreeNode<T>* tree, bool& kick_up){
   if(tree == nullptr){
+    // if we've reached an empty spot, create new node and return it, and
+    // indicate that a kick-up is needed
     kick_up = true;
     return new TwoThreeNode<T>(value);
   }
@@ -80,12 +74,6 @@ TwoThreeNode<T>* TwoThreeTree<T>::insertHelper(const T& value, TwoThreeNode<T>* 
   return tree;
 }
 
-// void TwoThreeTree<T>::insertHelperTwo(TwoThreeNode<T>* newNode, TwoThreeNode<T>* tree) throw(DuplicateValue<T>){
-//   if(newNode->getVal() < tree->getVal()) tree->setLeftSubtree(insertHelper(newNode, tree->getLeftTree()));
-//   else if(newNode->getVal() > tree->getVal()) tree->setRightSubtree(insertHelper(newNode, tree->getRightTree()));
-//   else throw DuplicateValue<T>(newNode->getValue());
-// }
-
 template <typename T>
 void TwoThreeTree<T>::remove(const T& value) throw(ValueNotFound<T>){
 
@@ -104,6 +92,27 @@ void TwoThreeTree<T>::removeMax() throw(EmptyStructure){
 template <typename T>
 bool TwoThreeTree<T>::find(const T& value) const{
 
+  return findHelper(value, root);
+
+}
+
+template <typename T>
+bool TwoThreeTree<T>::findHelper(const T& value, TwoThreeTree<T>* tree) const{
+
+  if(tree == nullptr) return false;
+
+  if(tree->getType() == TWO){
+    if(value == tree->getVal()) return true;
+    if(value < tree->getVal()) return findHelper(value, tree->getLeftTree());
+    return findHelper(value, tree->getRightTree());
+  }
+
+  // if a 3-node
+  if(value == tree->getLeftVal() || value == tree->getRightVal()) return true;
+  if(value < tree->getLeftVal()) return findHelper(value, tree->getLeftTree());
+  if(value > tree->getRightVal()) return findHelper(value, tree->getRightTree());
+  return findHelper(value, tree->getMiddleTree());
+  
 }
 
 template <typename T>
