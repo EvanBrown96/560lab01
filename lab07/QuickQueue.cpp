@@ -26,6 +26,8 @@ template <typename T>
 QuickQueue<T>& QuickQueue<T>::operator=(const QuickQueue<T>& qq){
   destroyQueue();
   copyQueue(qq);
+
+  return *this;
 }
 
 template <typename T>
@@ -53,14 +55,14 @@ void QuickQueue<T>::push(const T& item){
   if(count == size){
     T** new_contents = new T*[size*2];
     for(int i = start; i < start+count; i++){
-      new_contents[i-start] = contents[i%size];
+      new_contents[i] = contents[i%size];
     }
     delete[] contents;
+    contents = new_contents;
     size *= 2;
-    start = 0;
   }
 
-  contents[start+count] = new T(item);
+  contents[(start+count)%size] = new T(item);
   count++;
 
 }
@@ -85,14 +87,14 @@ void QuickQueue<T>::copyQueue(const QuickQueue<T> copy){
   count = copy.count;
   contents = new T*[size];
   for(int i = start; i < start+count; i++){
-    contents[i] = new T(*copy.contents[i%size]);
+    contents[i%size] = new T(*copy.contents[i%size]);
   }
 }
 
 template <typename T>
 std::ostream& operator<<(std::ostream& stream, const QuickQueue<T>& t){
   for(int i = t.start; i < t.start+t.count; i++){
-    stream << t.contents[i%t.size] << " ";
+    stream << *t.contents[i%t.size] << " ";
   }
 
   return stream;
