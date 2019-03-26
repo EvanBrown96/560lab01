@@ -3,6 +3,7 @@
  * @file: String.hpp
  * @date: 2/12/19
  * @brief: header file for character wrapper class
+ *         adapted from 560 lab 6
  */
 
 #ifndef STRING_HPP

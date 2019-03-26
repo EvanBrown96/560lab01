@@ -2,6 +2,7 @@
 #include "QuickQueue.hpp"
 #include "InputParser.hpp"
 #include "String.hpp"
+#include "UserInput.hpp"
 #include <iostream>
 #include <fstream>
 
@@ -47,7 +48,9 @@ int main(int argc, char** argv){
     ttt.insert(input_data.pop()[0]);
   }
 
-  std::cout << ttt.levelOrder() << "\n";
+  UserInput ui(ttt);
+
+  ui.start();
 
   return 0;
 }

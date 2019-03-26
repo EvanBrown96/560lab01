@@ -3,7 +3,7 @@
  * @file: ParseError.cpp
  * @date: 2/11/19
  * @brief: implementation of ParseError exception methods
- *         adapted from 560 lab 5
+ *         adapted from 560 lab 6
  */
 
 #include "ParseError.hpp"

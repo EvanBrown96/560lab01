@@ -9,13 +9,13 @@ TwoThreeTree<T>::~TwoThreeTree(){
 
 template <typename T>
 TwoThreeTree<T>::TwoThreeTree(const TwoThreeTree<T>& copy){
-  root = copyTree(copy->root);
+  root = copyTree(copy.root);
 }
 
 template <typename T>
 TwoThreeTree<T>& TwoThreeTree<T>::operator=(const TwoThreeTree<T>& copy){
   destroyTree(root);
-  root = copyTree(copy->root);
+  root = copyTree(copy.root);
 
   return *this;
 }
@@ -97,7 +97,7 @@ bool TwoThreeTree<T>::find(const T& value) const{
 }
 
 template <typename T>
-bool TwoThreeTree<T>::findHelper(const T& value, TwoThreeTree<T>* tree) const{
+bool TwoThreeTree<T>::findHelper(const T& value, TwoThreeNode<T>* tree) const{
 
   if(tree == nullptr) return false;
 
@@ -112,7 +112,7 @@ bool TwoThreeTree<T>::findHelper(const T& value, TwoThreeTree<T>* tree) const{
   if(value < tree->getLeftVal()) return findHelper(value, tree->getLeftTree());
   if(value > tree->getRightVal()) return findHelper(value, tree->getRightTree());
   return findHelper(value, tree->getMiddleTree());
-  
+
 }
 
 template <typename T>

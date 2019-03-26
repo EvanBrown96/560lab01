@@ -1,8 +1,11 @@
-lab: main.o EmptyStructure.o InvalidNodeType.o ParseError.o InputParser.o String.o
-	g++ -std=c++11 -g main.o EmptyStructure.o InvalidNodeType.o ParseError.o InputParser.o String.o -o lab
+lab: main.o EmptyStructure.o InvalidNodeType.o ParseError.o InputParser.o UserInput.o String.o
+	g++ -std=c++11 -g main.o EmptyStructure.o InvalidNodeType.o ParseError.o InputParser.o UserInput.o String.o -o lab
 
-main.o: main.cpp InputParser.hpp String.hpp QuickQueue.hpp QuickQueue.cpp TwoThreeTree.hpp TwoThreeTree.cpp TwoThreeNode.hpp TwoThreeNode.cpp ParseError.hpp EmptyStructure.hpp ValueNotFound.hpp ValueNotFound.cpp DuplicateValue.hpp DuplicateValue.cpp
+main.o: main.cpp InputParser.hpp UserInput.hpp String.hpp QuickQueue.hpp QuickQueue.cpp TwoThreeTree.hpp TwoThreeTree.cpp TwoThreeNode.hpp TwoThreeNode.cpp ParseError.hpp EmptyStructure.hpp ValueNotFound.hpp ValueNotFound.cpp DuplicateValue.hpp DuplicateValue.cpp
 	g++ -std=c++11 -g -c main.cpp
+
+UserInput.o: UserInput.hpp UserInput.cpp QuickQueue.hpp QuickQueue.cpp TwoThreeTree.hpp TwoThreeTree.cpp TwoThreeNode.hpp TwoThreeNode.cpp ParseError.hpp EmptyStructure.hpp ValueNotFound.hpp ValueNotFound.cpp DuplicateValue.hpp DuplicateValue.cpp
+	g++ -std=c++11 -g -c UserInput.cpp
 
 EmptyStructure.o: EmptyStructure.hpp EmptyStructure.cpp
 	g++ -std=c++11 -g -c EmptyStructure.cpp

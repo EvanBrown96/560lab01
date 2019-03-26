@@ -3,6 +3,7 @@
  * @file: String.cpp
  * @date: 2/12/19
  * @brief: implementation of character wrapper class
+ *         adapted from 560 lab 6
  */
 
 #include <iostream>

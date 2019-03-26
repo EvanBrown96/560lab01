@@ -42,7 +42,7 @@ private:
   TwoThreeNode<T>* copyTree(TwoThreeNode<T>* tree);
 
   TwoThreeNode<T>* insertHelper(const T& value, TwoThreeNode<T>* tree, bool& kick_up);
-  bool findHelper(const T& value, TwoThreeTree<T>* tree) const;
+  bool findHelper(const T& value, TwoThreeNode<T>* tree) const;
 
 };
 

@@ -3,7 +3,7 @@
  * @file: ParseError.hpp
  * @date: 2/11/19
  * @brief: header file defining exception occuring during input file parsing
- *         adapted from 560 lab 5
+ *         adapted from 560 lab 6
  */
 
 #ifndef PARSEERROR_HPP
