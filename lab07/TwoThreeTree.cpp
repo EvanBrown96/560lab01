@@ -16,6 +16,8 @@ template <typename T>
 TwoThreeTree<T>& TwoThreeTree<T>::operator=(const TwoThreeTree<T>& copy){
   destroyTree(root);
   root = copyTree(copy->root);
+
+  return *this;
 }
 
 template <typename T>
@@ -148,6 +150,32 @@ T TwoThreeTree<T>::findMax() const throw(EmptyStructure){
   while(iter->getRightTree() != nullptr) iter = iter->getRightTree();
 
   return iter->getRightVal();
+}
+
+template <typename T>
+QuickQueue<T> TwoThreeTree<T>::levelOrder() const{
+  QuickQueue<T> output(10);
+  QuickQueue<TwoThreeNode<T>*> qq(2);
+  qq.push(root);
+
+  while(!qq.isEmpty()){
+    TwoThreeNode<T>* cur = qq.pop();
+    if(cur != nullptr){
+      qq.push(cur->getLeftTree());
+      if(cur->getType() == TWO){
+        output.push(cur->getVal());
+      }
+      else{
+        output.push(cur->getLeftVal());
+        output.push(cur->getRightVal());
+        qq.push(cur->getMiddleTree());
+      }
+      qq.push(cur->getRightTree());
+    }
+  }
+
+  return output;
+
 }
 
 template <typename T>

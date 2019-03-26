@@ -12,6 +12,7 @@
 #include "ValueNotFound.hpp"
 #include "EmptyStructure.hpp"
 #include "DuplicateValue.hpp"
+#include "QuickQueue.hpp"
 
 template <typename T>
 class TwoThreeTree{
@@ -31,7 +32,7 @@ public:
   T findMin() const throw(EmptyStructure);
   T findMax() const throw(EmptyStructure);
 
-  // List<T> levelOrder() const;
+  QuickQueue<T> levelOrder() const;
 
 private:
 
