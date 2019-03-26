@@ -11,7 +11,7 @@
 #include "InvalidNodeType.hpp"
 #include "EmptyStructure.hpp"
 
-enum NodeType { TWO, THREE };
+enum NodeType { HOLE, TWO, THREE };
 
 template <typename T>
 class TwoThreeNode{
@@ -37,12 +37,16 @@ public:
 
   void absorbMiddleKickUp() throw(InvalidNodeType, EmptyStructure);
 
-  // both
-  TwoThreeNode<T>* getLeftTree() const;
-  TwoThreeNode<T>* getRightTree() const;
+  // hole node only
+  TwoThreeNode<T>* getTree() const throw(InvalidNodeType);
+  void setTree(TwoThreeNode<T>* tree) throw(InvalidNodeType);
 
-  void setLeftTree(TwoThreeNode<T>* tree);
-  void setRightTree(TwoThreeNode<T>* tree);
+  // 2-node and 3-node
+  TwoThreeNode<T>* getLeftTree() const throw(InvalidNodeType);
+  TwoThreeNode<T>* getRightTree() const throw(InvalidNodeType);
+
+  void setLeftTree(TwoThreeNode<T>* tree) throw(InvalidNodeType);
+  void setRightTree(TwoThreeNode<T>* tree) throw(InvalidNodeType);
 
   void absorbLeftKickUp() throw(InvalidNodeType, EmptyStructure);
   void absorbRightKickUp() throw(InvalidNodeType, EmptyStructure);
@@ -56,6 +60,9 @@ private:
   TwoThreeNode<T>* ltree;
   TwoThreeNode<T>* mtree;
   TwoThreeNode<T>* rtree;
+
+  void checkInvalidType(enum NodeType safe) const throw(InvalidNodeType);
+  void checkInvalidType(enum NodeType safe, enum NodeType safe2) const throw(InvalidNodeType);
 
 };
 
