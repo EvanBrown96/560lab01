@@ -51,6 +51,9 @@ public:
   void absorbLeftKickUp() throw(InvalidNodeType, EmptyStructure);
   void absorbRightKickUp() throw(InvalidNodeType, EmptyStructure);
 
+  void absorbLeftHole() throw(InvalidNodeType, EmptyStructure);
+  void absorbRightHole() throw(InvalidNodeType, EmptyStructure);
+
 private:
 
   enum NodeType ntype;
@@ -63,6 +66,11 @@ private:
 
   void checkInvalidType(enum NodeType safe) const throw(InvalidNodeType);
   void checkInvalidType(enum NodeType safe, enum NodeType safe2) const throw(InvalidNodeType);
+
+  void absorbLeftHoleTwoNode() throw(InvalidNodeType, EmptyStructure);
+  void absorbLeftHoleThreeNode() throw(InvalidNodeType, EmptyStructure);
+  void absorbRightHoleTwoNode() throw(InvalidNodeType, EmptyStructure);
+  void absorbRightHoleThreeNode() throw(InvalidNodeType, EmptyStructure);
 
 };
 
