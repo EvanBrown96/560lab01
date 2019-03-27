@@ -17,7 +17,7 @@ public:
   /**
    * constructor
    */
-  InvalidNodeType();
+  InvalidNodeType(const char* msg);
 
 };
 

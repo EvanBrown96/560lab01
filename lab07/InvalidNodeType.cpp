@@ -7,4 +7,4 @@
 
 #include "InvalidNodeType.hpp"
 
-InvalidNodeType::InvalidNodeType(): std::logic_error("Invalid Node Type"){}
+InvalidNodeType::InvalidNodeType(const char* msg): std::logic_error(msg){}

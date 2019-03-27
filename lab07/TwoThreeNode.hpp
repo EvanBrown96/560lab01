@@ -21,10 +21,12 @@ public:
   TwoThreeNode(const T& lvalue, const T& rvalue);
 
   enum NodeType getType() const;
+  bool isLeaf() const;
 
   // 2-node only
   T getVal() const throw(InvalidNodeType);
   void setVal(const T& value) throw(InvalidNodeType);
+  T makeHole() throw(InvalidNodeType);
 
   // 3-node only
   T getLeftVal() const throw(InvalidNodeType);
@@ -37,6 +39,9 @@ public:
 
   void absorbMiddleKickUp() throw(InvalidNodeType, EmptyStructure);
   void absorbMiddleHole() throw(InvalidNodeType, EmptyStructure);
+
+  T make2NodeFromLeft() throw(InvalidNodeType);
+  T make2NodeFromRight() throw(InvalidNodeType);
 
   // hole node only
   TwoThreeNode<T>* getTree() const throw(InvalidNodeType);
@@ -65,8 +70,8 @@ private:
   TwoThreeNode<T>* mtree;
   TwoThreeNode<T>* rtree;
 
-  void checkInvalidType(enum NodeType safe) const throw(InvalidNodeType);
-  void checkInvalidType(enum NodeType safe, enum NodeType safe2) const throw(InvalidNodeType);
+  void checkInvalidType(enum NodeType safe, const char* msg) const throw(InvalidNodeType);
+  void checkInvalidType(enum NodeType safe, enum NodeType safe2, const char* msg) const throw(InvalidNodeType);
 
   void absorbLeftHoleTwoNode() throw(InvalidNodeType, EmptyStructure);
   void absorbLeftHoleThreeNode() throw(InvalidNodeType, EmptyStructure);

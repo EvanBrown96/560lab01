@@ -44,6 +44,10 @@ private:
   TwoThreeNode<T>* insertHelper(const T& value, TwoThreeNode<T>* tree, bool& kick_up);
   bool findHelper(const T& value, TwoThreeNode<T>* tree) const;
 
+  void removeHelperFindStage(const T& value, TwoThreeNode<T>* tree) throw(ValueNotFound<T>);
+  T removeHelperSingleLeftStage(TwoThreeNode<T>* tree);
+  T removeHelperFindPredecessorStage(TwoThreeNode<T>* tree);
+
 };
 
 #include "TwoThreeTree.cpp"

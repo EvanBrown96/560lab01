@@ -4,13 +4,52 @@ enum NodeType TwoThreeNode<T>::getType() const{
 }
 
 template <typename T>
-void TwoThreeNode<T>::checkInvalidType(enum NodeType safe) const throw(InvalidNodeType){
-  if(ntype != safe) throw InvalidNodeType();
+bool TwoThreeNode<T>::isLeaf() const{
+  if(ntype == HOLE){
+    return (ltree == nullptr);
+  }
+  if(ntype == TWO){
+    return (ltree == nullptr && rtree == nullptr);
+  }
+  return (ltree == nullptr && mtree == nullptr && rtree == nullptr);
 }
 
 template <typename T>
-void TwoThreeNode<T>::checkInvalidType(enum NodeType safe, enum NodeType safe2) const throw(InvalidNodeType){
-  if(ntype != safe && ntype != safe2) throw InvalidNodeType();
+T TwoThreeNode<T>::makeHole() throw(InvalidNodeType){
+  checkInvalidType(TWO, "makeHole");
+  if(rtree != nullptr) throw InvalidNodeType("makeHole requires empty right tree");
+  ntype = HOLE;
+  return lvalue;
+}
+
+template <typename T>
+T TwoThreeNode<T>::make2NodeFromLeft() throw(InvalidNodeType){
+  checkInvalidType(THREE, "make2NodeFromLeft");
+  if(rtree != nullptr) throw InvalidNodeType("make2NodeFromLeft requires empty right tree");
+  ntype = TWO;
+  rtree = mtree;
+  return rvalue;
+}
+
+template <typename T>
+T TwoThreeNode<T>::make2NodeFromRight() throw(InvalidNodeType){
+  checkInvalidType(THREE, "make3NodeFromLeft");
+  if(ltree != nullptr) throw InvalidNodeType("make2NodeFromLeft requires empty left tree");
+  ntype = TWO;
+  T save = lvalue;
+  lvalue = rvalue;
+  ltree = mtree;
+  return save;
+}
+
+template <typename T>
+void TwoThreeNode<T>::checkInvalidType(enum NodeType safe, const char* msg) const throw(InvalidNodeType){
+  if(ntype != safe) throw InvalidNodeType(msg);
+}
+
+template <typename T>
+void TwoThreeNode<T>::checkInvalidType(enum NodeType safe, enum NodeType safe2, const char* msg) const throw(InvalidNodeType){
+  if(ntype != safe && ntype != safe2) throw InvalidNodeType(msg);
 }
 
 template <typename T>
@@ -23,20 +62,20 @@ TwoThreeNode<T>::TwoThreeNode(const T& lvalue, const T& rvalue):
 
 template <typename T>
 T TwoThreeNode<T>::getVal() const throw(InvalidNodeType){
-  checkInvalidType(TWO);
+  checkInvalidType(TWO, "getVal");
   return lvalue;
 }
 
 template <typename T>
 void TwoThreeNode<T>::setVal(const T& value) throw(InvalidNodeType){
-  checkInvalidType(TWO);
+  checkInvalidType(TWO, "setVal");
   lvalue = value;
 }
 
 template <typename T>
 void TwoThreeNode<T>::absorbLeftKickUp() throw(InvalidNodeType, EmptyStructure){
   if(ltree == nullptr) throw EmptyStructure();
-  if(ltree->ntype != TWO) throw InvalidNodeType();
+  if(ltree->ntype != TWO) throw InvalidNodeType("absorbLeftKickUp requires left node be a 2-node");
 
   if(ntype == TWO){
     // turn parent node into 3-node
@@ -71,7 +110,7 @@ void TwoThreeNode<T>::absorbLeftKickUp() throw(InvalidNodeType, EmptyStructure){
 template <typename T>
 void TwoThreeNode<T>::absorbRightKickUp() throw(InvalidNodeType, EmptyStructure){
   if(rtree == nullptr) throw EmptyStructure();
-  if(rtree->ntype != TWO) throw InvalidNodeType();
+  if(rtree->ntype != TWO) throw InvalidNodeType("absorbRightKickUp requires right node be a 2-node");
 
   if(ntype == TWO){
     ntype = THREE;
@@ -97,9 +136,9 @@ void TwoThreeNode<T>::absorbRightKickUp() throw(InvalidNodeType, EmptyStructure)
 
 template <typename T>
 void TwoThreeNode<T>::absorbMiddleKickUp() throw(InvalidNodeType, EmptyStructure){
-  checkInvalidType(THREE);
+  checkInvalidType(THREE, "absorbMiddleKickUp");
   if(mtree == nullptr) throw EmptyStructure();
-  if(mtree->ntype != TWO) throw InvalidNodeType();
+  if(mtree->ntype != TWO) throw InvalidNodeType("absorbMiddleKickUp requires middle node be a 2-node");
 
   ntype = TWO;
 
@@ -121,7 +160,7 @@ void TwoThreeNode<T>::absorbMiddleKickUp() throw(InvalidNodeType, EmptyStructure
 template <typename T>
 void TwoThreeNode<T>::absorbLeftHole() throw(InvalidNodeType, EmptyStructure){
   if(ltree == nullptr) throw EmptyStructure();
-  if(ltree->ntype != HOLE) throw InvalidNodeType();
+  if(ltree->ntype != HOLE) throw InvalidNodeType("absorbLeftHole requires left node be a hole node");
 
   if(ntype == TWO) absorbLeftHoleTwoNode();
   else absorbLeftHoleThreeNode();
@@ -165,7 +204,7 @@ void TwoThreeNode<T>::absorbLeftHoleTwoNode() throw(InvalidNodeType, EmptyStruct
     // move old rtree mtree to be it's ltree
     rtree->ltree = rtree->mtree;
   }
-  else throw InvalidNodeType();
+  else throw InvalidNodeType("absorbLeftHoleTwoNode requires right node not be a hole node");
 }
 
 template <typename T>
@@ -191,13 +230,13 @@ void TwoThreeNode<T>::absorbLeftHoleThreeNode() throw(InvalidNodeType, EmptyStru
     ltree->rtree = mtree->ltree;
     mtree->ltree = mtree->mtree;
   }
-  else throw InvalidNodeType();
+  else throw InvalidNodeType("absorbLeftHoleThreeNode requires middle node not be a hole node");
 }
 
 template <typename T>
 void TwoThreeNode<T>::absorbRightHole() throw(InvalidNodeType, EmptyStructure){
   if(rtree == nullptr) throw EmptyStructure();
-  if(rtree->ntype != HOLE) throw InvalidNodeType();
+  if(rtree->ntype != HOLE) throw InvalidNodeType("absorbRightHole requires right node be a hole node");
 
   if(ntype == TWO) absorbRightHoleTwoNode();
   else absorbRightHoleThreeNode();
@@ -223,7 +262,7 @@ void TwoThreeNode<T>::absorbRightHoleTwoNode() throw(InvalidNodeType, EmptyStruc
     rtree->ltree = ltree->rtree;
     ltree->rtree = ltree->mtree;
   }
-  else throw InvalidNodeType();
+  else throw InvalidNodeType("absorbRightHoleTwoNode requires left node not be a hole node");
 }
 
 template <typename T>
@@ -249,13 +288,13 @@ void TwoThreeNode<T>::absorbRightHoleThreeNode() throw(InvalidNodeType, EmptyStr
     rtree->ltree = mtree->rtree;
     mtree->rtree = mtree->mtree;
   }
-  else throw InvalidNodeType();
+  else throw InvalidNodeType("absorbRightHoleThreeNode requires middle node not be a hole node");
 }
 
 template <typename T>
 void TwoThreeNode<T>::absorbMiddleHole() throw(InvalidNodeType, EmptyStructure){
   if(mtree == nullptr) throw EmptyStructure();
-  if(mtree->ntype != HOLE) throw InvalidNodeType();
+  if(mtree->ntype != HOLE) throw InvalidNodeType("absorbMiddleHole requires middle node be a hole node");
 
   if(ltree == nullptr && rtree == nullptr) throw EmptyStructure();
 
@@ -269,79 +308,80 @@ void TwoThreeNode<T>::absorbMiddleHole() throw(InvalidNodeType, EmptyStructure){
 
   }
   else if(rtree != nullptr && rtree->ntype == THREE){ // case 4b-1
+
   }
-  else throw InvalidNodeType();
+  else throw InvalidNodeType("absorbMiddleHole requires either left node or right node not be a hole node");
 
 }
 
 template <typename T>
 T TwoThreeNode<T>::getLeftVal() const throw(InvalidNodeType){
-  checkInvalidType(THREE);
+  checkInvalidType(THREE, "getLeftVal");
   return lvalue;
 }
 
 template <typename T>
 T TwoThreeNode<T>::getRightVal() const throw(InvalidNodeType){
-  checkInvalidType(THREE);
+  checkInvalidType(THREE, "getRightVal");
   return rvalue;
 }
 
 template <typename T>
 void TwoThreeNode<T>::setLeftVal(const T& value) throw(InvalidNodeType){
-  checkInvalidType(THREE);
+  checkInvalidType(THREE, "setLeftVal");
   lvalue = value;
 }
 
 template <typename T>
 void TwoThreeNode<T>::setRightVal(const T& value) throw(InvalidNodeType){
-  checkInvalidType(THREE);
+  checkInvalidType(THREE, "setRightVal");
   rvalue = value;
 }
 
 template <typename T>
 TwoThreeNode<T>* TwoThreeNode<T>::getMiddleTree() const throw(InvalidNodeType){
-  checkInvalidType(THREE);
+  checkInvalidType(THREE, "getMiddleTree");
   return mtree;
 }
 
 template <typename T>
 void TwoThreeNode<T>::setMiddleTree(TwoThreeNode<T>* tree) throw(InvalidNodeType){
-  checkInvalidType(THREE);
+  checkInvalidType(THREE, "setMiddleTree");
   mtree = tree;
 }
 
 template <typename T>
 TwoThreeNode<T>* TwoThreeNode<T>::getLeftTree() const throw(InvalidNodeType){
-  checkInvalidType(TWO, THREE);
+  checkInvalidType(TWO, THREE, "getLeftTree");
   return ltree;
 }
 
 template <typename T>
 TwoThreeNode<T>* TwoThreeNode<T>::getRightTree() const throw(InvalidNodeType){
-  checkInvalidType(TWO, THREE);
+  checkInvalidType(TWO, THREE, "getRightTree");
   return rtree;
 }
 
 template <typename T>
 void TwoThreeNode<T>::setLeftTree(TwoThreeNode<T>* tree) throw(InvalidNodeType){
-  checkInvalidType(TWO, THREE);
+  checkInvalidType(TWO, THREE, "setLeftTree");
   ltree = tree;
 }
 
 template <typename T>
 void TwoThreeNode<T>::setRightTree(TwoThreeNode<T>* tree) throw(InvalidNodeType){
-  checkInvalidType(TWO, THREE);
+  checkInvalidType(TWO, THREE, "setRightTree");
   rtree = tree;
 }
 
 template <typename T>
 TwoThreeNode<T>* TwoThreeNode<T>::getTree() const throw(InvalidNodeType){
-  checkInvalidType(HOLE);
+  checkInvalidType(HOLE, "getTree");
   return ltree;
 }
 
 template <typename T>
 void TwoThreeNode<T>::setTree(TwoThreeNode<T>* tree) throw(InvalidNodeType){
-  checkInvalidType(HOLE);
+  checkInvalidType(HOLE, "setTree");
   ltree = tree;
 }

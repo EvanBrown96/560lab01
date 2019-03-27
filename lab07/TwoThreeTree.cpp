@@ -77,6 +77,90 @@ TwoThreeNode<T>* TwoThreeTree<T>::insertHelper(const T& value, TwoThreeNode<T>* 
 template <typename T>
 void TwoThreeTree<T>::remove(const T& value) throw(ValueNotFound<T>){
 
+  //bool hole = false;
+  removeHelperFindStage(value, root);
+  // if resultant root is a hole, get rid of it and set its subtree as root
+  if(root->getType() == HOLE){
+    TwoThreeNode<T>* del = root;
+    root = root->getTree();
+    delete del;
+  }
+
+}
+
+template <typename T>
+void TwoThreeTree<T>::removeHelperFindStage(const T& value, TwoThreeNode<T>* tree) throw(ValueNotFound<T>){
+
+  if(tree == nullptr){
+    throw ValueNotFound<T>(value);
+  }
+
+  if(tree->getType() == TWO){
+    if(value < tree->getVal()){
+      removeHelperFindStage(value, tree->getLeftTree());
+    }
+    else if(value > tree->getVal()){
+      removeHelperFindStage(value, tree->getRightTree());
+    }
+    else removeHelperSingleLeftStage(tree);
+  }
+  else{
+    if(value < tree->getLeftVal()){
+      removeHelperFindStage(value, tree->getLeftTree());
+    }
+    else if(value > tree->getRightVal()){
+      removeHelperFindStage(value, tree->getRightTree());
+    }
+    else if(value > tree->getLeftVal() && value < tree->getRightVal()){
+      removeHelperFindStage(value, tree->getMiddleTree());
+    }
+    else removeHelperSingleLeftStage(tree);
+  }
+
+}
+
+template <typename T>
+T TwoThreeTree<T>::removeHelperSingleLeftStage(TwoThreeNode<T>* tree){
+  // node containing value is already leaf
+  if(tree->getLeftTree() == nullptr){
+    if(tree->getType() == TWO){
+      // make this node a hole and return the value in it
+      return tree->makeHole();
+    }
+    else{
+      // make this node into a 2-node with its right value and return its left value
+      return tree->make2NodeFromRight();
+    }
+  }
+  else{
+    T swap_val = removeHelperFindPredecessorStage(tree->getLeftTree());
+    if(tree->getLeftTree()->getType() == HOLE){
+      tree->absorbLeftHole();
+    }
+    return swap_val;
+  }
+}
+
+template <typename T>
+T TwoThreeTree<T>::removeHelperFindPredecessorStage(TwoThreeNode<T>* tree){
+  // found predecessor
+  if(tree->getRightTree() == nullptr){
+    if(tree->getType() == TWO){
+      // make this node a hole and return the value in it
+      return tree->makeHole();
+    }
+    else{
+      // make this node into a 2-node with its left value and return its right value
+      return tree->make2NodeFromLeft();
+    }
+  }
+  else{
+    T swap_val = removeHelperFindPredecessorStage(tree->getRightTree());
+    if(tree->getRightTree()->getType() == HOLE){
+      tree->absorbRightHole();
+    }
+    return swap_val;
+  }
 }
 
 template <typename T>
