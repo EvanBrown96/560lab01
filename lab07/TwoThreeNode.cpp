@@ -131,7 +131,7 @@ template <typename T>
 void TwoThreeNode<T>::absorbLeftHoleTwoNode() throw(InvalidNodeType, EmptyStructure){
   if(rtree == nullptr) throw EmptyStructure();
 
-  if(rtree->ntype == TWO){
+  if(rtree->ntype == TWO){ // case 1-1
     // make parent node into hole
     ntype = HOLE;
     // make right node into 3-node
@@ -149,7 +149,7 @@ void TwoThreeNode<T>::absorbLeftHoleTwoNode() throw(InvalidNodeType, EmptyStruct
     // make new hole node's subtree old updated 3-node
     ltree = rtree;
   }
-  else if(rtree->ntype == THREE){
+  else if(rtree->ntype == THREE){ // case 2-1
     // make left node into 2-node
     ltree->ntype = TWO;
     // make right node into 2-node
@@ -172,7 +172,7 @@ template <typename T>
 void TwoThreeNode<T>::absorbLeftHoleThreeNode() throw(InvalidNodeType, EmptyStructure){
   if(mtree == nullptr) throw EmptyStructure();
 
-  if(mtree->ntype == TWO){
+  if(mtree->ntype == TWO){ // case 3a-1
     ntype = TWO;
     ltree->ntype = THREE;
     ltree->lvalue = lvalue;
@@ -182,7 +182,7 @@ void TwoThreeNode<T>::absorbLeftHoleThreeNode() throw(InvalidNodeType, EmptyStru
     ltree->rtree = mtree->rtree;
     delete mtree;
   }
-  else if(mtree->ntype = THREE){
+  else if(mtree->ntype == THREE){ // case 4a-1
     ltree->ntype = TWO;
     mtree->ntype = TWO;
     ltree->lvalue = lvalue;
@@ -207,7 +207,7 @@ template <typename T>
 void TwoThreeNode<T>::absorbRightHoleTwoNode() throw(InvalidNodeType, EmptyStructure){
   if(ltree == nullptr) throw EmptyStructure();
 
-  if(ltree->ntype == TWO){
+  if(ltree->ntype == TWO){ // case 1-2
     ntype = HOLE;
     ltree->ntype = THREE;
     ltree->mtree = ltree->rtree;
@@ -215,7 +215,7 @@ void TwoThreeNode<T>::absorbRightHoleTwoNode() throw(InvalidNodeType, EmptyStruc
     ltree->rvalue = lvalue;
     delete rtree;
   }
-  else if(ltree->ntype == THREE){
+  else if(ltree->ntype == THREE){ // case 2-2
     ltree->ntype = TWO;
     rtree->ntype = TWO;
     rtree->lvalue = lvalue;
@@ -230,7 +230,7 @@ template <typename T>
 void TwoThreeNode<T>::absorbRightHoleThreeNode() throw(InvalidNodeType, EmptyStructure){
   if(mtree == nullptr) throw EmptyStructure();
 
-  if(mtree->ntype == TWO){
+  if(mtree->ntype == TWO){ // case 3b-2
     ntype = TWO;
     rtree->ntype = THREE;
     rtree->lvalue = mtree->lvalue;
@@ -240,7 +240,7 @@ void TwoThreeNode<T>::absorbRightHoleThreeNode() throw(InvalidNodeType, EmptyStr
     rtree->ltree = mtree->ltree;
     delete mtree;
   }
-  else if(mtree->ntype == THREE){
+  else if(mtree->ntype == THREE){ // case 4b-2
     mtree->ntype = TWO;
     rtree->ntype = TWO;
     rtree->lvalue = rvalue;
@@ -250,6 +250,28 @@ void TwoThreeNode<T>::absorbRightHoleThreeNode() throw(InvalidNodeType, EmptyStr
     mtree->rtree = mtree->mtree;
   }
   else throw InvalidNodeType();
+}
+
+template <typename T>
+void TwoThreeNode<T>::absorbMiddleHole() throw(InvalidNodeType, EmptyStructure){
+  if(mtree == nullptr) throw EmptyStructure();
+  if(mtree->ntype != HOLE) throw InvalidNodeType();
+
+  if(ltree == nullptr && rtree == nullptr) throw EmptyStructure();
+
+  if(ltree != nullptr && ltree->ntype == TWO){ // case 3a-2
+
+  }
+  else if(rtree != nullptr && rtree->ntype == TWO){ // case 3b-1
+
+  }
+  else if(ltree != nullptr && ltree->ntype == THREE){ // case 4a-2
+
+  }
+  else if(rtree != nullptr && rtree->ntype == THREE){ // case 4b-1
+  }
+  else throw InvalidNodeType();
+
 }
 
 template <typename T>

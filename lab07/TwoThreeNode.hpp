@@ -36,6 +36,7 @@ public:
   void setMiddleTree(TwoThreeNode<T>* tree) throw(InvalidNodeType);
 
   void absorbMiddleKickUp() throw(InvalidNodeType, EmptyStructure);
+  void absorbMiddleHole() throw(InvalidNodeType, EmptyStructure);
 
   // hole node only
   TwoThreeNode<T>* getTree() const throw(InvalidNodeType);
