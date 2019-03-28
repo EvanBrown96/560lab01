@@ -98,46 +98,92 @@ void TwoThreeTree<T>::removeHelperFindStage(const T& value, TwoThreeNode<T>* tre
   if(tree->getType() == TWO){
     if(value < tree->getVal()){
       removeHelperFindStage(value, tree->getLeftTree());
+      if(tree->getLeftTree()->getType() == HOLE){
+        tree->absorbLeftHole();
+      }
     }
     else if(value > tree->getVal()){
       removeHelperFindStage(value, tree->getRightTree());
+      if(tree->getRightTree()->getType() == HOLE){
+        tree->absorbRightHole();
+      }
     }
-    else removeHelperSingleLeftStage(tree);
+    else{
+      removeHelperSingleLeftStage(value, tree);
+
+    }
   }
   else{
     if(value < tree->getLeftVal()){
       removeHelperFindStage(value, tree->getLeftTree());
+      if(tree->getLeftTree()->getType() == HOLE){
+        tree->absorbLeftHole();
+      }
     }
     else if(value > tree->getRightVal()){
       removeHelperFindStage(value, tree->getRightTree());
+      if(tree->getMiddleTree()->getType() == HOLE){
+        tree->absorbMiddleHole();
+      }
     }
     else if(value > tree->getLeftVal() && value < tree->getRightVal()){
       removeHelperFindStage(value, tree->getMiddleTree());
+      if(tree->getRightTree()->getType() == HOLE){
+        tree->absorbRightHole();
+      }
     }
-    else removeHelperSingleLeftStage(tree);
+    else removeHelperSingleLeftStage(value, tree);
   }
 
 }
 
 template <typename T>
-T TwoThreeTree<T>::removeHelperSingleLeftStage(TwoThreeNode<T>* tree){
-  // node containing value is already leaf
-  if(tree->getLeftTree() == nullptr){
-    if(tree->getType() == TWO){
-      // make this node a hole and return the value in it
-      return tree->makeHole();
+void TwoThreeTree<T>::removeHelperSingleLeftStage(const T& value, TwoThreeNode<T>* tree){
+  if(tree->getType() == TWO){
+    // node containing value to delete is already leaf
+    if(tree->getLeftTree() == nullptr){
+      // make this node a hole; don't care about the value returned since this is the node we want to delete
+      tree->makeHole();
     }
     else{
-      // make this node into a 2-node with its right value and return its left value
-      return tree->make2NodeFromRight();
+      // get largest predecessor and propogate hole up left subtree, if there is one
+      T swap_val = removeHelperFindPredecessorStage(tree->getLeftTree());
+      // replace value in node to delete with largest predecessor
+      tree->setVal(swap_val);
+      // absorb the hole, if there is one
+      if(tree->getLeftTree()->getType() == HOLE){
+        tree->absorbLeftHole();
+      }
     }
   }
   else{
-    T swap_val = removeHelperFindPredecessorStage(tree->getLeftTree());
-    if(tree->getLeftTree()->getType() == HOLE){
-      tree->absorbLeftHole();
+    // want to delete left value of 3-node
+    if(value == tree->getLeftVal()){
+      // node containing value to delete is already leaf
+      if(tree->getLeftTree() == nullptr){
+        tree->make2NodeFromRight();
+      }
+      else{
+        T swap_val = removeHelperFindPredecessorStage(tree->getLeftTree());
+        tree->setLeftVal(swap_val);
+        if(tree->getLeftTree()->getType() == HOLE){
+          tree->absorbLeftHole();
+        }
+      }
     }
-    return swap_val;
+    // want to delete right value of 3-node
+    else{
+      if(tree->getMiddleTree() == nullptr){
+        tree->make2NodeFromLeft();
+      }
+      else{
+        T swap_val = removeHelperFindPredecessorStage(tree->getMiddleTree());
+        tree->setRightVal(swap_val);
+        if(tree->getMiddleTree()->getType() == HOLE){
+          tree->absorbMiddleHole();
+        }
+      }
+    }
   }
 }
 

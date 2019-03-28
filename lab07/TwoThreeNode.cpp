@@ -1,3 +1,5 @@
+#include <iostream>
+
 template <typename T>
 enum NodeType TwoThreeNode<T>::getType() const{
   return ntype;
@@ -297,6 +299,8 @@ void TwoThreeNode<T>::absorbMiddleHole() throw(InvalidNodeType, EmptyStructure){
   if(mtree->ntype != HOLE) throw InvalidNodeType("absorbMiddleHole requires middle node be a hole node");
 
   if(ltree == nullptr && rtree == nullptr) throw EmptyStructure();
+
+  std::cout << "UNDEFINED FUNCTION!!!!\n";
 
   if(ltree != nullptr && ltree->ntype == TWO){ // case 3a-2
 
