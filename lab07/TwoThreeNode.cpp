@@ -269,6 +269,7 @@ void TwoThreeNode<T>::absorbRightHoleTwoNode() throw(InvalidNodeType, EmptyStruc
     rtree->ntype = TWO;
     rtree->lvalue = lvalue;
     lvalue = ltree->rvalue;
+    rtree->rtree = rtree->ltree;
     rtree->ltree = ltree->rtree;
     ltree->rtree = ltree->mtree;
     ltree->mtree = nullptr; //safety
