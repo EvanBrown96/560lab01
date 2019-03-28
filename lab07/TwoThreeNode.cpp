@@ -106,6 +106,8 @@ void TwoThreeNode<T>::absorbLeftKickUp() throw(InvalidNodeType, EmptyStructure){
     rnew->rtree = rtree;
     // make new node right tree of parent node
     rtree = rnew;
+
+    mtree = nullptr; //safety
   }
 }
 
@@ -132,6 +134,8 @@ void TwoThreeNode<T>::absorbRightKickUp() throw(InvalidNodeType, EmptyStructure)
 
     lvalue = rvalue;
     ltree = lnew;
+
+    mtree = nullptr; //safety
   }
 
 }
@@ -205,6 +209,7 @@ void TwoThreeNode<T>::absorbLeftHoleTwoNode() throw(InvalidNodeType, EmptyStruct
     ltree->rtree = rtree->ltree;
     // move old rtree mtree to be it's ltree
     rtree->ltree = rtree->mtree;
+    rtree->mtree = nullptr; //safety
   }
   else throw InvalidNodeType("absorbLeftHoleTwoNode requires right node not be a hole node");
 }
@@ -232,6 +237,7 @@ void TwoThreeNode<T>::absorbLeftHoleThreeNode() throw(InvalidNodeType, EmptyStru
     mtree->lvalue = mtree->rvalue;
     ltree->rtree = mtree->ltree;
     mtree->ltree = mtree->mtree;
+    mtree->mtree = nullptr; //safety
   }
   else throw InvalidNodeType("absorbLeftHoleThreeNode requires middle node not be a hole node");
 }
@@ -256,7 +262,7 @@ void TwoThreeNode<T>::absorbRightHoleTwoNode() throw(InvalidNodeType, EmptyStruc
     ltree->rtree = rtree->ltree;
     ltree->rvalue = lvalue;
     delete rtree;
-    rtree = nullptr //safety
+    rtree = nullptr; //safety
   }
   else if(ltree->ntype == THREE){ // case 2-2
     ltree->ntype = TWO;
@@ -265,6 +271,7 @@ void TwoThreeNode<T>::absorbRightHoleTwoNode() throw(InvalidNodeType, EmptyStruc
     lvalue = ltree->rvalue;
     rtree->ltree = ltree->rtree;
     ltree->rtree = ltree->mtree;
+    ltree->mtree = nullptr; //safety
   }
   else throw InvalidNodeType("absorbRightHoleTwoNode requires left node not be a hole node");
 }
@@ -292,6 +299,7 @@ void TwoThreeNode<T>::absorbRightHoleThreeNode() throw(InvalidNodeType, EmptyStr
     rtree->rtree = rtree->ltree;
     rtree->ltree = mtree->rtree;
     mtree->rtree = mtree->mtree;
+    mtree->mtree = nullptr; //safety
   }
   else throw InvalidNodeType("absorbRightHoleThreeNode requires middle node not be a hole node");
 }
@@ -316,7 +324,7 @@ void TwoThreeNode<T>::absorbMiddleHole() throw(InvalidNodeType, EmptyStructure){
     mtree = nullptr; //safety
   }
   else if(rtree != nullptr && rtree->ntype == TWO){ // case 3b-1
-    ntype = TWO
+    ntype = TWO;
     rtree->ntype = THREE;
     rtree->rvalue = rtree->lvalue;
     rtree->lvalue = rvalue;
@@ -326,10 +334,24 @@ void TwoThreeNode<T>::absorbMiddleHole() throw(InvalidNodeType, EmptyStructure){
     mtree = nullptr; //safety
   }
   else if(ltree != nullptr && ltree->ntype == THREE){ // case 4a-2
-
+    ltree->ntype = TWO;
+    mtree->ntype = TWO;
+    mtree->lvalue = lvalue;
+    lvalue = ltree->rvalue;
+    mtree->rtree = mtree->ltree;
+    mtree->ltree = ltree->rtree;
+    ltree->rtree = ltree->mtree;
+    ltree->mtree = nullptr; //safety
   }
   else if(rtree != nullptr && rtree->ntype == THREE){ // case 4b-1
-
+    mtree->ntype = TWO;
+    rtree->ntype = TWO;
+    mtree->lvalue = rvalue;
+    rvalue = rtree->lvalue;
+    rtree->lvalue = rtree->rvalue;
+    mtree->rtree = rtree->ltree;
+    rtree->ltree = rtree->mtree;
+    rtree->mtree = nullptr; //safety
   }
   else throw InvalidNodeType("absorbMiddleHole requires either left node or right node not be a hole node");
 
