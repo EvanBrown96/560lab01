@@ -74,9 +74,21 @@ void UserInput::start(){
         break;
       }
       case 3: {
+        try{
+          test_tree.removeMin();
+          std::cout << "Delete was successful.\n";
+        }catch(EmptyStructure& err){
+          std::cout << "Tree is empty and has no mininum.\n";
+        }
         break;
       }
       case 4: {
+        try{
+          test_tree.removeMax();
+          std::cout << "Delete was successful.\n";
+        }catch(EmptyStructure& err){
+          std::cout << "Tree is empty and has no maximum.\n";
+        }
         break;
       }
       case 5: {
@@ -118,9 +130,13 @@ void UserInput::userInsert(){
   char insert;
   if(!queryUser<char>("Enter character to be inserted: ", insert)) return;
 
-  test_tree.insert(insert);
-
-  std::cout << "Insert was successful.\n";
+  try{
+    test_tree.insert(insert);
+    std::cout << "Insert was successful.\n";
+  }
+  catch(DuplicateValue<char>& err){
+    std::cout << "Delete failed; character is already in tree.\n";
+  }
 }
 
 void UserInput::userDelete(){

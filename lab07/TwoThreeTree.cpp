@@ -211,12 +211,12 @@ T TwoThreeTree<T>::removeHelperFindPredecessorStage(TwoThreeNode<T>* tree){
 
 template <typename T>
 void TwoThreeTree<T>::removeMin() throw(EmptyStructure){
-
+  remove(findMin());
 }
 
 template <typename T>
 void TwoThreeTree<T>::removeMax() throw(EmptyStructure){
-
+  remove(findMax());
 }
 
 template <typename T>
@@ -252,6 +252,7 @@ T TwoThreeTree<T>::findMin() const throw(EmptyStructure){
   TwoThreeNode<T>* iter = root;
   while(iter->getLeftTree() != nullptr) iter = iter->getLeftTree();
 
+  if(iter->getType() == TWO) return iter->getVal();
   return iter->getLeftVal();
 }
 
@@ -262,6 +263,7 @@ T TwoThreeTree<T>::findMax() const throw(EmptyStructure){
   TwoThreeNode<T>* iter = root;
   while(iter->getRightTree() != nullptr) iter = iter->getRightTree();
 
+  if(iter->getType() == TWO) return iter->getVal();
   return iter->getRightVal();
 }
 
