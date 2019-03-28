@@ -9,6 +9,7 @@
 #include "UserInput.hpp"
 #include "EmptyStructure.hpp"
 #include "DuplicateValue.hpp"
+#include "ValueNotFound.hpp"
 #include <iostream>
 #include <limits>
 
@@ -69,7 +70,7 @@ void UserInput::start(){
         break;
       }
       case 2: {
-        //userDelete();
+        userDelete();
         break;
       }
       case 3: {
@@ -123,18 +124,18 @@ void UserInput::userInsert(){
 }
 
 void UserInput::userDelete(){
-//
-//   int del;
-//   if(!queryNumber("Enter number to delete from BST: ", del)) return;
-//
-//   try{
-//     test_bst.deleteVal(del);
-//     std::cout << "Delete was successful.\n";
-//   }
-//   catch(ValueNotFound<int>& err){
-//     std::cout << "Delete failed; number was not found in tree.\n";
-//   }
-//
+
+  char del;
+  if(!queryUser<char>("Enter character to be deleted: ", del)) return;
+
+  try{
+    test_tree.remove(del);
+    std::cout << "Delete was successful.\n";
+  }
+  catch(ValueNotFound<char>& err){
+    std::cout << "Delete failed; character was not found.\n";
+  }
+
 }
 
 void UserInput::userFind(){

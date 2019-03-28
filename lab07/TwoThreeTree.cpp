@@ -122,14 +122,14 @@ void TwoThreeTree<T>::removeHelperFindStage(const T& value, TwoThreeNode<T>* tre
     }
     else if(value > tree->getRightVal()){
       removeHelperFindStage(value, tree->getRightTree());
-      if(tree->getMiddleTree()->getType() == HOLE){
-        tree->absorbMiddleHole();
+      if(tree->getRightTree()->getType() == HOLE){
+        tree->absorbRightHole();
       }
     }
     else if(value > tree->getLeftVal() && value < tree->getRightVal()){
       removeHelperFindStage(value, tree->getMiddleTree());
-      if(tree->getRightTree()->getType() == HOLE){
-        tree->absorbRightHole();
+      if(tree->getMiddleTree()->getType() == HOLE){
+        tree->absorbMiddleHole();
       }
     }
     else removeHelperSingleLeftStage(value, tree);
