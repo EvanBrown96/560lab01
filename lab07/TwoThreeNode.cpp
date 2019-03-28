@@ -222,6 +222,7 @@ void TwoThreeNode<T>::absorbLeftHoleThreeNode() throw(InvalidNodeType, EmptyStru
     ltree->mtree = mtree->ltree;
     ltree->rtree = mtree->rtree;
     delete mtree;
+    mtree = nullptr; //safety
   }
   else if(mtree->ntype == THREE){ // case 4a-1
     ltree->ntype = TWO;
@@ -255,6 +256,7 @@ void TwoThreeNode<T>::absorbRightHoleTwoNode() throw(InvalidNodeType, EmptyStruc
     ltree->rtree = rtree->ltree;
     ltree->rvalue = lvalue;
     delete rtree;
+    rtree = nullptr //safety
   }
   else if(ltree->ntype == THREE){ // case 2-2
     ltree->ntype = TWO;
@@ -280,6 +282,7 @@ void TwoThreeNode<T>::absorbRightHoleThreeNode() throw(InvalidNodeType, EmptyStr
     rtree->mtree = mtree->rtree;
     rtree->ltree = mtree->ltree;
     delete mtree;
+    mtree = nullptr; //safety
   }
   else if(mtree->ntype == THREE){ // case 4b-2
     mtree->ntype = TWO;
@@ -300,13 +303,27 @@ void TwoThreeNode<T>::absorbMiddleHole() throw(InvalidNodeType, EmptyStructure){
 
   if(ltree == nullptr && rtree == nullptr) throw EmptyStructure();
 
-  std::cout << "UNDEFINED FUNCTION!!!!\n";
+  //std::cout << "UNDEFINED FUNCTION!!!!\n";
 
   if(ltree != nullptr && ltree->ntype == TWO){ // case 3a-2
-
+    ntype = TWO;
+    ltree->ntype = THREE;
+    ltree->rvalue = lvalue;
+    lvalue = rvalue;
+    ltree->mtree = ltree->rtree;
+    ltree->rtree = mtree->ltree;
+    delete mtree;
+    mtree = nullptr; //safety
   }
   else if(rtree != nullptr && rtree->ntype == TWO){ // case 3b-1
-
+    ntype = TWO
+    rtree->ntype = THREE;
+    rtree->rvalue = rtree->lvalue;
+    rtree->lvalue = rvalue;
+    rtree->mtree = rtree->ltree;
+    rtree->ltree = mtree->ltree;
+    delete mtree;
+    mtree = nullptr; //safety
   }
   else if(ltree != nullptr && ltree->ntype == THREE){ // case 4a-2
 
