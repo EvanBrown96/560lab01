@@ -97,7 +97,7 @@ void UserInput::start(){
       }
       case 6: {
         try{
-          std::cout << "Minimum number: " << test_tree.findMin() << "\n";
+          std::cout << "Minimum character: " << test_tree.findMin() << "\n";
         }catch(EmptyStructure& err){
           std::cout << "Tree is empty and has no minimum.\n";
         }
@@ -105,7 +105,7 @@ void UserInput::start(){
       }
       case 7: {
         try{
-          std::cout << "Maximum number: " << test_tree.findMax() << "\n";
+          std::cout << "Maximum character: " << test_tree.findMax() << "\n";
         }catch(EmptyStructure& err){
           std::cout << "Tree is empty and has no maximum.\n";
         }
@@ -135,7 +135,7 @@ void UserInput::userInsert(){
     std::cout << "Insert was successful.\n";
   }
   catch(DuplicateValue<char>& err){
-    std::cout << "Delete failed; character is already in tree.\n";
+    std::cout << "Insert failed; character is already in tree.\n";
   }
 }
 
