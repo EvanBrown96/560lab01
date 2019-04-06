@@ -2,24 +2,23 @@
 #define HEAP_HPP
 
 #include "EmptyStructure.hpp"
-#include "QuickQueue.hpp"
 
-template <typename T>
+template <int ch, typename T>
 class Heap{
 public:
 
-  Heap();
+  Heap(bool (*compare)(const T& v1, const T& v2));
   ~Heap();
 
-  void insert(const T& val) = 0;
+  void insert(const T& val);
 
-  T findMin() throw(EmptyStructure) const = 0;
-  T findMax() throw(EmptyStructure) const = 0;
+  T findMin() throw(EmptyStructure) const;
+  T findMax() throw(EmptyStructure) const;
 
-  int deleteMin() throw(EmptyStructure) = 0;
-  int deleteMax() throw(EmptyStructure) = 0;
+  int deleteMin() throw(EmptyStructure);
+  int deleteMax() throw(EmptyStructure);
 
-  QuickQueue<T> levelOrder() const;
+  void levelOrder() const;
 
 private:
 
@@ -27,7 +26,14 @@ private:
   int size;
   int count;
 
+  bool (*compare)(const T& v1, const T& v2);
+
   void destroyHeap();
+  void resizeHeap();
+
+  int parent(int child) const;
+
+  void swap(int idx1, int idx2);
 
 };
 
