@@ -1,3 +1,10 @@
+/**
+ * @author: Evan Brown
+ * @file: Heap.hpp
+ * @date: 4/6/19
+ * @brief: header file for general heap
+ */
+
 #ifndef HEAP_HPP
 #define HEAP_HPP
 
@@ -12,8 +19,8 @@ public:
 
   void insert(const T& val);
 
-  T findMin() throw(EmptyStructure) const;
-  T findMax() throw(EmptyStructure) const;
+  T findMin() const throw(EmptyStructure);
+  T findMax() const throw(EmptyStructure);
 
   int deleteMin() throw(EmptyStructure);
   int deleteMax() throw(EmptyStructure);

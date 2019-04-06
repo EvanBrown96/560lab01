@@ -1,3 +1,10 @@
+/**
+ * @author: Evan Brown
+ * @file: Heap.cpp
+ * @date: 4/6/19
+ * @brief: implementation of general heap functions
+ */
+
 #include <math.h>
 #include <iostream>
 
@@ -7,7 +14,7 @@ Heap<ch, T>::Heap(bool (*compare)(const T& v1, const T& v2)):
 
 template <int ch, typename T>
 Heap<ch, T>::~Heap(){
-  destroyHeap()
+  destroyHeap();
 }
 
 template <int ch, typename T>
@@ -21,17 +28,17 @@ void Heap<ch, T>::insert(const T& val){
 
   while(iter > 0 && compare(val, data[parent(iter)])){
     swap(iter, parent(iter));
-    iter = parent(iter):
+    iter = parent(iter);
   }
 }
 
 template <int ch, typename T>
-T Heap<ch, T>::findMin() throw(EmptyStructure) const{
+T Heap<ch, T>::findMin() const throw(EmptyStructure){
 
 }
 
 template <int ch, typename T>
-T Heap<ch, T>::findMax() throw(EmptyStructure) const{
+T Heap<ch, T>::findMax() const throw(EmptyStructure){
 
 }
 
@@ -89,7 +96,7 @@ int Heap<ch, T>::parent(int child) const{
 }
 
 template <int ch, typename T>
-int Heap<ch, T>::swap(int idx1, int idx2){
+void Heap<ch, T>::swap(int idx1, int idx2){
   T* store = data[idx1];
   data[idx1] = data[idx2];
   data[idx2] = store;
