@@ -33,10 +33,39 @@ void Heap<ch, T>::insert(const T& val){
 }
 
 template <int ch, typename T>
-void Heap<ch, T>::deleteRoot() throw(EmptyStructure){
+T Heap<ch, T>::findHighest() const throw(EmptyStructure){
   if(count == 0) throw EmptyStructure();
+  return data[0];
+}
 
+template <int ch, typename T>
+T Heap<ch, T>::findLowest() const throw(EmptyStructure){
+  if(count == 0) throw EmptyStructure();
+  return *data[findLowestIndex()];
+}
+
+template <int ch, typename T>
+void Heap<ch, T>::deleteHighest() throw(EmptyStructure){
+  if(count == 0) throw EmptyStructure();
   safeRemove(0);
+}
+
+template <int ch, typename T>
+void Heap<ch, T>::deleteLowest() throw(EmptyStructure){
+  if(count == 0) throw EmptyStructure();
+  safeRemove(findLowestIndex());
+}
+
+template <int ch, typename T>
+int Heap<ch, T>::findLowestIndex() const{
+  if(count == 1) return 0;
+  // start at first leaf node
+  int curlow = parent(count-1)+1;
+  for(int i = 0; i < count; i++){
+    if(compare(curlow, i)) curlow = i;
+  }
+
+  return curlow;
 }
 
 template <int ch, typename T>
@@ -107,15 +136,15 @@ void Heap<ch, T>::pushDown(int index){
 
   if(index >= count) return;
 
-  int worthy = index*5+1;
+  int worthy = index;
 
-  // find most worthy child
-  for(int child = worthy+1; child < worthy+5 && child < count; child++){
+  // find most worthy element of the given index and all its children
+  for(int child = index*5+1; child < index*5+6 && child < count; child++){
     if(indexCompare(child, worthy)) worthy = child;
   }
 
   // do a swap if necessary
-  if(indexCompare(worthy, index)){
+  if(worthy != index){
     swap(worthy, index);
     pushDown(worthy);
   }

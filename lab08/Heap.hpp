@@ -20,12 +20,11 @@ public:
 
   void insert(const T& val);
 
-  void deleteRoot() throw(EmptyStructure);
-  // T findMin() const throw(EmptyStructure);
-  // T findMax() const throw(EmptyStructure);
-  //
-  // int deleteMin() throw(EmptyStructure);
-  // int deleteMax() throw(EmptyStructure);
+  void deleteHighest() throw(EmptyStructure);
+  void deleteLowest() throw(EmptyStructure);
+
+  T findHighest() const throw(EmptyStructure);
+  T findLowest() const throw(EmptyStructure);
 
   void levelOrder() const;
 
@@ -48,6 +47,7 @@ private:
   bool (*compare)(const T& v1, const T& v2);
 
   void pushDown(int index);
+  int findLowestIndex() const;
 
   void destroyHeap();
   void resizeHeap();

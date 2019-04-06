@@ -1,0 +1,23 @@
+template <int ch, typename T>
+MinHeap<ch, T>::MinHeap():
+  Heap<ch, T>(min_compare){}
+
+template <int ch, typename T>
+T MinHeap<ch, T>::findMin() const throw(EmptyStructure){
+  return this->findHighest();
+}
+
+template <int ch, typename T>
+T MinHeap<ch, T>::findMax() const throw(EmptyStructure){
+  return this->findLowest();
+}
+
+template <int ch, typename T>
+void MinHeap<ch, T>::deleteMin() throw(EmptyStructure){
+  this->deleteHighest();
+}
+
+template <int ch, typename T>
+void MinHeap<ch, T>::deleteMax() throw(EmptyStructure){
+  this->deleteLowest();
+}
