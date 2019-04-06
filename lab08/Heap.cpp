@@ -86,7 +86,7 @@ int Heap<ch, T>::findLowestIndex() const{
   // start at first leaf node
   int curlow = parent(count-1)+1;
   for(int i = curlow+1; i < count; i++){
-    if(compare(curlow, i)) curlow = i;
+    if(!indexCompare(i, curlow)) curlow = i;
   }
 
   return curlow;
@@ -157,7 +157,7 @@ void Heap<ch, T>::safeRemove(int index){
 
 template <int ch, typename T>
 void Heap<ch, T>::pushDown(int index){
-  
+
   fflush(stdout);
   if(index >= count) return;
 
