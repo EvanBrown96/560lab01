@@ -45,7 +45,7 @@ private:
 
   void destroyQueue();
 
-  void copyQueue(const QuickQueue<T> copy);
+  void copyQueue(const QuickQueue<T>& copy);
 
 };
 

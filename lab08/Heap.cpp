@@ -157,7 +157,7 @@ void Heap<ch, T>::safeRemove(int index){
 
 template <int ch, typename T>
 void Heap<ch, T>::pushDown(int index){
-  levelOrder();
+  
   fflush(stdout);
   if(index >= count) return;
 

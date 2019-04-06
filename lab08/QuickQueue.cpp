@@ -86,7 +86,7 @@ void QuickQueue<T>::destroyQueue(){
 }
 
 template <typename T>
-void QuickQueue<T>::copyQueue(const QuickQueue<T> copy){
+void QuickQueue<T>::copyQueue(const QuickQueue<T>& copy){
   size = copy.size;
   start = copy.start;
   count = copy.count;

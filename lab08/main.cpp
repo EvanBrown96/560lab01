@@ -17,10 +17,10 @@ int main(int argc, char** argv){
     qq.push(vals[i]);
   }
 
-  MinHeap<5, int> h(qq);
-  // h.levelOrder();
-  //
-  // h.deleteMin();
-  //
-  // h.levelOrder();
+  MaxHeap<5, int> h(qq);
+  h.levelOrder();
+
+  h.deleteMin();
+
+  h.levelOrder();
 }
