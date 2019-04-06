@@ -26,30 +26,17 @@ void Heap<ch, T>::insert(const T& val){
   int iter = count;
   count++;
 
-  while(iter > 0 && compare(val, data[parent(iter)])){
+  while(iter > 0 && indexCompare(iter, parent(iter))){
     swap(iter, parent(iter));
     iter = parent(iter);
   }
 }
 
 template <int ch, typename T>
-T Heap<ch, T>::findMin() const throw(EmptyStructure){
+void Heap<ch, T>::deleteRoot() throw(EmptyStructure){
+  if(count == 0) throw EmptyStructure();
 
-}
-
-template <int ch, typename T>
-T Heap<ch, T>::findMax() const throw(EmptyStructure){
-
-}
-
-template <int ch, typename T>
-int Heap<ch, T>::deleteMin() throw(EmptyStructure){
-
-}
-
-template <int ch, typename T>
-int Heap<ch, T>::deleteMax() throw(EmptyStructure){
-
+  safeRemove(0);
 }
 
 template <int ch, typename T>
@@ -66,6 +53,8 @@ void Heap<ch, T>::levelOrder() const{
       std::cout << "- ";
     }
   }
+
+  std::cout << "\n\n";
 
 }
 
@@ -100,4 +89,40 @@ void Heap<ch, T>::swap(int idx1, int idx2){
   T* store = data[idx1];
   data[idx1] = data[idx2];
   data[idx2] = store;
+}
+
+template <int ch, typename T>
+void Heap<ch, T>::safeRemove(int index){
+
+  count--;
+  delete data[index];
+  data[index] = data[count];
+
+  pushDown(index);
+
+}
+
+template <int ch, typename T>
+void Heap<ch, T>::pushDown(int index){
+
+  if(index >= count) return;
+
+  int worthy = index*5+1;
+
+  // find most worthy child
+  for(int child = worthy+1; child < worthy+5 && child < count; child++){
+    if(indexCompare(child, worthy)) worthy = child;
+  }
+
+  // do a swap if necessary
+  if(indexCompare(worthy, index)){
+    swap(worthy, index);
+    pushDown(worthy);
+  }
+
+}
+
+template <int ch, typename T>
+bool Heap<ch, T>::indexCompare(int idx1, int idx2) const{
+  return compare(*data[idx1], *data[idx2]);
 }

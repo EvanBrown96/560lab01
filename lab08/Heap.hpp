@@ -12,6 +12,7 @@
 
 template <int ch, typename T>
 class Heap{
+
 public:
 
   Heap(bool (*compare)(const T& v1, const T& v2));
@@ -19,28 +20,37 @@ public:
 
   void insert(const T& val);
 
-  T findMin() const throw(EmptyStructure);
-  T findMax() const throw(EmptyStructure);
-
-  int deleteMin() throw(EmptyStructure);
-  int deleteMax() throw(EmptyStructure);
+  void deleteRoot() throw(EmptyStructure);
+  // T findMin() const throw(EmptyStructure);
+  // T findMax() const throw(EmptyStructure);
+  //
+  // int deleteMin() throw(EmptyStructure);
+  // int deleteMax() throw(EmptyStructure);
 
   void levelOrder() const;
 
-private:
+protected:
 
   T** data;
   int size;
   int count;
 
-  bool (*compare)(const T& v1, const T& v2);
-
-  void destroyHeap();
-  void resizeHeap();
-
   int parent(int child) const;
 
   void swap(int idx1, int idx2);
+
+  void safeRemove(int index);
+
+  bool indexCompare(int idx1, int idx2) const;
+
+private:
+
+  bool (*compare)(const T& v1, const T& v2);
+
+  void pushDown(int index);
+
+  void destroyHeap();
+  void resizeHeap();
 
 };
 
