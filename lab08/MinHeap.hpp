@@ -21,6 +21,7 @@ class MinHeap: public Heap<ch, T>{
 public:
 
   MinHeap();
+  MinHeap(const QuickQueue<T>& initial);
 
   T findMin() const throw(EmptyStructure);
   T findMax() const throw(EmptyStructure);

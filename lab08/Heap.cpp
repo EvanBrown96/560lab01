@@ -13,6 +13,30 @@ Heap<ch, T>::Heap(bool (*compare)(const T& v1, const T& v2)):
   data(new T*[1]), size(1), count(0), compare(compare){}
 
 template <int ch, typename T>
+Heap<ch, T>::Heap(bool (*compare)(const T& v1, const T& v2), const QuickQueue<T>& initial):
+  compare(compare){
+
+  // count = initial.getSize();
+  // set size to an evenly-layered number
+  // size = 1;
+  // while(size < count){
+  //   size = (size*5)+1;
+  // }
+  //
+  // // add items to the tree, in level order
+  // data = new T*[size];
+  // for(int i = 0; i < count; i++){
+  //   data[i] = new T(initial.pop());
+  // }
+  //
+  // // start at the last non-leaf node and go to the root
+  // for(int i = parent(count-1); i > -1; i--){
+  //   pushDown(i);
+  // }
+
+}
+
+template <int ch, typename T>
 Heap<ch, T>::~Heap(){
   destroyHeap();
 }
@@ -61,7 +85,7 @@ int Heap<ch, T>::findLowestIndex() const{
   if(count == 1) return 0;
   // start at first leaf node
   int curlow = parent(count-1)+1;
-  for(int i = 0; i < count; i++){
+  for(int i = curlow+1; i < count; i++){
     if(compare(curlow, i)) curlow = i;
   }
 
@@ -133,7 +157,8 @@ void Heap<ch, T>::safeRemove(int index){
 
 template <int ch, typename T>
 void Heap<ch, T>::pushDown(int index){
-
+  levelOrder();
+  fflush(stdout);
   if(index >= count) return;
 
   int worthy = index;

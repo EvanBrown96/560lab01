@@ -10,6 +10,10 @@ MaxHeap<ch, T>::MaxHeap():
   Heap<ch, T>(max_compare){}
 
 template <int ch, typename T>
+MaxHeap<ch, T>::MaxHeap(QuickQueue<T> initial):
+  Heap<ch, T>(max_compare, initial){}
+
+template <int ch, typename T>
 T MaxHeap<ch, T>::findMin() const throw(EmptyStructure){
   return this->findLowest();
 }

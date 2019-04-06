@@ -10,6 +10,10 @@ MinHeap<ch, T>::MinHeap():
   Heap<ch, T>(min_compare){}
 
 template <int ch, typename T>
+MinHeap<ch, T>::MinHeap(const QuickQueue<T>& initial):
+  Heap<ch, T>(min_compare, initial){}
+
+template <int ch, typename T>
 T MinHeap<ch, T>::findMin() const throw(EmptyStructure){
   return this->findHighest();
 }

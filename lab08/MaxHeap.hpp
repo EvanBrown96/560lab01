@@ -21,6 +21,7 @@ class MaxHeap: public Heap<ch, T>{
 public:
 
   MaxHeap();
+  MaxHeap(QuickQueue<T> initial);
 
   T findMin() const throw(EmptyStructure);
   T findMax() const throw(EmptyStructure);
