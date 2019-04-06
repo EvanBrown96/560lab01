@@ -1,4 +1,5 @@
 #include "MinHeap.hpp"
+#include "MaxHeap.hpp"
 
 bool compare(const int& v1, const int& v2){
   return (v1 < v2);

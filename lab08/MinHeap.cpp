@@ -1,3 +1,10 @@
+/**
+ * @author: Evan Brown
+ * @file: MinHeap.cpp
+ * @date: 4/6/19
+ * @brief: implementation of functions for min-heap
+ */
+
 template <int ch, typename T>
 MinHeap<ch, T>::MinHeap():
   Heap<ch, T>(min_compare){}
