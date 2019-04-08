@@ -20,15 +20,15 @@ bool compare(const int& v1, const int& v2){
 
 int main(int argc, char** argv){
 
-  if(argc <= 1){
-    std::cout << "No input file provided, exiting.\n";
+  if(argc <= 2){
+    std::cout << "Expected usage: ./lab [m/M] input_file.txt\n";
     return -1;
   }
 
   QuickQueue<String> input_data(10);
 
   std::ifstream f;
-  f.open(argv[1]);
+  f.open(argv[2]);
 
   try{
     InputParser::parse(f, input_data);
@@ -48,9 +48,20 @@ int main(int argc, char** argv){
     int_data.push(input_data.pop().getInt());
   }
 
-  Heap<5, int>* h = new MinHeap<5, int>(int_data);
-  //
-  // h.levelOrder();
+  Heap<5, int>* h;
+
+  if(argv[1][0] == 'm'){
+    std::cout << "Using min-heap...\n\n";
+    h = new MinHeap<5, int>(int_data);
+  }
+  else if(argv[1][0] == 'M'){
+    std::cout << "Using max-heap...\n\n";
+    h = new MaxHeap<5, int>(int_data);
+  }
+  else{
+    std::cout << "Expected usage: ./lab [m/M] input_file.txt\n";
+    return -1;
+  }
 
   UserInput ui(h);
 
