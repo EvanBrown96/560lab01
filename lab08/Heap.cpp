@@ -95,6 +95,8 @@ int Heap<ch, T>::findLowestIndex() const{
 template <int ch, typename T>
 void Heap<ch, T>::levelOrder() const{
 
+  std::cout << "Level-order traversal:\n";
+
   int line = 0;
   for(int i = 0; i < count; i++){
     std::cout << *data[i] << " ";

@@ -59,12 +59,14 @@ void UserInput::start(){
     switch(choice){
       case 1: {
         userInsert();
+        test_heap->levelOrder();
         break;
       }
       case 2: {
         try{
           test_heap->deleteMin();
           std::cout << "Delete was successful.\n";
+          test_heap->levelOrder();
         }catch(EmptyStructure& err){
           std::cout << "Heap is empty and has no mininum.\n";
         }
@@ -74,6 +76,7 @@ void UserInput::start(){
         try{
           test_heap->deleteMax();
           std::cout << "Delete was successful.\n";
+          test_heap->levelOrder();
         }catch(EmptyStructure& err){
           std::cout << "Heap is empty and has no maximum.\n";
         }
@@ -96,7 +99,6 @@ void UserInput::start(){
         break;
       }
       default: {
-        std::cout << "Levelorder traversal:\n";
         test_heap->levelOrder();
         break;
       }
