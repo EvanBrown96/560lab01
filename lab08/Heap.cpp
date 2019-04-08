@@ -59,7 +59,7 @@ void Heap<ch, T>::insert(const T& val){
 template <int ch, typename T>
 T Heap<ch, T>::findHighest() const throw(EmptyStructure){
   if(count == 0) throw EmptyStructure();
-  return data[0];
+  return *data[0];
 }
 
 template <int ch, typename T>

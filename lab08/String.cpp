@@ -1,9 +1,9 @@
 /**
  * @author: Evan Brown
  * @file: String.cpp
- * @date: 2/12/19
+ * @date: 4/8/19
  * @brief: implementation of character wrapper class
- *         adapted from 560 lab 6
+ *         adapted from 560 lab 7
  */
 
 #include <iostream>

@@ -1,8 +1,11 @@
-lab: main.o EmptyStructure.o String.o ParseError.o InputParser.o
-	g++ -std=c++11 -g main.o EmptyStructure.o String.o ParseError.o InputParser.o -o lab
+lab: main.o UserInput.o EmptyStructure.o String.o ParseError.o InputParser.o
+	g++ -std=c++11 -g main.o UserInput.o EmptyStructure.o String.o ParseError.o InputParser.o -o lab
 
-main.o: main.cpp Heap.hpp Heap.cpp MinHeap.hpp MinHeap.cpp MaxHeap.hpp MaxHeap.cpp QuickQueue.hpp QuickQueue.cpp InputParser.hpp String.hpp ParseError.hpp EmptyStructure.hpp
+main.o: main.cpp UserInput.hpp Heap.hpp Heap.cpp MinHeap.hpp MinHeap.cpp MaxHeap.hpp MaxHeap.cpp QuickQueue.hpp QuickQueue.cpp InputParser.hpp String.hpp ParseError.hpp EmptyStructure.hpp
 	g++ -std=c++11 -g -c main.cpp
+
+UserInput.o: UserInput.hpp UserInput.hpp Heap.hpp Heap.cpp MinHeap.hpp MinHeap.cpp MaxHeap.hpp MaxHeap.cpp QuickQueue.hpp QuickQueue.cpp EmptyStructure.hpp
+	g++ -std=c++11 -g -c UserInput.cpp
 
 EmptyStructure.o: EmptyStructure.hpp EmptyStructure.cpp
 	g++ -std=c++11 -g -c EmptyStructure.cpp

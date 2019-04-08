@@ -18,7 +18,7 @@ public:
 
   Heap(bool (*compare)(const T& v1, const T& v2));
   Heap(bool (*compare)(const T& v1, const T& v2), QuickQueue<T> initial);
-  ~Heap();
+  virtual ~Heap();
 
   void insert(const T& val);
 
@@ -27,6 +27,12 @@ public:
 
   T findHighest() const throw(EmptyStructure);
   T findLowest() const throw(EmptyStructure);
+
+  virtual T findMin() const throw(EmptyStructure) = 0;
+  virtual T findMax() const throw(EmptyStructure) = 0;
+
+  virtual void deleteMin() throw(EmptyStructure) = 0;
+  virtual void deleteMax() throw(EmptyStructure) = 0;
 
   void levelOrder() const;
 

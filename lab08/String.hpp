@@ -1,9 +1,9 @@
 /**
  * @author: Evan Brown
  * @file: String.hpp
- * @date: 2/12/19
+ * @date: 4/8/19
  * @brief: header file for character wrapper class
- *         adapted from 560 lab 6
+ *         adapted from 560 lab 7
  */
 
 #ifndef STRING_HPP

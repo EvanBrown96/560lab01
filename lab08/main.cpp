@@ -1,3 +1,10 @@
+/**
+ * @author: Evan Brown
+ * @file: main.cpp
+ * @date: 4/8/19
+ * @brief: entrypoint to lab program
+ */
+
 #include "MinHeap.hpp"
 #include "MaxHeap.hpp"
 #include "QuickQueue.hpp"
@@ -5,6 +12,7 @@
 #include "ParseError.hpp"
 #include "InputParser.hpp"
 #include <fstream>
+#include "UserInput.hpp"
 
 bool compare(const int& v1, const int& v2){
   return (v1 < v2);
@@ -40,13 +48,15 @@ int main(int argc, char** argv){
     int_data.push(input_data.pop().getInt());
   }
 
-  MinHeap<5, int> h(int_data);
-
-  h.levelOrder();
-
-  // UserInput ui(ttt);
+  Heap<5, int>* h = new MinHeap<5, int>(int_data);
   //
-  // ui.start();
+  // h.levelOrder();
+
+  UserInput ui(h);
+
+  ui.start();
+
+  delete h;
 
   return 0;
 
