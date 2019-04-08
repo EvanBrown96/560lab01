@@ -28,7 +28,7 @@ public:
   bool operator>=(const String& cw) const;
   bool operator<=(const String& cw) const;
 
-  static int getASCII(const String& cw);
+  int getInt() const;
 
   int getLength() const;
 

@@ -61,25 +61,30 @@ bool String::operator!=(const String& cw) const{
 }
 
 bool String::operator>(const String& cw) const{
-  return(getASCII(*this) > getASCII(cw));
+  // return(getASCII(*this) > getASCII(cw));
+  return false;
 }
 
 bool String::operator<(const String& cw) const{
-  return(getASCII(*this) < getASCII(cw));
+  // return(getASCII(*this) < getASCII(cw));
+  return false;
 }
 
 bool String::operator>=(const String& cw) const{
-  return(getASCII(*this) >= getASCII(cw));
+  // return(getASCII(*this) >= getASCII(cw));
+  return false;
 }
 
 bool String::operator<=(const String& cw) const{
-  return(getASCII(*this) <= getASCII(cw));
+  // return(getASCII(*this) <= getASCII(cw));
+  return false;
 }
 
-int String::getASCII(const String& cw){
+int String::getInt() const{
   int sum = 0;
-  for(int i = 0; i < cw.length; i++){
-    sum += static_cast<int>(cw.string[i]);
+  for(int i = 0; i < length; i++){
+    sum *= 10;
+    sum += static_cast<int>(string[i])-48;
   }
   return sum;
 }
