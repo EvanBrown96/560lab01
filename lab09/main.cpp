@@ -6,6 +6,10 @@ int main(int argc, char** argv){
   mm.insert(25);
   mm.insert(2);
   mm.insert(11);
+  mm.insert(22);
+  mm.insert(111);
+  mm.insert(17);
   mm.levelOrder();
-  mm.deleteMin();
+  mm.deleteMax();
+  mm.levelOrder();
 }

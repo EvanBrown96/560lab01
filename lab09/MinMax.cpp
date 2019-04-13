@@ -72,6 +72,7 @@ void MinMax<T>::deleteMin() throw(EmptyStructure){
 
   count--;
   delete data[0];
+  if(count == 0) return;
   data[0] = data[count];
 
   int iter = 0;
@@ -105,6 +106,46 @@ void MinMax<T>::deleteMin() throw(EmptyStructure){
 
 template <typename T>
 void MinMax<T>::deleteMax() throw(EmptyStructure){
+
+  if(count == 0) throw EmptyStructure();
+
+  if(count == 1) deleteMin();
+
+  // find index of max element
+  int iter = 2;
+  if(count == 2 || indexGTE(1, 2)) iter = 1;
+
+  // replace max with last element
+  count--;
+  delete data[iter];
+  if(count == iter) return;
+  data[iter] = data[count];
+
+  int repl;
+
+  while(true){
+
+    repl = iter;
+
+    if(lchild(lchild(iter)) < count){
+      // check grandchildren
+      if(indexGTE(rchild(rchild(iter)), repl)) repl = rchild(rchild(iter));
+      if(indexGTE(lchild(rchild(iter)), repl)) repl = lchild(rchild(iter));
+      if(indexGTE(rchild(lchild(iter)), repl)) repl = rchild(lchild(iter));
+      if(indexGTE(lchild(lchild(iter)), repl)) repl = lchild(lchild(iter));
+    }
+    else if(lchild(iter) < count){
+      // check children
+      if(indexGTE(rchild(iter), repl)) repl = rchild(iter);
+      if(indexGTE(lchild(iter), repl)) repl = lchild(iter);
+    }
+
+    if(repl == iter) break;
+
+    swap(iter, repl);
+    iter = repl;
+
+  }
 
 }
 
