@@ -59,18 +59,18 @@ void UserInput::start(){
     switch(choice){
       case 0: {
         // for debugging
-        test_heap->levelOrder();
+        test_heap.levelOrder();
       }
       case 1: {
         userInsert();
-        test_heap->levelOrder();
+        test_heap.levelOrder();
         break;
       }
       case 2: {
         try{
-          test_heap->deleteMin();
+          test_heap.deleteMin();
           std::cout << "Delete was successful.\n";
-          test_heap->levelOrder();
+          test_heap.levelOrder();
         }catch(EmptyStructure& err){
           std::cout << "Heap is empty and has no mininum.\n";
         }
@@ -78,9 +78,9 @@ void UserInput::start(){
       }
       case 3: {
         try{
-          test_heap->deleteMax();
+          test_heap.deleteMax();
           std::cout << "Delete was successful.\n";
-          test_heap->levelOrder();
+          test_heap.levelOrder();
         }catch(EmptyStructure& err){
           std::cout << "Heap is empty and has no maximum.\n";
         }
@@ -88,7 +88,7 @@ void UserInput::start(){
       }
       case 4: {
         try{
-          std::cout << "Minimum number: " << test_heap->findMin() << "\n";
+          std::cout << "Minimum process: " << test_heap.findMin() << "\n";
         }catch(EmptyStructure& err){
           std::cout << "Heap is empty and has no minimum.\n";
         }
@@ -96,7 +96,7 @@ void UserInput::start(){
       }
       case 5: {
         try{
-          std::cout << "Maximum number: " << test_heap->findMax() << "\n";
+          std::cout << "Maximum process: " << test_heap.findMax() << "\n";
         }catch(EmptyStructure& err){
           std::cout << "Heap is empty and has no maximum.\n";
         }
@@ -118,10 +118,10 @@ void UserInput::start(){
 
 void UserInput::userInsert(){
 
-  int insert;
-  if(!queryUser<int>("Enter number to be inserted: ", insert)) return;
+  Process insert(0, 0, 0);
+  if(!queryUser<Process>("Enter process to be inserted: ", insert)) return;
 
-  test_heap->insert(insert);
+  test_heap.insert(insert);
   std::cout << "Insert was successful.\n";
 
 }
