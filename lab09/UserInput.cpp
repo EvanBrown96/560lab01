@@ -118,7 +118,7 @@ void UserInput::start(){
 
 void UserInput::userInsert(){
 
-  Process insert(0, 0, 0);
+  Process insert(0, 0);
   if(!queryUser<Process>("Enter process to be inserted: ", insert)) return;
 
   test_heap.insert(insert);

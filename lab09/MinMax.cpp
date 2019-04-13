@@ -65,26 +65,25 @@ void MinMax<T>::insert(const T& item){
     if(!isMinNode(check)) check = grandparent(iter);
 
     while(true){
+      if(check < 0) break;
       if(indexLT(iter, check)){
         swap(iter, check);
         iter = check;
       }
-      if(check == 0) break;
       check = grandparent(check);
     }
 
   }
   else if(indexGT(iter, check)){
-
     // ensure check is a max-node
     if(isMinNode(check)) check = grandparent(iter);
 
     while(true){
+      if(check < 0) break;
       if(indexGT(iter, check)){
         swap(iter, check);
         iter = check;
       }
-      if(check < 3) break;
       check = grandparent(check);
     }
   }
@@ -263,6 +262,7 @@ void MinMax<T>::copyHeap(const MinMax<T>& copy){
 
 template <typename T>
 int MinMax<T>::parent(int index) const{
+  if(index < 1) return -1;
   return (index-1)/2;
 }
 

@@ -10,7 +10,7 @@ UserInput.o: UserInput.hpp UserInput.cpp Process.hpp MinMax.hpp MinMax.cpp Quick
 EmptyStructure.o: EmptyStructure.hpp EmptyStructure.cpp
 	g++ -std=c++11 -g -Wno-deprecated -c EmptyStructure.cpp
 
-Process.o: Process.hpp Process.cpp
+Process.o: Process.hpp Process.cpp QuickQueue.hpp QuickQueue.cpp EmptyStructure.hpp
 	g++ -std=c++11 -g -Wno-deprecated -c Process.cpp
 
 clean:

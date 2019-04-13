@@ -3,11 +3,14 @@
 #include <iostream>
 
 struct Process{
+
+  static int count;
+
   int id;
   int priority;
   int time_left;
 
-  Process(int id, int priority, int time_left);
+  Process(int priority, int time_left);
 
   bool operator<(const Process& p) const;
 

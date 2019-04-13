@@ -2,6 +2,9 @@
 
 #include <ios>
 #include "Process.hpp"
+#include "QuickQueue.hpp"
+
+int Process::count = 1;
 
 std::ostream& operator<<(std::ostream& stream, const Process& p){
 
@@ -14,39 +17,21 @@ std::ostream& operator<<(std::ostream& stream, const Process& p){
 
 std::istream& operator>>(std::istream& stream, Process& p){
 
-  char cur = ' ';
-  while(cur == ' ') stream >> cur;
-
-  if(cur != '('){
-    stream.setstate(std::ios::failbit);
-    return stream;
-  }
-
   int priority;
-  stream >> priority;
-
-  cur = ' ';
-  while(cur == ' ') stream >> cur;
-
-  if(cur != ','){
-    stream.setstate(std::ios::failbit);
-    return stream;
-  }
-
-  cur = ' ';
-  while(cur == ' ') stream >> cur;
-
   int time_left;
-  stream >> time_left;
 
-  cur = ' ';
-  while(cur == ' ') stream >> cur;
+  char cur;
+  stream >> cur;
+  while(cur != '(') stream >> cur;
+  if(!(stream >> priority)){ stream.setstate(std::ios::failbit); return stream; }
 
-  if(cur != ')'){
-    stream.setstate(std::ios::failbit);
-    return stream;
-  }
+  stream >> cur;
+  while(cur != ',') stream >> cur;
+  if(!(stream >> time_left)){ stream.setstate(std::ios::failbit); return stream; }
 
+  while(cur != ')') stream >> cur;
+
+  std::cout << '\n' << priority << '\n' << time_left << '\n';
   p.priority = priority;
   p.time_left = time_left;
 
@@ -56,8 +41,12 @@ std::istream& operator>>(std::istream& stream, Process& p){
 
 
 
-Process::Process(int id, int priority, int time_left):
-  id(id), priority(priority), time_left(time_left){}
+Process::Process(int priority, int time_left):
+  id(count), priority(priority), time_left(time_left){
+
+  count++;
+
+}
 
 bool Process::operator<(const Process& p) const{
   return priority < p.priority;
