@@ -7,4 +7,5 @@ int main(int argc, char** argv){
   mm.insert(2);
   mm.insert(11);
   mm.levelOrder();
+  mm.deleteMin();
 }

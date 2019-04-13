@@ -44,6 +44,8 @@ private:
 
   bool indexLT(int idx1, int idx2) const;
   bool indexGT(int idx1, int idx2) const;
+  bool indexLTE(int idx1, int idx2) const;
+  bool indexGTE(int idx1, int idx2) const;
 
   void swap(int idx1, int idx2);
 

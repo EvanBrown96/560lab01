@@ -68,6 +68,39 @@ void MinMax<T>::insert(const T& item){
 template <typename T>
 void MinMax<T>::deleteMin() throw(EmptyStructure){
 
+  if(count == 0) throw EmptyStructure();
+
+  count--;
+  delete data[0];
+  data[0] = data[count];
+
+  int iter = 0;
+  int repl;
+
+  while(true){
+
+    repl = iter;
+
+    if(lchild(lchild(iter)) < count){
+      // check grandchildren
+      if(indexLTE(rchild(rchild(iter)), repl)) repl = rchild(rchild(iter));
+      if(indexLTE(lchild(rchild(iter)), repl)) repl = lchild(rchild(iter));
+      if(indexLTE(rchild(lchild(iter)), repl)) repl = rchild(lchild(iter));
+      if(indexLTE(lchild(lchild(iter)), repl)) repl = lchild(lchild(iter));
+    }
+    else if(lchild(iter) < count){
+      // check children
+      if(indexLTE(rchild(iter), repl)) repl = rchild(iter);
+      if(indexLTE(lchild(iter), repl)) repl = lchild(iter);
+    }
+
+    if(repl == iter) break;
+
+    swap(iter, repl);
+    iter = repl;
+
+  }
+
 }
 
 template <typename T>
@@ -195,4 +228,14 @@ bool MinMax<T>::indexLT(int idx1, int idx2) const{
 template <typename T>
 bool MinMax<T>::indexGT(int idx1, int idx2) const{
   return (*data[idx1]) > (*data[idx2]);
+}
+
+template <typename T>
+bool MinMax<T>::indexLTE(int idx1, int idx2) const{
+  return !indexGT(idx1, idx2);
+}
+
+template <typename T>
+bool MinMax<T>::indexGTE(int idx1, int idx2) const{
+  return !indexLT(idx1, idx2);
 }
