@@ -5,6 +5,30 @@ MinMax<T>::MinMax():
   data(new T*[1]), size(1), count(0){}
 
 template <typename T>
+MinMax<T>::MinMax(QuickQueue<T> qq){
+
+  count = qq.getSize();
+  // set size to an evenly-layered number
+  size = 1;
+  while(size < count){
+    size = (size*2)+1;
+  }
+
+  // add items to the tree, in level order
+  data = new T*[size];
+  for(int i = 0; i < count; i++){
+    data[i] = new T(qq.pop());
+  }
+
+  // start at the last non-leaf node and go to the root
+  for(int i = parent(count-1); i > -1; i--){
+    if(isMinNode(i)) pushDownMin(i);
+    else pushDownMax(i);
+  }
+
+}
+
+template <typename T>
 MinMax<T>::~MinMax(){
   destroyHeap();
 }
@@ -75,30 +99,36 @@ void MinMax<T>::deleteMin() throw(EmptyStructure){
   if(count == 0) return;
   data[0] = data[count];
 
-  int iter = 0;
+  pushDownMin(0);
+
+}
+
+template <typename T>
+void MinMax<T>::pushDownMin(int index){
+
   int repl;
 
   while(true){
 
-    repl = iter;
+    repl = index;
 
-    if(lchild(lchild(iter)) < count){
+    if(lchild(lchild(index)) < count){
       // check grandchildren
-      if(indexLTE(rchild(rchild(iter)), repl)) repl = rchild(rchild(iter));
-      if(indexLTE(lchild(rchild(iter)), repl)) repl = lchild(rchild(iter));
-      if(indexLTE(rchild(lchild(iter)), repl)) repl = rchild(lchild(iter));
-      if(indexLTE(lchild(lchild(iter)), repl)) repl = lchild(lchild(iter));
+      if(indexLT(rchild(rchild(index)), repl)) repl = rchild(rchild(index));
+      if(indexLT(lchild(rchild(index)), repl)) repl = lchild(rchild(index));
+      if(indexLT(rchild(lchild(index)), repl)) repl = rchild(lchild(index));
+      if(indexLT(lchild(lchild(index)), repl)) repl = lchild(lchild(index));
     }
-    else if(lchild(iter) < count){
+    else if(lchild(index) < count){
       // check children
-      if(indexLTE(rchild(iter), repl)) repl = rchild(iter);
-      if(indexLTE(lchild(iter), repl)) repl = lchild(iter);
+      if(indexLT(rchild(index), repl)) repl = rchild(index);
+      if(indexLT(lchild(index), repl)) repl = lchild(index);
     }
 
-    if(repl == iter) break;
+    if(repl == index) break;
 
-    swap(iter, repl);
-    iter = repl;
+    swap(index, repl);
+    index = repl;
 
   }
 
@@ -112,38 +142,45 @@ void MinMax<T>::deleteMax() throw(EmptyStructure){
   if(count == 1) deleteMin();
 
   // find index of max element
-  int iter = 2;
-  if(count == 2 || indexGTE(1, 2)) iter = 1;
+  int max = 2;
+  if(count == 2 || indexGTE(1, 2)) max = 1;
 
   // replace max with last element
   count--;
-  delete data[iter];
-  if(count == iter) return;
-  data[iter] = data[count];
+  delete data[max];
+  if(count == max) return;
+  data[max] = data[count];
+
+  pushDownMax(max);
+
+}
+
+template <typename T>
+void MinMax<T>::pushDownMax(int index){
 
   int repl;
 
   while(true){
 
-    repl = iter;
+    repl = index;
 
-    if(lchild(lchild(iter)) < count){
+    if(lchild(lchild(index)) < count){
       // check grandchildren
-      if(indexGTE(rchild(rchild(iter)), repl)) repl = rchild(rchild(iter));
-      if(indexGTE(lchild(rchild(iter)), repl)) repl = lchild(rchild(iter));
-      if(indexGTE(rchild(lchild(iter)), repl)) repl = rchild(lchild(iter));
-      if(indexGTE(lchild(lchild(iter)), repl)) repl = lchild(lchild(iter));
+      if(indexGTE(rchild(rchild(index)), repl)) repl = rchild(rchild(index));
+      if(indexGTE(lchild(rchild(index)), repl)) repl = lchild(rchild(index));
+      if(indexGTE(rchild(lchild(index)), repl)) repl = rchild(lchild(index));
+      if(indexGTE(lchild(lchild(index)), repl)) repl = lchild(lchild(index));
     }
-    else if(lchild(iter) < count){
+    else if(lchild(index) < count){
       // check children
-      if(indexGTE(rchild(iter), repl)) repl = rchild(iter);
-      if(indexGTE(lchild(iter), repl)) repl = lchild(iter);
+      if(indexGTE(rchild(index), repl)) repl = rchild(index);
+      if(indexGTE(lchild(index), repl)) repl = lchild(index);
     }
 
-    if(repl == iter) break;
+    if(repl == index) break;
 
-    swap(iter, repl);
-    iter = repl;
+    swap(index, repl);
+    index = repl;
 
   }
 

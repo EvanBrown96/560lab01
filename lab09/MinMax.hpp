@@ -4,6 +4,7 @@
 #define MINMAX_HPP
 
 #include "EmptyStructure.hpp"
+#include "QuickQueue.hpp"
 
 template <typename T>
 class MinMax{
@@ -11,6 +12,7 @@ class MinMax{
 public:
 
   MinMax();
+  MinMax(QuickQueue<T> qq);
   ~MinMax();
 
   MinMax(const MinMax<T>& copy);
@@ -35,6 +37,9 @@ private:
   void resizeHeap();
   void destroyHeap();
   void copyHeap(const MinMax<T>& copy);
+
+  void pushDownMin(int index);
+  void pushDownMax(int index);
 
   int parent(int index) const;
   int grandparent(int index) const;
