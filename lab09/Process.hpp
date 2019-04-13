@@ -1,5 +1,8 @@
 // 4/13
 
+#ifndef PROCESS_HPP
+#define PROCESS_HPP
+
 #include <iostream>
 
 struct Process{
@@ -24,3 +27,5 @@ struct Process{
   friend std::ostream& operator<<(std::ostream& stream, const Process& p);
 
 };
+
+#endif
