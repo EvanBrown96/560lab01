@@ -115,15 +115,15 @@ void MinMax<T>::pushDownMin(int index){
 
     if(lchild(lchild(index)) < count){
       // check grandchildren
-      if(indexLT(rchild(rchild(index)), repl)) repl = rchild(rchild(index));
-      if(indexLT(lchild(rchild(index)), repl)) repl = lchild(rchild(index));
-      if(indexLT(rchild(lchild(index)), repl)) repl = rchild(lchild(index));
-      if(indexLT(lchild(lchild(index)), repl)) repl = lchild(lchild(index));
+      for(int i = rchild(rchild(index)); i >= lchild(lchild(index)); i--){
+        if(i < count && indexLT(i, repl)) repl = i;
+      }
     }
     else if(lchild(index) < count){
       // check children
-      if(indexLT(rchild(index), repl)) repl = rchild(index);
-      if(indexLT(lchild(index), repl)) repl = lchild(index);
+      for(int i = rchild(index); i >= lchild(index); i--){
+        if(i < count && indexLT(i, repl)) repl = i;
+      }
     }
 
     if(repl == index) break;
@@ -167,15 +167,15 @@ void MinMax<T>::pushDownMax(int index){
 
     if(lchild(lchild(index)) < count){
       // check grandchildren
-      if(indexGTE(rchild(rchild(index)), repl)) repl = rchild(rchild(index));
-      if(indexGTE(lchild(rchild(index)), repl)) repl = lchild(rchild(index));
-      if(indexGTE(rchild(lchild(index)), repl)) repl = rchild(lchild(index));
-      if(indexGTE(lchild(lchild(index)), repl)) repl = lchild(lchild(index));
+      for(int i = rchild(rchild(index)); i >= lchild(lchild(index)); i--){
+        if(i < count && indexGT(i, repl)) repl = i;
+      }
     }
     else if(lchild(index) < count){
       // check children
-      if(indexGTE(rchild(index), repl)) repl = rchild(index);
-      if(indexGTE(lchild(index), repl)) repl = lchild(index);
+      for(int i = rchild(index); i >= lchild(index); i--){
+        if(i < count && indexGT(i, repl)) repl = i;
+      }
     }
 
     if(repl == index) break;

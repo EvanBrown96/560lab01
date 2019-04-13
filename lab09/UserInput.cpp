@@ -88,7 +88,8 @@ void UserInput::start(){
       }
       case 4: {
         try{
-          std::cout << "Minimum process: " << test_heap.findMin() << "\n";
+          Process p = test_heap.findMin();
+          std::cout << "Minimum process: " << p << "(" << p.priority << "," << p.time_left << ")" << "\n";
         }catch(EmptyStructure& err){
           std::cout << "Heap is empty and has no minimum.\n";
         }
@@ -96,7 +97,8 @@ void UserInput::start(){
       }
       case 5: {
         try{
-          std::cout << "Maximum process: " << test_heap.findMax() << "\n";
+          Process p = test_heap.findMax();
+          std::cout << "Maximum process: " << p << "(" << p.priority << "," << p.time_left << ")" << "\n";
         }catch(EmptyStructure& err){
           std::cout << "Heap is empty and has no maximum.\n";
         }
