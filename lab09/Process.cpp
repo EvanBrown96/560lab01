@@ -31,7 +31,6 @@ std::istream& operator>>(std::istream& stream, Process& p){
 
   while(cur != ')') stream >> cur;
 
-  std::cout << '\n' << priority << '\n' << time_left << '\n';
   p.priority = priority;
   p.time_left = time_left;
 

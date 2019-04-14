@@ -97,8 +97,12 @@ void MinMax<T>::deleteMin() throw(EmptyStructure){
 
   count--;
   delete data[0];
-  if(count == 0) return;
+  if(count == 0){
+    data[0] = nullptr;
+    return;
+  }
   data[0] = data[count];
+  data[count] = nullptr;
 
   pushDownMin(0);
 
@@ -140,7 +144,10 @@ void MinMax<T>::deleteMax() throw(EmptyStructure){
 
   if(count == 0) throw EmptyStructure();
 
-  if(count == 1) deleteMin();
+  if(count == 1){
+    deleteMin();
+    return;
+  }
 
   // find index of max element
   int max = 2;
@@ -149,8 +156,12 @@ void MinMax<T>::deleteMax() throw(EmptyStructure){
   // replace max with last element
   count--;
   delete data[max];
-  if(count == max) return;
+  if(count == max){
+    data[max] = nullptr;
+    return;
+  }
   data[max] = data[count];
+  data[count] = nullptr;
 
   pushDownMax(max);
 
