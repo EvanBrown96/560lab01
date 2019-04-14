@@ -26,6 +26,9 @@ public:
   T findMin() const throw(EmptyStructure);
   T findMax() const throw(EmptyStructure);
 
+  T& getActualMin() const throw(EmptyStructure);
+  T& getActualMax() const throw(EmptyStructure);
+
   void levelOrder() const;
 
 private:

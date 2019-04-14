@@ -8,6 +8,7 @@
 
 #include "UserInput.hpp"
 #include "EmptyStructure.hpp"
+#include "Scheduler.hpp"
 #include <iostream>
 #include <limits>
 
@@ -105,7 +106,8 @@ void UserInput::start(){
         break;
       }
       default: {
-        // todo
+        Scheduler s(test_heap);
+        s.run();
         break;
       }
     }

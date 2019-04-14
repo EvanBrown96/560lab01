@@ -189,6 +189,11 @@ void MinMax<T>::pushDownMax(int index){
 
 template <typename T>
 T MinMax<T>::findMin() const throw(EmptyStructure){
+  return getActualMin();
+}
+
+template <typename T>
+T& MinMax<T>::getActualMin() const throw(EmptyStructure){
   if(count == 0) throw EmptyStructure();
 
   return *data[0];
@@ -196,6 +201,11 @@ T MinMax<T>::findMin() const throw(EmptyStructure){
 
 template <typename T>
 T MinMax<T>::findMax() const throw(EmptyStructure){
+  return getActualMax();
+}
+
+template <typename T>
+T& MinMax<T>::getActualMax() const throw(EmptyStructure){
   if(count == 0) throw EmptyStructure();
 
   if(count == 1) return *data[0];
@@ -207,6 +217,11 @@ T MinMax<T>::findMax() const throw(EmptyStructure){
 
 template <typename T>
 void MinMax<T>::levelOrder() const{
+
+  if(count == 0){
+    std::cout << "Heap is empty\n\n";
+    return;
+  }
 
   int line = 0;
   for(int i = 0; i < count; i++){
