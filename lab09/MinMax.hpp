@@ -41,8 +41,8 @@ private:
   void destroyHeap();
   void copyHeap(const MinMax<T>& copy);
 
-  void pushDownMin(int index);
-  void pushDownMax(int index);
+  void pushDownMin(int index, bool inc_eqs=false);
+  void pushDownMax(int index, bool inc_eqs=false);
 
   int parent(int index) const;
   int grandparent(int index) const;

@@ -104,12 +104,12 @@ void MinMax<T>::deleteMin() throw(EmptyStructure){
   data[0] = data[count];
   data[count] = nullptr;
 
-  pushDownMin(0);
+  pushDownMin(0, true);
 
 }
 
 template <typename T>
-void MinMax<T>::pushDownMin(int index){
+void MinMax<T>::pushDownMin(int index, bool inc_eqs){
 
   int repl;
 
@@ -120,7 +120,7 @@ void MinMax<T>::pushDownMin(int index){
     if(lchild(lchild(index)) < count){
       // check grandchildren
       for(int i = rchild(rchild(index)); i >= lchild(lchild(index)); i--){
-        if(i < count && indexLT(i, repl)) repl = i;
+        if(i < count && (inc_eqs ? indexLTE(i, repl) : indexLT(i, repl))) repl = i;
       }
     }
     else if(lchild(index) < count){
@@ -163,12 +163,12 @@ void MinMax<T>::deleteMax() throw(EmptyStructure){
   data[max] = data[count];
   data[count] = nullptr;
 
-  pushDownMax(max);
+  pushDownMax(max, true);
 
 }
 
 template <typename T>
-void MinMax<T>::pushDownMax(int index){
+void MinMax<T>::pushDownMax(int index, bool inc_eqs){
 
   int repl;
 
@@ -179,7 +179,7 @@ void MinMax<T>::pushDownMax(int index){
     if(lchild(lchild(index)) < count){
       // check grandchildren
       for(int i = rchild(rchild(index)); i >= lchild(lchild(index)); i--){
-        if(i < count && indexGT(i, repl)) repl = i;
+        if(i < count && (inc_eqs ? indexGTE(i, repl) : indexGT(i, repl))) repl = i;
       }
     }
     else if(lchild(index) < count){
