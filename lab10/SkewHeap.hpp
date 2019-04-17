@@ -1,9 +1,10 @@
-// 4/16
+// 4/17
 
 #ifndef SKEWHEAP_HPP
 #define SKEWHEAP_HPP
 
 #include "SkewNode.hpp"
+#include "QuickQueue.hpp"
 #include "EmptyStructure.hpp"
 
 template <typename T>
@@ -21,7 +22,7 @@ public:
 
   SkewHeap<T>& operator=(const SkewHeap<T>& copy);
 
-  static SkewHeap<T> merge(SkewHeap<T>& h1, SkewHeap<T>& h2);
+  static SkewHeap<T> merge(const SkewHeap<T>& h1, const SkewHeap<T>& h2);
 
   void insert(const T& item);
 

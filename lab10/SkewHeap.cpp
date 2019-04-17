@@ -1,3 +1,7 @@
+// 4/17
+
+#include <iostream>
+
 template <typename T>
 SkewHeap<T>::SkewHeap():
     root(nullptr){}
@@ -34,10 +38,15 @@ SkewHeap<T>& SkewHeap<T>::operator=(const SkewHeap<T>& copy){
 }
 
 template <typename T>
-static SkewHeap<T>::SkewHeap<T> merge(SkewHeap<T>& h1, SkewHeap<T>& h2){
+SkewHeap<T> SkewHeap<T>::merge(const SkewHeap<T>& h1, const SkewHeap<T>& h2){
+
+  SkewHeap<T> h1_copy = h1;
+  SkewHeap<T> h2_copy = h2;
 
   SkewHeap<T> new_heap;
-  new_heap->root = baseMerge(h1->root, h2->root);
+  new_heap->root = baseMerge(h1_copy->root, h2_copy->root);
+
+  return new_heap;
 
 }
 
@@ -76,16 +85,16 @@ bool SkewHeap<T>::isEmpty() const{
 }
 
 template <typename T>
-QuickQueue<T> SkewHeap<T>::inorder() const;
+QuickQueue<T> SkewHeap<T>::inorder() const{}
 
 template <typename T>
-QuickQueue<T> SkewHeap<T>::preorder() const;
+QuickQueue<T> SkewHeap<T>::preorder() const{}
 
 template <typename T>
-QuickQueue<T> SkewHeap<T>::postorder() const;
+QuickQueue<T> SkewHeap<T>::postorder() const{}
 
 template <typename T>
-QuickQueue<T> SkewHeap<T>::levelorder() const;
+QuickQueue<T> SkewHeap<T>::levelorder() const{}
 
 template <typename T>
 void SkewHeap<T>::destroyHeap(SkewNode<T>* subtree){
@@ -104,10 +113,10 @@ SkewNode<T>* SkewHeap<T>::copyHeap(SkewNode<T>* subtree){
   if(subtree == nullptr) return nullptr;
 
   SkewNode<T>* new_node = new SkewNode<T>(subtree->get());
-  new_node->setLeft(copyHeap(new_node->getLeft());
+  new_node->setLeft(copyHeap(new_node->getLeft()));
   new_node->setRight(copyHeap(new_node->getRight()));
 
-  return new_node
+  return new_node;
 
 }
 
