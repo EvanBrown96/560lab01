@@ -15,7 +15,7 @@ void SkewNode<T>::set(const T& item){
 }
 
 template <typename T>
-SkewNode<T>* SkewNode<T>::getLeft(){
+SkewNode<T>* SkewNode<T>::getLeft() const{
   return left;
 }
 
@@ -25,7 +25,7 @@ void SkewNode<T>::setLeft(SkewNode<T>* left){
 }
 
 template <typename T>
-SkewNode<T>* SkewNode<T>::getRight(){
+SkewNode<T>* SkewNode<T>::getRight() const{
   return right;
 }
 

@@ -13,10 +13,10 @@ public:
   T get() const;
   void set(const T& item);
 
-  SkewNode<T>* getLeft();
+  SkewNode<T>* getLeft() const;
   void setLeft(SkewNode<T>* left);
 
-  SkewNode<T>* getRight();
+  SkewNode<T>* getRight() const;
   void setRight(SkewNode<T>* right);
 
 private:

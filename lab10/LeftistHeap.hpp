@@ -3,6 +3,8 @@
 #ifndef LEFTISTHEAP_HPP
 #define LEFTISTHEAP_HPP
 
+#include "LeftistNode.hpp"
+#include "QuickQueue.hpp"
 #include "EmptyStructure.hpp"
 
 template <typename T>
@@ -28,6 +30,8 @@ public:
 
   T findMax() const;
 
+  bool isEmpty() const;
+
   QuickQueue<T> inorder() const;
 
   QuickQueue<T> preorder() const;
@@ -35,6 +39,22 @@ public:
   QuickQueue<T> postorder() const;
 
   QuickQueue<T> levelorder() const;
+
+private:
+
+  SkewNode<T>* root;
+
+  void destroyHeap(LeftistNode<T>* subtree);
+
+  SkewNode<T>* copyHeap(SkewNode<T>* subtree);
+
+  static SkewNode<T>* baseMerge(SkewNode<T>* st1, SkewNode<T>* st2);
+
+  void preorderHelper(LeftistNode<T>* subtree, QuickQueue<T>& qq) const;
+
+  void inorderHelper(LeftistNode<T>* subtree, QuickQueue<T>& qq) const;
+
+  void postorderHelper(LeftistNode<T>* subtree, QuickQueue<T>& qq) const;
 
 };
 
