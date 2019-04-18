@@ -38,7 +38,7 @@ public:
 
   QuickQueue<T> postorder() const;
 
-  QuickQueue<T> levelorder() const;
+  QuickQueue<QuickQueue<T>> levelorder() const;
 
 private:
 
@@ -49,6 +49,14 @@ private:
   SkewNode<T>* copyHeap(SkewNode<T>* subtree);
 
   static SkewNode<T>* baseMerge(SkewNode<T>* st1, SkewNode<T>* st2);
+
+  void preorderHelper(SkewNode<T>* subtree, QuickQueue<T>& qq);
+
+  void inorderHelper(SkewNode<T>* subtree, QuickQueue<T>& qq);
+
+  void postorderHelper(SkewNode<T>* subtree, QuickQueue<T>& qq);
+
+
 
 };
 

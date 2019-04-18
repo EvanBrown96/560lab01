@@ -1,7 +1,5 @@
 // 4/17
 
-#include <iostream>
-
 template <typename T>
 SkewHeap<T>::SkewHeap():
     root(nullptr){}
@@ -85,16 +83,52 @@ bool SkewHeap<T>::isEmpty() const{
 }
 
 template <typename T>
-QuickQueue<T> SkewHeap<T>::inorder() const{}
+QuickQueue<T> SkewHeap<T>::inorder() const{
+
+  QuickQueue<T> qq(10);
+  inorderHelper(root, qq);
+
+  return qq;
+
+}
 
 template <typename T>
-QuickQueue<T> SkewHeap<T>::preorder() const{}
+QuickQueue<T> SkewHeap<T>::preorder() const{
+
+  QuickQueue<T> qq(10);
+  preorderHelper(root, qq);
+
+  return qq;
+
+}
 
 template <typename T>
-QuickQueue<T> SkewHeap<T>::postorder() const{}
+QuickQueue<T> SkewHeap<T>::postorder() const{
+
+  QuickQueue<T> qq(10);
+  preorderHelper(root, qq);
+
+  return qq;
+
+}
 
 template <typename T>
-QuickQueue<T> SkewHeap<T>::levelorder() const{}
+void SkewHeap<T>::preorderHelper(SkewNode<T>* subtree, QuickQueue<T>& qq){
+
+  qq.push(subtree->get());
+  preorderHelper(subtree->getLeft(), qq);
+  preorderHelper(subtree->getRight(), qq);
+
+}
+
+template <typename T>
+void SkewHeap<T>::inorderHelper(SkewNode<T>* subtree, QuickQueue<T>& qq);
+
+template <typename T>
+void SkewHeap<T>::postorderHelper(SkewNode<T>* subtree, QuickQueue<T>& qq);
+
+template <typename T>
+QuickQueue<QuickQueue<T>> SkewHeap<T>::levelorder() const{}
 
 template <typename T>
 void SkewHeap<T>::destroyHeap(SkewNode<T>* subtree){
