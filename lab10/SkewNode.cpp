@@ -5,7 +5,7 @@ SkewNode<T>::SkewNode(const T& item):
     item(item), left(nullptr), right(nullptr){}
 
 template <typename T>
-T& SkewNode<T>::get() const{
+T SkewNode<T>::get() const{
   return item;
 }
 

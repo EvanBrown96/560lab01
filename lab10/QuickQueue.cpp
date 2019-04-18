@@ -31,14 +31,14 @@ QuickQueue<T>& QuickQueue<T>::operator=(const QuickQueue<T>& qq){
 }
 
 template <typename T>
-T QuickQueue<T>::peek() const throw(EmptyStructure){
+T QuickQueue<T>::peek() const{
   if(count == 0) throw EmptyStructure();
 
   return *contents[start];
 }
 
 template <typename T>
-T QuickQueue<T>::pop() throw(EmptyStructure){
+T QuickQueue<T>::pop(){
   if(count == 0) throw EmptyStructure();
 
   T ret = *contents[start];
@@ -52,6 +52,7 @@ T QuickQueue<T>::pop() throw(EmptyStructure){
 
 template <typename T>
 void QuickQueue<T>::push(const T& item){
+  
   if(count == size){
     T** new_contents = new T*[size*2];
     for(int i = start; i < start+count; i++){

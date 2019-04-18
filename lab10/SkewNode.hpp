@@ -10,7 +10,7 @@ public:
 
   SkewNode(const T& item);
 
-  T& get() const;
+  T get() const;
   void set(const T& item);
 
   SkewNode<T>* getLeft();

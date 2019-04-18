@@ -7,6 +7,8 @@
 #include "QuickQueue.hpp"
 #include "EmptyStructure.hpp"
 
+#define DISPLAY_LEN 4
+
 template <typename T>
 class SkewHeap{
 
@@ -38,7 +40,9 @@ public:
 
   QuickQueue<T> postorder() const;
 
-  QuickQueue<QuickQueue<T>> levelorder() const;
+  QuickQueue<T> levelorder() const;
+
+  void printVisual() const;
 
 private:
 
@@ -50,13 +54,15 @@ private:
 
   static SkewNode<T>* baseMerge(SkewNode<T>* st1, SkewNode<T>* st2);
 
-  void preorderHelper(SkewNode<T>* subtree, QuickQueue<T>& qq);
+  void preorderHelper(SkewNode<T>* subtree, QuickQueue<T>& qq) const;
 
-  void inorderHelper(SkewNode<T>* subtree, QuickQueue<T>& qq);
+  void inorderHelper(SkewNode<T>* subtree, QuickQueue<T>& qq) const;
 
-  void postorderHelper(SkewNode<T>* subtree, QuickQueue<T>& qq);
+  void postorderHelper(SkewNode<T>* subtree, QuickQueue<T>& qq) const;
 
+  void printSpace(int count) const;
 
+  void printMaxLen(int val, int max) const;
 
 };
 

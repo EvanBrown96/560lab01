@@ -23,9 +23,9 @@ public:
 
   QuickQueue<T>& operator=(const QuickQueue<T>& qq);
 
-  T peek() const throw(EmptyStructure);
+  T peek() const;
 
-  T pop() throw(EmptyStructure);
+  T pop();
 
   void push(const T& item);
 
