@@ -45,6 +45,7 @@ private:
   bool queryUser(const char* query_str, T& res);
 
   void skewInsert();
+  void leftistInsert();
 
 };
 

@@ -18,7 +18,7 @@ int setup(int argc, char** argv, bool isskew){
   QuickQueue<String> input_data(10);
 
   std::ifstream f;
-  f.open(argv[2]);
+  f.open(argv[1]);
 
   try{
     InputParser::parse(f, input_data);
@@ -38,6 +38,8 @@ int setup(int argc, char** argv, bool isskew){
     int_data.push(input_data.pop().getInt());
   }
 
+  std::cout << int_data;
+  
   if(isskew){
     std::cout << "Using skew heap...\n\n";
     SkewHeap<int>* h = new SkewHeap<int>(int_data);
