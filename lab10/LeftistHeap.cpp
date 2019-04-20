@@ -108,7 +108,7 @@ template <typename T>
 QuickQueue<T> LeftistHeap<T>::postorder() const{
 
   QuickQueue<T> qq(10);
-  preorderHelper(root, qq);
+  postorderHelper(root, qq);
 
   return qq;
 
@@ -187,8 +187,8 @@ LeftistNode<T>* LeftistHeap<T>::copyHeap(LeftistNode<T>* subtree){
   if(subtree == nullptr) return nullptr;
 
   LeftistNode<T>* new_node = new LeftistNode<T>(subtree->get());
-  new_node->setLeft(copyHeap(new_node->getLeft()));
-  new_node->setRight(copyHeap(new_node->getRight()));
+  new_node->setLeft(copyHeap(subtree->getLeft()));
+  new_node->setRight(copyHeap(subtree->getRight()));
 
   return new_node;
 
@@ -202,7 +202,7 @@ LeftistNode<T>* LeftistHeap<T>::baseMerge(LeftistNode<T>* st1, LeftistNode<T>* s
 
   LeftistNode<T>* helper;
 
-  if(st1->get() > st2->get()){
+  if(st1->get() < st2->get()){
     // swap order of trees
     helper = st1;
     st1 = st2;
@@ -211,7 +211,7 @@ LeftistNode<T>* LeftistHeap<T>::baseMerge(LeftistNode<T>* st1, LeftistNode<T>* s
 
   helper = baseMerge(st1->getRight(), st2);
 
-  if(helper->getRank() < st1->getLeft()->getRank()){
+  if(getRankSafe(helper) > getRankSafe(st1->getLeft())){
     st1->setRight(st1->getLeft());
     st1->setLeft(helper);
   }
@@ -221,4 +221,10 @@ LeftistNode<T>* LeftistHeap<T>::baseMerge(LeftistNode<T>* st1, LeftistNode<T>* s
 
   return st1;
 
+}
+
+template <typename T>
+int LeftistHeap<T>::getRankSafe(LeftistNode<T>* subtree){
+  if(subtree == nullptr) return 0;
+  return subtree->getRank();
 }

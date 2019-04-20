@@ -56,6 +56,8 @@ private:
 
   void postorderHelper(LeftistNode<T>* subtree, QuickQueue<T>& qq) const;
 
+  static int getRankSafe(LeftistNode<T>* subtree);
+
 };
 
 #include "LeftistHeap.cpp"

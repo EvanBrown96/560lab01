@@ -38,8 +38,6 @@ int setup(int argc, char** argv, bool isskew){
     int_data.push(input_data.pop().getInt());
   }
 
-  std::cout << int_data;
-  
   if(isskew){
     std::cout << "Using skew heap...\n\n";
     SkewHeap<int>* h = new SkewHeap<int>(int_data);

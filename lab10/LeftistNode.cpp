@@ -48,7 +48,7 @@ void LeftistNode<T>::calcRank(){
     int lrank = left->rank;
     int rrank = right->rank;
 
-    if(lrank <= rrank) rank = lrank;
-    else rank = rrank;
+    if(lrank <= rrank) rank = lrank+1;
+    else rank = rrank+1;
   }
 }

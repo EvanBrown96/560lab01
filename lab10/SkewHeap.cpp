@@ -111,7 +111,7 @@ template <typename T>
 QuickQueue<T> SkewHeap<T>::postorder() const{
 
   QuickQueue<T> qq(10);
-  preorderHelper(root, qq);
+  postorderHelper(root, qq);
 
   return qq;
 
@@ -321,8 +321,8 @@ SkewNode<T>* SkewHeap<T>::copyHeap(SkewNode<T>* subtree){
   if(subtree == nullptr) return nullptr;
 
   SkewNode<T>* new_node = new SkewNode<T>(subtree->get());
-  new_node->setLeft(copyHeap(new_node->getLeft()));
-  new_node->setRight(copyHeap(new_node->getRight()));
+  new_node->setLeft(copyHeap(subtree->getLeft()));
+  new_node->setRight(copyHeap(subtree->getRight()));
 
   return new_node;
 
@@ -336,7 +336,7 @@ SkewNode<T>* SkewHeap<T>::baseMerge(SkewNode<T>* st1, SkewNode<T>* st2){
 
   SkewNode<T>* helper;
 
-  if(st1->get() > st2->get()){
+  if(st1->get() < st2->get()){
     // swap order of trees
     helper = st1;
     st1 = st2;
