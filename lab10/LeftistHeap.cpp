@@ -8,8 +8,10 @@ template <typename T>
 LeftistHeap<T>::LeftistHeap(const QuickQueue<T>& initial_data):
     root(nullptr){
 
-  while(!initial_data.isEmpty()){
-    insert(initial_data.pop());
+  QuickQueue<T> dup(initial_data);
+
+  while(!dup.isEmpty()){
+    insert(dup.pop());
   }
 
 }

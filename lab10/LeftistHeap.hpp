@@ -42,13 +42,13 @@ public:
 
 private:
 
-  SkewNode<T>* root;
+  LeftistNode<T>* root;
 
   void destroyHeap(LeftistNode<T>* subtree);
 
-  SkewNode<T>* copyHeap(SkewNode<T>* subtree);
+  LeftistNode<T>* copyHeap(LeftistNode<T>* subtree);
 
-  static SkewNode<T>* baseMerge(SkewNode<T>* st1, SkewNode<T>* st2);
+  static LeftistNode<T>* baseMerge(LeftistNode<T>* st1, LeftistNode<T>* st2);
 
   void preorderHelper(LeftistNode<T>* subtree, QuickQueue<T>& qq) const;
 
