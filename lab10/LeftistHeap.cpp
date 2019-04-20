@@ -23,7 +23,7 @@ LeftistHeap<T>::~LeftistHeap(){
 
 template <typename T>
 LeftistHeap<T>::LeftistHeap(const LeftistHeap<T>& copy){
-  root = copyHeap(copy->root);
+  root = copyHeap(copy.root);
 }
 
 
@@ -31,7 +31,7 @@ template <typename T>
 LeftistHeap<T>& LeftistHeap<T>::operator=(const LeftistHeap<T>& copy){
 
   destroyHeap(root);
-  root = copyHeap(copy->root);
+  root = copyHeap(copy.root);
 
   return *this;
 

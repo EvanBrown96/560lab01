@@ -4,13 +4,14 @@
 #include "LeftistHeap.hpp"
 #include "InputParser.hpp"
 #include "String.hpp"
+#include "UserInput.hpp"
 #include <fstream>
 #include <iostream>
 
 int setup(int argc, char** argv, bool isskew){
 
-  if(argc <= 2){
-    std::cout << "Expected usage: ./lab input_file.txt\n";
+  if(argc <= 1){
+    std::cout << "Expected usage: " << argv[0] << " input_file.txt\n";
     return -1;
   }
 
@@ -40,19 +41,19 @@ int setup(int argc, char** argv, bool isskew){
   if(isskew){
     std::cout << "Using skew heap...\n\n";
     SkewHeap<int>* h = new SkewHeap<int>(int_data);
-    // userinput
+
+    UserInput ui(isskew, h, nullptr);
+    ui.start();
     delete h;
   }
   else{
     std::cout << "Using leftist heap...\n\n";
     LeftistHeap<int>* h = new LeftistHeap<int>(int_data);
-    // userinput
+
+    UserInput ui(isskew, nullptr, h);
+    ui.start();
     delete h;
   }
-
-  // UserInput ui(h);
-  //
-  // ui.start();
 
   return 0;
 

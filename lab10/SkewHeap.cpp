@@ -26,7 +26,7 @@ SkewHeap<T>::~SkewHeap(){
 
 template <typename T>
 SkewHeap<T>::SkewHeap(const SkewHeap<T>& copy){
-  root = copyHeap(copy->root);
+  root = copyHeap(copy.root);
 }
 
 
@@ -34,7 +34,7 @@ template <typename T>
 SkewHeap<T>& SkewHeap<T>::operator=(const SkewHeap<T>& copy){
 
   destroyHeap(root);
-  root = copyHeap(copy->root);
+  root = copyHeap(copy.root);
 
   return *this;
 
