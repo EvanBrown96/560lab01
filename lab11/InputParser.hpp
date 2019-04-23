@@ -1,9 +1,9 @@
 /**
  * @author: Evan Brown
  * @file: InputParser.hpp
- * @date: 4/13/19
+ * @date: 3/26/19
  * @brief: header file for input stream parser
- *         adapted from 560 lab 8
+ *         adapted from 560 lab 7
  */
 
 #ifndef INPUTPARSER_HPP
@@ -11,7 +11,7 @@
 
 #include <istream>
 #include "QuickQueue.hpp"
-#include "Process.hpp"
+#include "String.hpp"
 #include "ParseError.hpp"
 
 class InputParser{
@@ -27,10 +27,11 @@ public:
    * @param ll: the QuickQueue to add string data to
    * @post: the linked list contains the strings read from the stream, in order
    */
-  static void parse(std::istream& stream, QuickQueue<Process>& ll) throw(ParseError);
+  static void parse(std::istream& stream, QuickQueue<String>& ll);
 
   static void discardSpaces(std::istream& stream, char& res);
-  static int parseInt(std::istream& stream, char& res) throw(ParseError);
+  static int parseInt(std::istream& stream, char& res);
+  static String parseString(std::istream& stream, char& res);
 
 private:
 

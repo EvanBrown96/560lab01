@@ -11,6 +11,17 @@ BinarySearchTree<T>::BinarySearchTree():
   root(nullptr), size(0){}
 
 template <typename T>
+BinarySearchTree<T>::BinarySearchTree(const QuickQueue<T>& initial_data):
+    root(nullptr), size(0){
+
+  QuickQueue<T> dup(initial_data);
+
+  while(!dup.isEmpty()){
+    insert(dup.pop());
+  }
+
+}
+template <typename T>
 BinarySearchTree<T>::~BinarySearchTree(){
   destroySubtree(root);
 }

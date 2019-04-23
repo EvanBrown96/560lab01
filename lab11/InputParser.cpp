@@ -1,36 +1,31 @@
 /**
  * @author: Evan Brown
  * @file: InputParser.cpp
- * @date: 4/13/19
+ * @date: 3/26/19
  * @brief: implementation of parse method for reading data from input stream
- *         adapted from 560 lab 8
+ *         adapted from 560 lab 7
  */
 
 #include "InputParser.hpp"
 
-void InputParser::parse(std::istream& stream, QuickQueue<Process>& ll) throw(ParseError){
+void InputParser::parse(std::istream& stream, QuickQueue<String>& ll){
 
   char res;
 
   // repeat until reach end of line, getting strings from input
   while(true){
 
-    stream.get(res);
-    while(res == ' ' || res == '\t' || res == ','){
-      stream.get(res);
-    }
-    stream.putback(res);
+    InputParser::discardSpaces(stream, res);
 
     // check if end of input has been reached
     if(res == '\n' || stream.eof()){
       return;
     }
 
-    Process p(0, 0);
-    if(!(stream >> p)) throw ParseError(stream);
+    String cw = InputParser::parseString(stream, res);
 
     // add the current value to the linked list
-    ll.push(p);
+    ll.push(cw);
 
   }
 
@@ -46,7 +41,7 @@ void InputParser::discardSpaces(std::istream& stream, char& res){
 
 }
 
-int InputParser::parseInt(std::istream& stream, char& res) throw(ParseError){
+int InputParser::parseInt(std::istream& stream, char& res){
 
   int value = 0;
 
@@ -66,6 +61,35 @@ int InputParser::parseInt(std::istream& stream, char& res) throw(ParseError){
   }while(res != ' ' && res != '\t' && res != '\n' && !stream.eof());
 
   return value;
+
+}
+
+String InputParser::parseString(std::istream& stream, char& res){
+
+  QuickQueue<char> char_ll(10);
+  int str_size = 0;
+
+  // repeat until we reach space again
+  do{
+
+    char_ll.push(res);
+    str_size++;
+
+    // get next character
+    stream.get(res);
+
+  }while(res != ' ' && res != '\t' && res != '\n' && !stream.eof());
+
+  char* res_string = new char[str_size+1];
+  res_string[str_size] = '\0';
+
+  for(int i = 0; i < str_size; i++){
+    res_string[i] = char_ll.pop();
+  }
+
+  String cw(res_string);
+  delete[] res_string;
+  return cw;
 
 }
 

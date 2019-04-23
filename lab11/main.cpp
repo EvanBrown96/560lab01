@@ -1,9 +1,12 @@
 // 4/13
 
-#include "MinMax.hpp"
+#include "String.hpp"
 #include "UserInput.hpp"
 #include "ParseError.hpp"
 #include "InputParser.hpp"
+#include "BinarySearchTree.hpp"
+#include "MinHeap.hpp"
+#include "MaxHeap.hpp"
 #include <fstream>
 
 int main(int argc, char** argv){
@@ -13,7 +16,7 @@ int main(int argc, char** argv){
     return -1;
   }
 
-  QuickQueue<Process> input_data(10);
+  QuickQueue<String> input_data(10);
 
   std::ifstream f;
   f.open(argv[1]);
@@ -29,10 +32,18 @@ int main(int argc, char** argv){
 
   f.close();
 
-  // create min-max heap
-  MinMax<Process> mm(input_data);
+  QuickQueue<int> int_data(10);
+
+  while(!input_data.isEmpty()){
+    int_data.push(input_data.pop().getInt());
+  }
+
+  // create test data structures
+  BinarySearchTree<int> bst(int_data);
+  MinHeap<5, int> minh(int_data);
+  MaxHeap<5, int> maxh(int_data);
 
   // run user interactivity
-  UserInput ui(mm);
+  UserInput ui(bst, minh, maxh);
   ui.start();
 }

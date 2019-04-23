@@ -22,12 +22,14 @@ template <typename T> class Levelorder;
 #include "Postorder.hpp"
 #include "Inorder.hpp"
 #include "Levelorder.hpp"
+#include "QuickQueue.hpp"
 
 template <typename T>
 class BinarySearchTree{
 public:
 
     BinarySearchTree();
+    BinarySearchTree(const QuickQueue<T>& initial_data);
     ~BinarySearchTree();
 
     BinarySearchTree(const BinarySearchTree<T>& bst);
