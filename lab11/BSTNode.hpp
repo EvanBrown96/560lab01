@@ -3,6 +3,7 @@
  * @file: BSTNode.hpp
  * @date: 2/27/19
  * @brief: declaration of binary search tree node methods
+ *         adapted from 560 lab 5
  */
 
 #ifndef BSTNODE_HPP

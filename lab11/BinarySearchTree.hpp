@@ -3,6 +3,7 @@
  * @file: BinarySearchTree.hpp
  * @date: 2/27/19
  * @brief: definition of binary search tree methods
+ *         adapted from 560 lab 5
  */
 
 #ifndef BINARYSEARCHTREE_HPP

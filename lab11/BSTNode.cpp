@@ -3,6 +3,7 @@
  * @file: BSTNode.cpp
  * @date: 2/27/19
  * @brief: implemetation of binary search tree node
+ *         adapted from 560 lab 5
  */
 
 template <typename T>

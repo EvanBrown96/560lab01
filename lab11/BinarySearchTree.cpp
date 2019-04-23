@@ -3,6 +3,7 @@
  * @file: BinarySearchTree.cpp
  * @date: 2/27/19
  * @brief: implementation of binary search tree
+ *         adapted from 560 lab 5
  */
 
 template <typename T>
