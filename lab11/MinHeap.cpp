@@ -7,8 +7,8 @@
  */
 
 template <int ch, typename T>
-MinHeap<ch, T>::MinHeap():
-    Heap<ch, T>(min_compare){}
+MinHeap<ch, T>::MinHeap(int startsize):
+    Heap<ch, T>(min_compare, startsize){}
 
 template <int ch, typename T>
 MinHeap<ch, T>::MinHeap(QuickQueue<T> initial):

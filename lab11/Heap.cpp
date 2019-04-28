@@ -10,8 +10,8 @@
 #include <iostream>
 
 template <int ch, typename T>
-Heap<ch, T>::Heap(bool (*compare)(const T& v1, const T& v2)):
-  data(new T*[1]), size(1), count(0), compare(compare){}
+Heap<ch, T>::Heap(bool (*compare)(const T& v1, const T& v2), int startsize):
+  data(new T*[startsize]), size(startsize), count(0), compare(compare){}
 
 template <int ch, typename T>
 Heap<ch, T>::Heap(bool (*compare)(const T& v1, const T& v2), QuickQueue<T> initial):

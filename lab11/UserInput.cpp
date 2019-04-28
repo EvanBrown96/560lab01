@@ -19,10 +19,10 @@ UserInput::UserInput(const BinarySearchTree<int>& startoff_bst,
   const MaxHeap<5, int>& startoff_maxh):
                      test_bst(startoff_bst), test_minh(startoff_minh), test_maxh(startoff_maxh){
 
-  MAX_RAND = 5 * TABLE_SIZE;
+  MAX_RAND = 5 * M;
   for(int i = 0; i < 5; i++){
-    SIZES[i] = floor(TABLE_SIZE * (static_cast<float>(i+1)/10));
-    FINDS[i] = floor(0.1 * SIZES[i]);
+    SIZES[i] = M * i;
+    DELETES[i] = floor(0.001 * SIZES[i]);
   }
 }
 
@@ -57,9 +57,9 @@ void UserInput::start(){
         break;
       }
       default: {
-        // userPerformanceOpenHashing();
-        // userPerformanceClosedHashingQuadraticProbing();
-        // userPerformanceClosedHashingDoubleHashing();
+        userPerformanceBST();
+        userPerformanceMinHeap();
+        userPerformanceMaxHeap();
         break;
       }
     }
@@ -83,157 +83,142 @@ void UserInput::userTest(){
 
 }
 
-// void UserInput::userPerformanceOpenHashing(){
-//
-//   Timer build_times[5];
-//   Timer found_times[5];
-//   Timer not_found_times[5];
-//   int location;
-//   bool found;
-//
-//   for(int i = 0; i < 5; i++){
-//
-//     for(int j = 0; j < 5; j++){
-//
-//       OpenHashTable<int> oht(TABLE_SIZE, myhash);
-//       RandomGenerator::seedTime();
-//
-//       for(int k = 0; k < SIZES[i]; k++){
-//         int to_insert = RandomGenerator::getFromOneTo(MAX_RAND);
-//         found = oht.findNoExcept(to_insert, location);
-//         // if the item was found successfully, don't do anything, since it is a duplicate
-//
-//         if(!found){
-//           build_times[i].start();
-//           oht.insert(to_insert);
-//           build_times[i].stop();
-//         }
-//       }
-//
-//       for(int k = 0; k < FINDS[i]; k++){
-//         int to_find = RandomGenerator::getFromOneTo(MAX_RAND);
-//         found = oht.findNoExcept(to_find, location);
-//         if(found){
-//           found_times[i].start();
-//           oht.findNoExcept(to_find, location);
-//           found_times[i].stop();
-//         }
-//         else{
-//           not_found_times[i].start();
-//           oht.findNoExcept(to_find, location);
-//           not_found_times[i].stop();
-//         }
-//       }
-//     }
-//
-//   }
-//
-//   std::cout << "Performance (Open hashing):\n";
-//   printTable(build_times, found_times, not_found_times);
-//
-// }
-//
-// void UserInput::userPerformanceClosedHashingQuadraticProbing(){
-//
-//   Timer build_times[5];
-//   Timer found_times[5];
-//   Timer not_found_times[5];
-//   int location;
-//   bool found;
-//
-//   for(int i = 0; i < 5; i++){
-//
-//     for(int j = 0; j < 5; j++){
-//
-//       ClosedHashTable<int, QuadraticProbing> ht(TABLE_SIZE, myhash);
-//       RandomGenerator::seedTime();
-//
-//       for(int k = 0; k < SIZES[i]; k++){
-//         int to_insert = RandomGenerator::getFromOneTo(MAX_RAND);
-//         found = ht.findNoExcept(to_insert, location);
-//         // if the item was found successfully, don't do anything, since it is a duplicate
-//
-//         if(!found){
-//           build_times[i].start();
-//           ht.insert(to_insert);
-//           build_times[i].stop();
-//         }
-//       }
-//
-//       for(int k = 0; k < FINDS[i]; k++){
-//         int to_find = RandomGenerator::getFromOneTo(MAX_RAND);
-//         found = ht.findNoExcept(to_find, location);
-//         if(found){
-//           found_times[i].start();
-//           ht.findNoExcept(to_find, location);
-//           found_times[i].stop();
-//         }
-//         else{
-//           not_found_times[i].start();
-//           ht.findNoExcept(to_find, location);
-//           not_found_times[i].stop();
-//         }
-//       }
-//     }
-//
-//   }
-//
-//   std::cout << "Performance (Closed hashing with quadratic probing):\n";
-//   printTable(build_times, found_times, not_found_times);
-//
-// }
-//
-// void UserInput::userPerformanceClosedHashingDoubleHashing(){
-//
-//   Timer build_times[5];
-//   Timer found_times[5];
-//   Timer not_found_times[5];
-//   int location;
-//   bool found;
-//
-//   for(int i = 0; i < 5; i++){
-//
-//     for(int j = 0; j < 5; j++){
-//
-//       ClosedHashTable<int, DoubleHashing<DOUBLE_HASHING_VAL>> ht(TABLE_SIZE, myhash);
-//       RandomGenerator::seedTime();
-//
-//       for(int k = 0; k < SIZES[i]; k++){
-//         int to_insert = RandomGenerator::getFromOneTo(MAX_RAND);
-//         found = ht.findNoExcept(to_insert, location);
-//         // if the item was found successfully, don't do anything, since it is a duplicate
-//
-//         if(!found){
-//           build_times[i].start();
-//           ht.insert(to_insert);
-//           build_times[i].stop();
-//         }
-//       }
-//
-//       for(int k = 0; k < FINDS[i]; k++){
-//         int to_find = RandomGenerator::getFromOneTo(MAX_RAND);
-//         found = ht.findNoExcept(to_find, location);
-//         if(found){
-//           found_times[i].start();
-//           ht.findNoExcept(to_find, location);
-//           found_times[i].stop();
-//         }
-//         else{
-//           not_found_times[i].start();
-//           ht.findNoExcept(to_find, location);
-//           not_found_times[i].stop();
-//         }
-//       }
-//     }
-//
-//   }
-//
-//   std::cout << "Performance (Closed hashing with quadratic probing):\n";
-//   printTable(build_times, found_times, not_found_times);
-//
-// }
 
-void UserInput::printTable(Timer* build_times, Timer* found_times, Timer* not_found_times) const{
+void UserInput::userPerformanceBST(){
+
+  Timer build_times[5];
+  Timer min_times[5];
+  Timer max_times[5];
+  int location;
+  bool found;
+
+  for(int i = 0; i < 5; i++){
+
+    for(int j = 0; j < 5; j++){
+      std::cout << "p";
+      BinarySearchTree<int> bst;
+      RandomGenerator::seedTime();
+
+      for(int k = 0; k < SIZES[i]; k++){
+        int to_insert = RandomGenerator::getFromOneTo(MAX_RAND);
+
+        build_times[i].start();
+        bst.insert(to_insert);
+        build_times[i].stop();
+      }
+
+      BinarySearchTree<int> bst_dup(bst);
+      for(int k = 0; k < DELETES[i]; k++){
+        min_times[i].start();
+        bst_dup.deleteMin();
+        min_times[i].stop();
+      }
+
+      for(int k = 0; k < DELETES[i]; k++){
+        max_times[i].start();
+        bst.deleteMax();
+        max_times[i].stop();
+      }
+    }
+
+  }
+
+  std::cout << "Performance (BST):\n";
+  printTable(build_times, min_times, max_times);
+
+}
+
+
+void UserInput::userPerformanceMinHeap(){
+
+  Timer build_times[5];
+  Timer min_times[5];
+  Timer max_times[5];
+  int location;
+  bool found;
+
+  for(int i = 0; i < 5; i++){
+
+    for(int j = 0; j < 5; j++){
+
+      MinHeap<5, int> heap;
+      RandomGenerator::seedTime();
+
+      for(int k = 0; k < SIZES[i]; k++){
+        int to_insert = RandomGenerator::getFromOneTo(MAX_RAND);
+
+        build_times[i].start();
+        heap.insert(to_insert);
+        build_times[i].stop();
+      }
+
+      MinHeap<5, int> heap_dup(heap);
+      for(int k = 0; k < DELETES[i]; k++){
+        min_times[i].start();
+        heap.deleteMin();
+        min_times[i].stop();
+      }
+
+      for(int k = 0; k < DELETES[i]; k++){
+        max_times[i].start();
+        heap.deleteMax();
+        max_times[i].stop();
+      }
+    }
+
+  }
+
+  std::cout << "Performance (MinHeap):\n";
+  printTable(build_times, min_times, max_times);
+
+}
+
+
+void UserInput::userPerformanceMaxHeap(){
+
+  Timer build_times[5];
+  Timer min_times[5];
+  Timer max_times[5];
+  int location;
+  bool found;
+
+  for(int i = 0; i < 5; i++){
+
+    for(int j = 0; j < 5; j++){
+
+      MaxHeap<5, int> heap;
+      RandomGenerator::seedTime();
+
+      for(int k = 0; k < SIZES[i]; k++){
+        int to_insert = RandomGenerator::getFromOneTo(MAX_RAND);
+
+        build_times[i].start();
+        heap.insert(to_insert);
+        build_times[i].stop();
+      }
+
+      MaxHeap<5, int> heap_dup(heap);
+      for(int k = 0; k < DELETES[i]; k++){
+        min_times[i].start();
+        heap.deleteMin();
+        min_times[i].stop();
+      }
+
+      for(int k = 0; k < DELETES[i]; k++){
+        max_times[i].start();
+        heap.deleteMax();
+        max_times[i].stop();
+      }
+    }
+
+  }
+
+  std::cout << "Performance (MaxHeap):\n";
+  printTable(build_times, min_times, max_times);
+
+}
+
+void UserInput::printTable(Timer* build_times, Timer* min_times, Timer* max_times) const{
 
   column();
   std::cout << "";
@@ -252,10 +237,10 @@ void UserInput::printTable(Timer* build_times, Timer* found_times, Timer* not_fo
   std::cout << "\n";
 
   column();
-  std::cout << "Found";
+  std::cout << "Del Min";
   for(int i = 0; i < 5; i++){
     column();
-    std::cout << found_times[i].getMS()/5;
+    std::cout << min_times[i].getMS()/5;
   }
   std::cout << "\n";
 
@@ -263,7 +248,7 @@ void UserInput::printTable(Timer* build_times, Timer* found_times, Timer* not_fo
   std::cout << "Not Found";
   for(int i = 0; i < 5; i++){
     column();
-    std::cout << not_found_times[i].getMS()/5;
+    std::cout << max_times[i].getMS()/5;
   }
   std::cout << "\n\n";
 }

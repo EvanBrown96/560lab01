@@ -71,6 +71,20 @@ T BinarySearchTree<T>::findMin(){
 }
 
 template <typename T>
+void BinarySearchTree<T>::deleteMin(){
+  if(root == nullptr) throw EmptyStructure();
+
+  if(root->getLeft() == nullptr) root = deleteHelper(root);
+  else{
+    BSTNode<T>* leftmost = root;
+    while(leftmost->getLeft()->getLeft() != nullptr){
+      leftmost = leftmost->getLeft();
+    }
+    leftmost->setLeft(deleteHelper(leftmost->getLeft()));
+  }
+}
+
+template <typename T>
 T BinarySearchTree<T>::findMax(){
   if(root == nullptr) throw EmptyStructure();
 
@@ -81,6 +95,21 @@ T BinarySearchTree<T>::findMax(){
 
   return rightmost->getValue();
 }
+
+template <typename T>
+void BinarySearchTree<T>::deleteMax(){
+  if(root == nullptr) throw EmptyStructure();
+
+  if(root->getRight() == nullptr) root = deleteHelper(root);
+  else{
+    BSTNode<T>* rightmost = root;
+    while(rightmost->getRight()->getRight() != nullptr){
+      rightmost = rightmost->getRight();
+    }
+    rightmost->setRight(deleteHelper(rightmost->getRight()));
+  }
+}
+
 
 template <typename T>
 Preorder<T> BinarySearchTree<T>::preorder() const{

@@ -14,7 +14,7 @@
 #include "MaxHeap.hpp"
 #include "Timer.hpp"
 
-#define TABLE_SIZE 1000003
+#define M 1000000
 
 class UserInput{
 
@@ -53,15 +53,15 @@ private:
 
   void userTest();
 
-  // void userPerformanceOpenHashing();
-  //
-  // void userPerformanceClosedHashingQuadraticProbing();
-  //
-  // void userPerformanceClosedHashingDoubleHashing();
+  void userPerformanceBST();
+
+  void userPerformanceMinHeap();
+
+  void userPerformanceMaxHeap();
 
   int MAX_RAND;
   int SIZES[5];
-  int FINDS[5];
+  int DELETES[5];
 
 };
 

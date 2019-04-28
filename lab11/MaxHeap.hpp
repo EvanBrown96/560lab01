@@ -21,7 +21,7 @@ class MaxHeap: public Heap<ch, T>{
 
 public:
 
-  MaxHeap();
+  MaxHeap(int startsize=1);
   MaxHeap(QuickQueue<T> initial);
   MaxHeap(const MaxHeap<ch, T>& copy);
   MaxHeap<ch, T>& operator=(const MaxHeap<ch, T>& copy);

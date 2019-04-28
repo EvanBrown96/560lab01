@@ -7,8 +7,8 @@
  */
 
 template <int ch, typename T>
-MaxHeap<ch, T>::MaxHeap():
-  Heap<ch, T>(max_compare){}
+MaxHeap<ch, T>::MaxHeap(int startsize):
+  Heap<ch, T>(max_compare, startsize){}
 
 template <int ch, typename T>
 MaxHeap<ch, T>::MaxHeap(QuickQueue<T> initial):

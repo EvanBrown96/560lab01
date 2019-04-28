@@ -17,7 +17,7 @@ class Heap{
 
 public:
 
-  Heap(bool (*compare)(const T& v1, const T& v2));
+  Heap(bool (*compare)(const T& v1, const T& v2), int startsize);
   Heap(bool (*compare)(const T& v1, const T& v2), QuickQueue<T> initial);
   Heap(bool (*compare)(const T& v1, const T& v2), const Heap<ch, T>& copy);
   virtual ~Heap();

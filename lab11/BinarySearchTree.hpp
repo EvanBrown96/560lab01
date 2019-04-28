@@ -42,6 +42,9 @@ public:
     T findMin();
     T findMax();
 
+    void deleteMin();
+    void deleteMax();
+
     Preorder<T> preorder() const;
     Inorder<T> inorder() const;
     Postorder<T> postorder() const;

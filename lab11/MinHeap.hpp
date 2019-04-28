@@ -21,7 +21,7 @@ class MinHeap: public Heap<ch, T>{
 
 public:
 
-  MinHeap();
+  MinHeap(int startsize=1);
   MinHeap(QuickQueue<T> initial);
   MinHeap(const MinHeap<ch, T>& copy);
   MinHeap<ch, T>& operator=(const MinHeap<ch, T>& copy);
