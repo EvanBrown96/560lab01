@@ -183,7 +183,7 @@ void Heap<ch, T>::pushDown(int index){
   int worthy = index;
 
   // find most worthy element of the given index and all its children
-  for(int child = index*5+1; child < index*5+6 && child < count; child++){
+  for(int child = index*ch+1; child < (index+1)*ch+1 && child < count; child++){
     if(indexCompare(child, worthy)) worthy = child;
   }
 

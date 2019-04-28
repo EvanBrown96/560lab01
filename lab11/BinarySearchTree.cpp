@@ -74,13 +74,19 @@ template <typename T>
 void BinarySearchTree<T>::deleteMin(){
   if(root == nullptr) throw EmptyStructure();
 
-  if(root->getLeft() == nullptr) root = deleteHelper(root);
+  if(root->getLeft() == nullptr){
+    BSTNode<T>* save = root->getRight();
+    delete root;
+    root = save;
+  }
   else{
     BSTNode<T>* leftmost = root;
     while(leftmost->getLeft()->getLeft() != nullptr){
       leftmost = leftmost->getLeft();
     }
-    leftmost->setLeft(deleteHelper(leftmost->getLeft()));
+    BSTNode<T>* save = leftmost->getLeft()->getRight();
+    delete leftmost->getLeft();
+    leftmost->setLeft(save);
   }
   size--;
 }
@@ -101,13 +107,19 @@ template <typename T>
 void BinarySearchTree<T>::deleteMax(){
   if(root == nullptr) throw EmptyStructure();
 
-  if(root->getRight() == nullptr) root = deleteHelper(root);
+  if(root->getRight() == nullptr){
+    BSTNode<T>* save = root->getLeft();
+    delete root;
+    root = save;
+  }
   else{
     BSTNode<T>* rightmost = root;
     while(rightmost->getRight()->getRight() != nullptr){
       rightmost = rightmost->getRight();
     }
-    rightmost->setRight(deleteHelper(rightmost->getRight()));
+    BSTNode<T>* save = rightmost->getRight()->getLeft();
+    delete rightmost->getRight();
+    rightmost->setRight(save);
   }
   size--;
 }
