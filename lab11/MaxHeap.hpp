@@ -23,6 +23,8 @@ public:
 
   MaxHeap();
   MaxHeap(QuickQueue<T> initial);
+  MaxHeap(const MaxHeap<ch, T>& copy);
+  MaxHeap<ch, T>& operator=(const MaxHeap<ch, T>& copy);
 
   T findMin() const;
   T findMax() const;

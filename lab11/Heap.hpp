@@ -19,6 +19,7 @@ public:
 
   Heap(bool (*compare)(const T& v1, const T& v2));
   Heap(bool (*compare)(const T& v1, const T& v2), QuickQueue<T> initial);
+  Heap(bool (*compare)(const T& v1, const T& v2), const Heap<ch, T>& copy);
   virtual ~Heap();
 
   void insert(const T& val);
@@ -51,6 +52,10 @@ protected:
 
   bool indexCompare(int idx1, int idx2) const;
 
+  void copyHeap(const Heap<ch, T>& copy);
+
+  void destroyHeap();
+
 private:
 
   bool (*compare)(const T& v1, const T& v2);
@@ -58,7 +63,6 @@ private:
   void pushDown(int index);
   int findLowestIndex() const;
 
-  void destroyHeap();
   void resizeHeap();
 
 };

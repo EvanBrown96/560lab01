@@ -39,7 +39,7 @@ private:
 
   BinarySearchTree<int> test_bst;
   MinHeap<5, int> test_minh;
-  MinHeap<5, int> test_maxh;
+  MaxHeap<5, int> test_maxh;
 
   /**
    * ignores any characters still in the input buffer and clears error flags

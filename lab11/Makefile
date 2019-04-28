@@ -24,3 +24,6 @@ Timer.o: Timer.hpp Timer.cpp
 
 RandomGenerator.o: RandomGenerator.hpp RandomGenerator.cpp
 	g++ -std=c++11 -g -c RandomGenerator.cpp
+
+clean:
+	rm -f *.o lab lab.exe

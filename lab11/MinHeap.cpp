@@ -8,11 +8,23 @@
 
 template <int ch, typename T>
 MinHeap<ch, T>::MinHeap():
-  Heap<ch, T>(min_compare){}
+    Heap<ch, T>(min_compare){}
 
 template <int ch, typename T>
 MinHeap<ch, T>::MinHeap(QuickQueue<T> initial):
-  Heap<ch, T>(min_compare, initial){}
+    Heap<ch, T>(min_compare, initial){}
+
+template <int ch, typename T>
+MinHeap<ch, T>::MinHeap(const MinHeap<ch, T>& copy):
+    Heap<ch, T>(min_compare, copy){}
+
+template <int ch, typename T>
+MinHeap<ch, T>& MinHeap<ch, T>::operator=(const MinHeap<ch, T>& copy){
+  this->destroyHeap();
+  copyHeap(copy);
+
+  return *this;
+}
 
 template <int ch, typename T>
 T MinHeap<ch, T>::findMin() const{

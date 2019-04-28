@@ -38,6 +38,11 @@ Heap<ch, T>::Heap(bool (*compare)(const T& v1, const T& v2), QuickQueue<T> initi
 }
 
 template <int ch, typename T>
+Heap<ch, T>::Heap(bool (*compare)(const T& v1, const T& v2), const Heap<ch, T>& copy){
+  copyHeap(copy);
+}
+
+template <int ch, typename T>
 Heap<ch, T>::~Heap(){
   destroyHeap();
 }
@@ -120,6 +125,16 @@ void Heap<ch, T>::destroyHeap(){
     delete data[i];
   }
   delete[] data;
+}
+
+template <int ch, typename T>
+void Heap<ch, T>::copyHeap(const Heap<ch, T>& copy){
+  size = copy.size;
+  count = copy.count;
+  data = new T*[size];
+  for(int i = 0; i < copy.count; i++){
+    data[i] = copy.data[i];
+  }
 }
 
 template <int ch, typename T>
