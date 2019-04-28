@@ -21,7 +21,7 @@ UserInput::UserInput(const BinarySearchTree<int>& startoff_bst,
 
   MAX_RAND = 5 * M;
   for(int i = 0; i < 5; i++){
-    SIZES[i] = M * i;
+    SIZES[i] = M * (i+1);
     DELETES[i] = floor(0.001 * SIZES[i]);
   }
 }
@@ -95,30 +95,34 @@ void UserInput::userPerformanceBST(){
   for(int i = 0; i < 5; i++){
 
     for(int j = 0; j < 5; j++){
-      std::cout << "p";
-      BinarySearchTree<int> bst;
+      BinarySearchTree<int>* bst = new BinarySearchTree<int>();
       RandomGenerator::seedTime();
 
       for(int k = 0; k < SIZES[i]; k++){
         int to_insert = RandomGenerator::getFromOneTo(MAX_RAND);
 
         build_times[i].start();
-        bst.insert(to_insert);
+        bst->insert(to_insert);
         build_times[i].stop();
       }
 
-      BinarySearchTree<int> bst_dup(bst);
+      BinarySearchTree<int>* bst_dup = new BinarySearchTree<int>(*bst);
       for(int k = 0; k < DELETES[i]; k++){
+        // std::cout << bst->size << "\n";
         min_times[i].start();
-        bst_dup.deleteMin();
+        bst_dup->deleteMin();
         min_times[i].stop();
       }
+      delete bst_dup;
 
       for(int k = 0; k < DELETES[i]; k++){
+        // std::cout << bst->size << "\n";
         max_times[i].start();
-        bst.deleteMax();
+        bst->deleteMax();
         max_times[i].stop();
       }
+      delete bst;
+
     }
 
   }
@@ -141,29 +145,32 @@ void UserInput::userPerformanceMinHeap(){
 
     for(int j = 0; j < 5; j++){
 
-      MinHeap<5, int> heap;
+      MinHeap<5, int>* heap = new MinHeap<5, int>(HEAP_SIZE);
       RandomGenerator::seedTime();
 
       for(int k = 0; k < SIZES[i]; k++){
         int to_insert = RandomGenerator::getFromOneTo(MAX_RAND);
 
         build_times[i].start();
-        heap.insert(to_insert);
+        heap->insert(to_insert);
         build_times[i].stop();
       }
 
-      MinHeap<5, int> heap_dup(heap);
+      MinHeap<5, int>* heap_dup = new MinHeap<5, int>(*heap);
       for(int k = 0; k < DELETES[i]; k++){
         min_times[i].start();
-        heap.deleteMin();
+        heap_dup->deleteMin();
         min_times[i].stop();
       }
+      delete heap_dup;
 
       for(int k = 0; k < DELETES[i]; k++){
         max_times[i].start();
-        heap.deleteMax();
+        heap->deleteMax();
         max_times[i].stop();
       }
+      delete heap;
+
     }
 
   }
@@ -186,29 +193,32 @@ void UserInput::userPerformanceMaxHeap(){
 
     for(int j = 0; j < 5; j++){
 
-      MaxHeap<5, int> heap;
+      MaxHeap<5, int>* heap = new MaxHeap<5, int>(HEAP_SIZE);
       RandomGenerator::seedTime();
 
       for(int k = 0; k < SIZES[i]; k++){
         int to_insert = RandomGenerator::getFromOneTo(MAX_RAND);
 
         build_times[i].start();
-        heap.insert(to_insert);
+        heap->insert(to_insert);
         build_times[i].stop();
       }
 
-      MaxHeap<5, int> heap_dup(heap);
+      MaxHeap<5, int>* heap_dup = new MaxHeap<5, int>(*heap);
       for(int k = 0; k < DELETES[i]; k++){
         min_times[i].start();
-        heap.deleteMin();
+        heap_dup->deleteMin();
         min_times[i].stop();
       }
+      delete heap_dup;
 
       for(int k = 0; k < DELETES[i]; k++){
         max_times[i].start();
-        heap.deleteMax();
+        heap->deleteMax();
         max_times[i].stop();
       }
+      delete heap;
+
     }
 
   }
@@ -245,7 +255,7 @@ void UserInput::printTable(Timer* build_times, Timer* min_times, Timer* max_time
   std::cout << "\n";
 
   column();
-  std::cout << "Not Found";
+  std::cout << "Del Max";
   for(int i = 0; i < 5; i++){
     column();
     std::cout << max_times[i].getMS()/5;

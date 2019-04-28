@@ -15,6 +15,7 @@
 #include "Timer.hpp"
 
 #define M 1000000
+#define HEAP_SIZE 10000000
 
 class UserInput{
 

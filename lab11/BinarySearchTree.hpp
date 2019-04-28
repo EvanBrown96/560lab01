@@ -57,11 +57,11 @@ public:
     friend class Inorder<T>;
     friend class Postorder<T>;
     friend class Levelorder<T>;
-
+    int size;
 private:
 
   BSTNode<T>* root;
-  int size;
+  // int size;
 
   void destroySubtree(BSTNode<T>* st);
   BSTNode<T>* copySubtree(BSTNode<T>* st);

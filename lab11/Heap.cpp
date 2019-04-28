@@ -38,7 +38,8 @@ Heap<ch, T>::Heap(bool (*compare)(const T& v1, const T& v2), QuickQueue<T> initi
 }
 
 template <int ch, typename T>
-Heap<ch, T>::Heap(bool (*compare)(const T& v1, const T& v2), const Heap<ch, T>& copy){
+Heap<ch, T>::Heap(bool (*compare)(const T& v1, const T& v2), const Heap<ch, T>& copy):
+    compare(compare){
   copyHeap(copy);
 }
 
@@ -133,7 +134,7 @@ void Heap<ch, T>::copyHeap(const Heap<ch, T>& copy){
   count = copy.count;
   data = new T*[size];
   for(int i = 0; i < copy.count; i++){
-    data[i] = copy.data[i];
+    data[i] = new T(*copy.data[i]);
   }
 }
 

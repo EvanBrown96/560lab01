@@ -82,6 +82,7 @@ void BinarySearchTree<T>::deleteMin(){
     }
     leftmost->setLeft(deleteHelper(leftmost->getLeft()));
   }
+  size--;
 }
 
 template <typename T>
@@ -108,6 +109,7 @@ void BinarySearchTree<T>::deleteMax(){
     }
     rightmost->setRight(deleteHelper(rightmost->getRight()));
   }
+  size--;
 }
 
 
