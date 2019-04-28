@@ -15,21 +15,21 @@ MaxHeap<ch, T>::MaxHeap(QuickQueue<T> initial):
   Heap<ch, T>(max_compare, initial){}
 
 template <int ch, typename T>
-T MaxHeap<ch, T>::findMin() const throw(EmptyStructure){
+T MaxHeap<ch, T>::findMin() const{
   return this->findLowest();
 }
 
 template <int ch, typename T>
-T MaxHeap<ch, T>::findMax() const throw(EmptyStructure){
+T MaxHeap<ch, T>::findMax() const{
   return this->findHighest();
 }
 
 template <int ch, typename T>
-void MaxHeap<ch, T>::deleteMin() throw(EmptyStructure){
+void MaxHeap<ch, T>::deleteMin(){
   this->deleteLowest();
 }
 
 template <int ch, typename T>
-void MaxHeap<ch, T>::deleteMax() throw(EmptyStructure){
+void MaxHeap<ch, T>::deleteMax(){
   this->deleteHighest();
 }

@@ -24,11 +24,11 @@ public:
   MinHeap();
   MinHeap(QuickQueue<T> initial);
 
-  T findMin() const throw(EmptyStructure);
-  T findMax() const throw(EmptyStructure);
+  T findMin() const;
+  T findMax() const;
 
-  void deleteMin() throw(EmptyStructure);
-  void deleteMax() throw(EmptyStructure);
+  void deleteMin();
+  void deleteMax();
 
 };
 

@@ -58,25 +58,25 @@ void Heap<ch, T>::insert(const T& val){
 }
 
 template <int ch, typename T>
-T Heap<ch, T>::findHighest() const throw(EmptyStructure){
+T Heap<ch, T>::findHighest() const{
   if(count == 0) throw EmptyStructure();
   return *data[0];
 }
 
 template <int ch, typename T>
-T Heap<ch, T>::findLowest() const throw(EmptyStructure){
+T Heap<ch, T>::findLowest() const{
   if(count == 0) throw EmptyStructure();
   return *data[findLowestIndex()];
 }
 
 template <int ch, typename T>
-void Heap<ch, T>::deleteHighest() throw(EmptyStructure){
+void Heap<ch, T>::deleteHighest(){
   if(count == 0) throw EmptyStructure();
   safeRemove(0);
 }
 
 template <int ch, typename T>
-void Heap<ch, T>::deleteLowest() throw(EmptyStructure){
+void Heap<ch, T>::deleteLowest(){
   if(count == 0) throw EmptyStructure();
   safeRemove(findLowestIndex());
 }

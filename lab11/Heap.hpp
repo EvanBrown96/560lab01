@@ -23,17 +23,17 @@ public:
 
   void insert(const T& val);
 
-  void deleteHighest() throw(EmptyStructure);
-  void deleteLowest() throw(EmptyStructure);
+  void deleteHighest();
+  void deleteLowest();
 
-  T findHighest() const throw(EmptyStructure);
-  T findLowest() const throw(EmptyStructure);
+  T findHighest() const;
+  T findLowest() const;
 
-  virtual T findMin() const throw(EmptyStructure) = 0;
-  virtual T findMax() const throw(EmptyStructure) = 0;
+  virtual T findMin() const = 0;
+  virtual T findMax() const = 0;
 
-  virtual void deleteMin() throw(EmptyStructure) = 0;
-  virtual void deleteMax() throw(EmptyStructure) = 0;
+  virtual void deleteMin() = 0;
+  virtual void deleteMax() = 0;
 
   void levelOrder() const;
 

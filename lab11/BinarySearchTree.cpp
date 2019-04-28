@@ -48,7 +48,7 @@ void BinarySearchTree<T>::insert(const T& value){
 }
 
 template <typename T>
-void BinarySearchTree<T>::deleteVal(const T& value) throw(ValueNotFound<T>){
+void BinarySearchTree<T>::deleteVal(const T& value){
   root = deleteFinder(root, value);
   size--;
 }
@@ -59,7 +59,7 @@ bool BinarySearchTree<T>::find(const T& value){
 }
 
 template <typename T>
-T BinarySearchTree<T>::findMin() throw(EmptyStructure){
+T BinarySearchTree<T>::findMin(){
   if(root == nullptr) throw EmptyStructure();
 
   BSTNode<T>* leftmost = root;
@@ -71,7 +71,7 @@ T BinarySearchTree<T>::findMin() throw(EmptyStructure){
 }
 
 template <typename T>
-T BinarySearchTree<T>::findMax() throw(EmptyStructure){
+T BinarySearchTree<T>::findMax(){
   if(root == nullptr) throw EmptyStructure();
 
   BSTNode<T>* rightmost = root;
@@ -170,7 +170,7 @@ bool BinarySearchTree<T>::findHelper(BSTNode<T>* st, const T& value) const{
 }
 
 template <typename T>
-BSTNode<T>* BinarySearchTree<T>::deleteFinder(BSTNode<T>* st, const T& value) throw(ValueNotFound<T>){
+BSTNode<T>* BinarySearchTree<T>::deleteFinder(BSTNode<T>* st, const T& value){
   if(st == nullptr) throw ValueNotFound<T>(value);
 
   if(st->getValue() == value) return deleteHelper(st);

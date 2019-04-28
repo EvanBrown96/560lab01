@@ -36,11 +36,11 @@ public:
     BinarySearchTree<T>& operator=(const BinarySearchTree<T>& bst);
 
     void insert(const T& value);
-    void deleteVal(const T& value) throw(ValueNotFound<T>);
+    void deleteVal(const T& value);
     bool find(const T& value);
 
-    T findMin() throw(EmptyStructure);
-    T findMax() throw(EmptyStructure);
+    T findMin();
+    T findMax();
 
     Preorder<T> preorder() const;
     Inorder<T> inorder() const;
@@ -66,7 +66,7 @@ private:
   BSTNode<T>* insertHelper(BSTNode<T>* st, const T& value);
   bool findHelper(BSTNode<T>* st, const T& value) const;
 
-  BSTNode<T>* deleteFinder(BSTNode<T>* st, const T& value) throw(ValueNotFound<T>);
+  BSTNode<T>* deleteFinder(BSTNode<T>* st, const T& value);
   BSTNode<T>* deleteHelper(BSTNode<T>* st);
 
 };
