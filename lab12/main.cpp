@@ -1,5 +1,6 @@
 #include "Graph.hpp"
 #include "PriQueue.hpp"
+#include "DJS.hpp"
 
 int main(int argc, char** argv){
 
@@ -9,6 +10,8 @@ int main(int argc, char** argv){
   // thing[2] = {14, 2, 0};
   //
   // Graph(3, thing);
+
+  DJS<int>();
 
   return 0;
 }
