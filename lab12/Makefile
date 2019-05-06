@@ -1,8 +1,11 @@
-lab: main.o Graph.o GraphNode.o Edge.o InputParser.o ParseError.o EmptyStructure.o String.o
-	g++ -std=c++11 -g main.o Graph.o GraphNode.o Edge.o InputParser.o ParseError.o EmptyStructure.o String.o -o lab
+lab: main.o UserInput.o Graph.o GraphNode.o Edge.o InputParser.o ParseError.o EmptyStructure.o String.o
+	g++ -std=c++11 -g main.o UserInput.o Graph.o GraphNode.o Edge.o InputParser.o ParseError.o EmptyStructure.o String.o -o lab
 
-main.o: main.cpp Graph.hpp Edge.hpp
+main.o: main.cpp UserInput.hpp InputParser.hpp ParseError.hpp Graph.hpp Edge.hpp
 	g++ -std=c++11 -g -c main.cpp
+
+UserInput.o: UserInput.hpp UserInput.cpp Graph.hpp
+	g++ -std=c++11 -g -c UserInput.cpp
 
 InputParser.o: InputParser.hpp InputParser.cpp ParseError.hpp String.hpp QuickQueue.hpp QuickQueue.cpp
 	g++ -std=c++11 -g -c InputParser.cpp
