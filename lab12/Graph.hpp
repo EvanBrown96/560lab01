@@ -4,6 +4,8 @@
 #define GRAPH_HPP
 
 #include "GraphNode.hpp"
+#include "Edge.hpp"
+#include "QuickQueue.hpp"
 
 class Graph{
 public:
@@ -14,7 +16,7 @@ public:
   Graph& operator=(const Graph& copy);
 
   int*** bfs() const;
-  int*** dfs() const;
+  Edge*** dfs() const;
 
   static void cleanup_search(int*** search_result);
 
@@ -30,6 +32,9 @@ private:
 
   int num_nodes;
   GraphNode** nodes;
+
+  void dfsHelper(bool* node_marked, bool** edge_marked, QuickQueue<Edge>& tree_edges, QuickQueue<Edge>& back_edges, int index) const;
+
 
 };
 

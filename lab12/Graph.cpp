@@ -26,15 +26,76 @@ Graph& Graph::operator=(const Graph& copy){
   return *this;
 }
 
-int*** bfs() const;
-int*** dfs() const;
+int*** Graph::bfs() const{}
+Edge*** Graph::dfs() const{
 
-static void cleanup_search(int*** search_result);
+    bool* edge_marked[5];
+    bool node_marked[num_nodes];
+    for(int i = 0; i < num_nodes; i++){
+      node_marked[i] = false;
+      edge_marked[i] = new bool[num_nodes];
+      for(int j = 0; j < num_nodes; j++){
+        edge_marked[i][j] = false;
+      }
+    }
+    node_marked[0] = true;
 
-int** kruskal() const;
-int** prim() const;
+    QuickQueue<Edge> tree_edges(10);
+    QuickQueue<Edge> back_edges(10);
 
-static void cleanup_mst(int** mst_result);
+    dfsHelper(node_marked, edge_marked, tree_edges, back_edges, 0);
+
+    Edge*** ret = new Edge**[2];
+
+    int num_tree_edges = tree_edges.getSize();
+    ret[0] = new Edge*[num_tree_edges+1];
+    ret[0][num_tree_edges] = nullptr;
+    for(int i = 0; i < num_tree_edges; i++){
+      ret[0][i] = new Edge(tree_edges.pop());
+    }
+
+    int num_back_edges = back_edges.getSize();
+    ret[1] = new Edge*[num_back_edges+1];
+    ret[1][num_back_edges] = nullptr;
+    for(int i = 0; i < num_back_edges; i++){
+      ret[1][i] = new Edge(back_edges.pop());
+    }
+
+    return ret;
+
+}
+
+void Graph::dfsHelper(bool* node_marked, bool** edge_marked, QuickQueue<Edge>& tree_edges, QuickQueue<Edge>& back_edges, int index) const{
+
+  GraphNode* cur = nodes[index];
+  for(int i = 0; i < num_nodes; i++){
+    if(i == index) continue;
+    if(!cur->isNeighbor(i)) continue;
+    if(edge_marked[index][i] || edge_marked[i][index]) continue;
+
+    if(node_marked[i]){
+      // add a back edge
+      back_edges.push(Edge(index, i));
+      edge_marked[i][index] = true;
+    }
+    else{
+      // add a tree edge & recurse dfs
+      node_marked[i] = true;
+      edge_marked[i][index] = true;
+      tree_edges.push(Edge(index, i));
+      dfsHelper(node_marked, edge_marked, tree_edges, back_edges, i);
+    }
+  }
+
+}
+
+
+void Graph::cleanup_search(int*** search_result){}
+
+int** Graph::kruskal() const{}
+int** Graph::prim() const{}
+
+void Graph::cleanup_mst(int** mst_result){}
 
 void Graph::copyGraph(const Graph& copy){
 
