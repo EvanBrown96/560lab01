@@ -1,4 +1,4 @@
-// 4/30
+// 5/5
 
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
@@ -18,10 +18,10 @@ public:
   Edge*** bfs() const;
   Edge*** dfs() const;
 
-  static void cleanup_search(int*** search_result);
+  static void cleanup_search(Edge*** search_result);
 
-  int** kruskal() const;
-  int** prim() const;
+  Edge** kruskal() const;
+  Edge** prim() const;
 
   static void cleanup_mst(int** mst_result);
 

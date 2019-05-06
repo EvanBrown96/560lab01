@@ -43,23 +43,35 @@ int main(int argc, char** argv){
   vals[4][4] = 0;
 
   Graph g(5, vals);
-  Edge*** dfs_res = g.bfs();
+  // Edge*** dfs_res = g.bfs();
+  //
+  //
+  // int iter = 0;
+  // while(dfs_res[0][iter] != nullptr){
+  //   std::cout << *dfs_res[0][iter] << ", ";
+  //   iter++;
+  // }
+  // std::cout << "\n";
+  //
+  // iter = 0;
+  // while(dfs_res[1][iter] != nullptr){
+  //   std::cout << *dfs_res[1][iter] << ", ";
+  //   iter++;
+  // }
+  // std::cout << "\n";
+  //
+  // Graph::cleanup_search(dfs_res);
 
+  Edge** krusk = g.kruskal();
 
   int iter = 0;
-  while(dfs_res[0][iter] != nullptr){
-    std::cout << *dfs_res[0][iter] << ", ";
+  int total_cost = 0;
+  while(krusk[iter] != nullptr){
+    std::cout << *krusk[iter] << ", ";
+    total_cost += krusk[iter]->cost;
     iter++;
   }
-  std::cout << "\n";
-
-  iter = 0;
-  while(dfs_res[1][iter] != nullptr){
-    std::cout << *dfs_res[1][iter] << ", ";
-    iter++;
-  }
-  std::cout << "\n";
-
+  std::cout << "\ncost: " << total_cost << "\n";
   // DJS<int> x;
   // x.makeSet(12);
   // x.makeSet(19);
