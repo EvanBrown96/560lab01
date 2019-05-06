@@ -270,13 +270,19 @@ Edge** Graph::prim() const{
 
   // loop
   while(num_visited != num_nodes){
+    // initialize minimum as infinity
     int cur_min = -1;
     int cur_node = -1;
     for(int i = 1; i < num_nodes; i++){
+      // skip if the tested node has already been visited
       if(!visited[i]){
-        if(minimums[i] >= 0 && (cur_min < 0 || minimums[i] < cur_min)){
-          cur_min = minimums[i];
-          cur_node = i;
+        // minimum for this node must not be infinity
+        if(minimums[i] >= 0){
+          // current min must be infinity or more than tested min
+          if(cur_min < 0 || minimums[i] < cur_min){
+            cur_min = minimums[i];
+            cur_node = i;
+          }
         }
       }
     }
@@ -289,11 +295,21 @@ Edge** Graph::prim() const{
     qq.push(e);
 
     for(int i = 1; i < num_nodes; i++){
+      // skip if tested not has already been visited
       if(!visited[i]){
-        int pot_new_min = nodes[cur_node]->costTo(i) + minimums[cur_node];
-        if(minimums[cur_node] >= 0 && (minimums[i] == -1 || minimums[i] > pot_new_min)){
-          minimums[i] = pot_new_min;
-          others[i] = cur_node;
+        int cost_between = nodes[cur_node]->costTo(i);
+        // skip if nodes are not adjacent
+        if(cost_between > 0){
+          // skip if minimum for current node is infinity
+          if(minimums[cur_node] >= 0){
+            // calculate new min
+            int pot_new_min = cost_between + minimums[cur_node];
+            // old min must be infinity or more than new min
+            if(minimums[i] == -1 || minimums[i] > pot_new_min){
+              minimums[i] = pot_new_min;
+              others[i] = cur_node;
+            }
+          }
         }
       }
     }
