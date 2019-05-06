@@ -80,7 +80,7 @@ void UserInput::userBFS(){
     iter++;
   }
 
-  std::cout << "\nBack edges: ";
+  std::cout << "\nCross edges: ";
   iter = 0;
   while(search_res[1][iter] != nullptr){
     std::cout << *search_res[1][iter] << ", ";
@@ -103,7 +103,7 @@ void UserInput::userDFS(){
     iter++;
   }
 
-  std::cout << "\nCross edges: ";
+  std::cout << "\nBack edges: ";
   iter = 0;
   while(search_res[1][iter] != nullptr){
     std::cout << *search_res[1][iter] << ", ";
