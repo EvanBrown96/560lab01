@@ -300,15 +300,10 @@ Edge** Graph::prim() const{
         int cost_between = nodes[cur_node]->costTo(i);
         // skip if nodes are not adjacent
         if(cost_between > 0){
-          // skip if minimum for current node is infinity
-          if(minimums[cur_node] >= 0){
-            // calculate new min
-            int pot_new_min = cost_between + minimums[cur_node];
-            // old min must be infinity or more than new min
-            if(minimums[i] == -1 || minimums[i] > pot_new_min){
-              minimums[i] = pot_new_min;
-              others[i] = cur_node;
-            }
+          // old min must be infinity or more than new min
+          if(minimums[i] == -1 || minimums[i] > cost_between){
+            minimums[i] = cost_between;
+            others[i] = cur_node;
           }
         }
       }
