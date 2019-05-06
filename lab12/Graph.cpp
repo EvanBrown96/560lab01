@@ -215,6 +215,7 @@ Edge** Graph::kruskal() const{
   Edge* cur;
   while(qq.getSize() != num_nodes-1){
 
+    // get next lowest edge
     try{
       cur = new Edge(edges.pop());
     }
@@ -222,9 +223,11 @@ Edge** Graph::kruskal() const{
       break;
     }
 
+    // find subset each node of the edge is in
     Set<int>* f1 = node_set.find(cur->n1);
     Set<int>* f2 = node_set.find(cur->n2);
 
+    // if they are in different sets
     if(f1->getRootItem() != f2->getRootItem()){
       qq.push(*cur);
       node_set.setUnion(f1, f2);
@@ -247,7 +250,11 @@ Edge** Graph::kruskal() const{
 
 }
 
-Edge** Graph::prim() const{}
+Edge** Graph::prim() const{
+
+  
+
+}
 
 void Graph::cleanup_mst(Edge** mst_result){
 

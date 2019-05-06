@@ -1,5 +1,8 @@
 #include "Graph.hpp"
 #include "Edge.hpp"
+#include "InputParser.hpp"
+#include "ParseError.hpp"
+#include <fstream>
 
 int main(int argc, char** argv){
 
@@ -10,39 +13,72 @@ int main(int argc, char** argv){
   //
   // Graph(3, thing);
 
-  int** vals = new int*[5];
-  vals[0] = new int[5];
-  vals[0][0] = 0;
-  vals[0][1] = 5;
-  vals[0][2] = 7;
-  vals[0][3] = 11;
-  vals[0][4] = 8;
-  vals[1] = new int[5];
-  vals[1][0] = 5;
-  vals[1][1] = 0;
-  vals[1][2] = 6;
-  vals[1][3] = -1;
-  vals[1][4] = 12;
-  vals[2] = new int[5];
-  vals[2][0] = 7;
-  vals[2][1] = 6;
-  vals[2][2] = 0;
-  vals[2][3] = 9;
-  vals[2][4] = -1;
-  vals[3] = new int[5];
-  vals[3][0] = 11;
-  vals[3][1] = -1;
-  vals[3][2] = 9;
-  vals[3][3] = 0;
-  vals[3][4] = 7;
-  vals[4] = new int[5];
-  vals[4][0] = 8;
-  vals[4][1] = 12;
-  vals[4][2] = -1;
-  vals[4][3] = 7;
-  vals[4][4] = 0;
+  if(argc <= 1){
+    std::cout << "No input file provided, exiting.\n";
+    return -1;
+  }
 
-  Graph g(5, vals);
+  QuickQueue<int> input_data(10);
+
+  std::ifstream f;
+  f.open(argv[1]);
+
+  int num_nodes;
+
+  try{
+    InputParser::parse(f, num_nodes, input_data);
+  }
+  catch(ParseError& err){
+    f.close();
+    std::cout << "Data could not be imported from " << argv[1] << "; error at position " << err.getErrPos() << "\n";
+    return -1;
+  }
+
+  f.close();
+
+  int** vals = new int*[num_nodes];
+  for(int i = 0; i < num_nodes; i++){
+    vals[i] = new int[num_nodes];
+    for(int j = 0; j < num_nodes; j++){
+      vals[i][j] = input_data.pop();
+    }
+  }
+
+  // return 0;
+  //
+  // int** vals = new int*[5];
+  // vals[0] = new int[5];
+  // vals[0][0] = 0;
+  // vals[0][1] = 5;
+  // vals[0][2] = 7;
+  // vals[0][3] = 11;
+  // vals[0][4] = 8;
+  // vals[1] = new int[5];
+  // vals[1][0] = 5;
+  // vals[1][1] = 0;
+  // vals[1][2] = 6;
+  // vals[1][3] = -1;
+  // vals[1][4] = 12;
+  // vals[2] = new int[5];
+  // vals[2][0] = 7;
+  // vals[2][1] = 6;
+  // vals[2][2] = 0;
+  // vals[2][3] = 9;
+  // vals[2][4] = -1;
+  // vals[3] = new int[5];
+  // vals[3][0] = 11;
+  // vals[3][1] = -1;
+  // vals[3][2] = 9;
+  // vals[3][3] = 0;
+  // vals[3][4] = 7;
+  // vals[4] = new int[5];
+  // vals[4][0] = 8;
+  // vals[4][1] = 12;
+  // vals[4][2] = -1;
+  // vals[4][3] = 7;
+  // vals[4][4] = 0;
+
+  Graph g(num_nodes, vals);
   // Edge*** dfs_res = g.bfs();
   //
   //
