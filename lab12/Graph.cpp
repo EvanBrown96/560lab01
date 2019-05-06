@@ -227,6 +227,7 @@ Edge** Graph::kruskal() const{
 
     if(f1->getRootItem() != f2->getRootItem()){
       qq.push(*cur);
+      node_set.setUnion(f1, f2);
     }
 
     delete cur;
