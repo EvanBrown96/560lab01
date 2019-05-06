@@ -274,7 +274,7 @@ Edge** Graph::prim() const{
     int cur_node = -1;
     for(int i = 1; i < num_nodes; i++){
       if(!visited[i]){
-        if(cur_min < 0 || minimums[i] < cur_min){
+        if(minimums[i] >= 0 && (cur_min < 0 || minimums[i] < cur_min)){
           cur_min = minimums[i];
           cur_node = i;
         }
