@@ -20,9 +20,9 @@ public:
   void makeSet(const T& item);
   void makeSet(const T* items, int count);
 
-  Set<T> find(const T& item);
+  Set<T>* find(const T& item);
   void setUnion(const T& item1, const T& item2);
-  void setUnion(const Set<T>& s1, const Set<T>& s2);
+  void setUnion(Set<T>* s1, Set<T>* s2);
 
 private:
 

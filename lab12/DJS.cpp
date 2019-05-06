@@ -43,12 +43,12 @@ void DJS<T>::makeSet(const T* items, int count){
 }
 
 template <typename T>
-Set<T> DJS<T>::find(const T& item){
+Set<T>* DJS<T>::find(const T& item){
 
   Set<T>* cur_set = first_set;
   while(cur_set != nullptr){
     if(cur_set->getRootItem() == item)
-      return *cur_set;
+      return cur_set;
     cur_set = cur_set->getNext();
   }
 
@@ -57,39 +57,41 @@ Set<T> DJS<T>::find(const T& item){
     if(cur_node->getItem() == item){
       while(cur_node->getMySet() == nullptr)
         cur_node = cur_node->getParent();
-      return *(cur_node->getMySet());
+      return cur_node->getMySet();
     }
     cur_node = cur_node->getNext();
   }
+
+  throw ValueNotFound<T>(item);
 }
 
 template <typename T>
 void DJS<T>::setUnion(const T& item1, const T& item2){
 
-  Set<T> s1 = find(item1);
-  Set<T> s2 = find(item2);
+  Set<T>* s1 = find(item1);
+  Set<T>* s2 = find(item2);
 
   setUnion(s1, s2);
 
 }
 
 template <typename T>
-void DJS<T>::setUnion(const Set<T>& s1, const Set<T>& s2){
+void DJS<T>::setUnion(Set<T>* s1, Set<T>* s2){
 
-  if(s1.getRank() == s2.getRank()){
-    s2.setRank(s2.getRank()+1);
+  if(s1->getRank() == s2->getRank()){
+    s2->setRank(s2->getRank()+1);
   }
 
-  if(s1.getRank() <= s2.getRank()){
-    SetNode<T>* old_root = s1.getRoot();
-    old_root->setParent(s2.getRoot());
-    removeSet(&s1);
+  if(s1->getRank() < s2->getRank()){
+    SetNode<T>* old_root = s1->getRoot();
+    old_root->setParent(s2->getRoot());
+    removeSet(s1);
     addNode(old_root);
   }
   else{
-    SetNode<T>* old_root = s2.getRoot();
-    old_root->setParent(s1.getRoot());
-    removeSet(&s2);
+    SetNode<T>* old_root = s2->getRoot();
+    old_root->setParent(s1->getRoot());
+    removeSet(s2);
     addNode(old_root);
   }
 
@@ -124,10 +126,17 @@ void DJS<T>::addSet(Set<T>* new_set){
 template <typename T>
 void DJS<T>::removeSet(Set<T>* rem_set){
 
-  if(rem_set->getPrev() == nullptr)
+  Set<T>* prev = rem_set->getPrev();
+  if(prev == nullptr)
     first_set = rem_set->getNext();
-  if(rem_set->getNext() == nullptr)
+  else
+    prev->setNext(rem_set->getNext());
+
+  Set<T>* next = rem_set->getNext();
+  if(next == nullptr)
     last_set = rem_set->getPrev();
+  else
+    next->setPrev(rem_set->getPrev());
 
   delete rem_set;
 
@@ -149,10 +158,17 @@ void DJS<T>::addNode(SetNode<T>* new_node){
 template <typename T>
 void DJS<T>::removeNode(SetNode<T>* rem_node){
 
-  if(rem_node->getPrev() == nullptr)
+  SetNode<T>* prev = rem_node->getPrev();
+  if(prev == nullptr)
     first_node = rem_node->getNext();
-  if(rem_node->getNext() == nullptr)
+  else
+    prev->setNext(rem_node->getNext());
+
+  SetNode<T>* next = rem_node->getNext();
+  if(next == nullptr)
     last_node = rem_node->getPrev();
+  else
+    next->setPrev(rem_node->getPrev());
 
   delete rem_node;
 

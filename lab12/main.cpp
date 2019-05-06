@@ -11,7 +11,15 @@ int main(int argc, char** argv){
   //
   // Graph(3, thing);
 
-  DJS<int>();
+  DJS<int> x;
+  x.makeSet(12);
+  x.makeSet(19);
+  x.makeSet(45);
+  x.makeSet(2);
+  x.makeSet(99);
+  x.makeSet(43);
+  x.setUnion(19, 45);
+  std::cout << x.find(19)->getRootItem() << "\n";
 
   return 0;
 }

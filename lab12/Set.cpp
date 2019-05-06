@@ -22,7 +22,7 @@ void Set<T>::setRank(int rank){
 
 template <typename T>
 T Set<T>::getRootItem() const{
-  return *root;
+  return root->getItem();
 }
 
 template <typename T>
