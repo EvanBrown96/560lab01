@@ -202,8 +202,7 @@ Edge** Graph::kruskal() const{
     for(int j = i+1; j < num_nodes; j++){
       c = nodes[i]->costTo(j);
       if(c != -1){
-        Edge e(i, j);
-        e.cost = c;
+        Edge e(i, j, c);
         edges.push(e);
       }
     }
@@ -252,7 +251,63 @@ Edge** Graph::kruskal() const{
 
 Edge** Graph::prim() const{
 
-  
+  int num_visited = 1;
+  bool visited[num_nodes];
+  visited[0] = true;
+  for(int i = 1; i < num_nodes; i++){
+    visited[i] = false;
+  }
+
+  int minimums[num_nodes];
+  int others[num_nodes];
+  others[0] = -1;
+  for(int i = 1; i < num_nodes; i++){
+    minimums[i] = nodes[0]->costTo(i);
+    others[i] = 0;
+  }
+
+  QuickQueue<Edge> qq(10);
+
+  // loop
+  while(num_visited != num_nodes){
+    int cur_min = -1;
+    int cur_node = -1;
+    for(int i = 1; i < num_nodes; i++){
+      if(!visited[i]){
+        if(cur_min < 0 || minimums[i] < cur_min){
+          cur_min = minimums[i];
+          cur_node = i;
+        }
+      }
+    }
+
+    if(cur_node < 0) throw std::runtime_error("Given graph is not connected");
+
+    num_visited++;
+    visited[cur_node] = true;
+    Edge e(cur_node, others[cur_node], nodes[cur_node]->costTo(others[cur_node]));
+    qq.push(e);
+
+    for(int i = 1; i < num_nodes; i++){
+      if(!visited[i]){
+        int pot_new_min = nodes[cur_node]->costTo(i) + minimums[cur_node];
+        if(minimums[cur_node] >= 0 && (minimums[i] == -1 || minimums[i] > pot_new_min)){
+          minimums[i] = pot_new_min;
+          others[i] = cur_node;
+        }
+      }
+    }
+    minimums[cur_node] = -1;
+  }
+
+  int num_edges = qq.getSize();
+  Edge** ret = new Edge*[num_edges+1];
+  ret[num_edges] = nullptr;
+  for(int i = 0; i < num_edges; i++){
+    ret[i] = new Edge(qq.pop());
+  }
+
+  return ret;
 
 }
 

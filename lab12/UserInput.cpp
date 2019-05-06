@@ -134,4 +134,17 @@ void UserInput::userKruskal(){
 
 void UserInput::userPrim(){
 
+  Edge** mst_res = g->prim();
+
+  int iter = 0;
+  int total_cost = 0;
+  while(mst_res[iter] != nullptr){
+    std::cout << *mst_res[iter] << ", ";
+    total_cost += mst_res[iter]->cost;
+    iter++;
+  }
+  std::cout << "\ncost: " << total_cost << "\n";
+
+  Graph::cleanup_mst(mst_res);
+
 }

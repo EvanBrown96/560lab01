@@ -49,40 +49,6 @@ int main(int argc, char** argv){
   UserInput ui(&g);
   ui.start();
 
-  return 0;
-
-  // Edge*** dfs_res = g.bfs();
-  //
-  //
-  // int iter = 0;
-  // while(dfs_res[0][iter] != nullptr){
-  //   std::cout << *dfs_res[0][iter] << ", ";
-  //   iter++;
-  // }
-  // std::cout << "\n";
-  //
-  // iter = 0;
-  // while(dfs_res[1][iter] != nullptr){
-  //   std::cout << *dfs_res[1][iter] << ", ";
-  //   iter++;
-  // }
-  // std::cout << "\n";
-  //
-  // Graph::cleanup_search(dfs_res);
-
-  Edge** krusk = g.kruskal();
-
-  int iter = 0;
-  int total_cost = 0;
-  while(krusk[iter] != nullptr){
-    std::cout << *krusk[iter] << ", ";
-    total_cost += krusk[iter]->cost;
-    iter++;
-  }
-  std::cout << "\ncost: " << total_cost << "\n";
-
-  Graph::cleanup_mst(krusk);
-
   for(int i = 0; i < 5; i++){
     delete[] vals[i];
   }
