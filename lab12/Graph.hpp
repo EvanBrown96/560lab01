@@ -15,7 +15,7 @@ public:
   Graph(const Graph& copy);
   Graph& operator=(const Graph& copy);
 
-  int*** bfs() const;
+  Edge*** bfs() const;
   Edge*** dfs() const;
 
   static void cleanup_search(int*** search_result);

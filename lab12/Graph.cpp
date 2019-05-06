@@ -26,7 +26,73 @@ Graph& Graph::operator=(const Graph& copy){
   return *this;
 }
 
-int*** Graph::bfs() const{}
+Edge*** Graph::bfs() const{
+
+  bool* edge_marked[5];
+  bool node_marked[num_nodes];
+  for(int i = 0; i < num_nodes; i++){
+    node_marked[i] = false;
+    edge_marked[i] = new bool[num_nodes];
+    for(int j = 0; j < num_nodes; j++){
+      edge_marked[i][j] = false;
+    }
+  }
+  node_marked[0] = true;
+
+  QuickQueue<Edge> tree_edges(10);
+  QuickQueue<Edge> cross_edges(10);
+
+  // do bfs
+  QuickQueue<int> node_queue(10);
+  node_queue.push(0);
+  int index;
+
+  while(!node_queue.isEmpty()){
+
+    index = node_queue.pop();
+    GraphNode* cur = nodes[index];
+
+    for(int i = 0; i < num_nodes; i++){
+      if(i == index) continue;
+      if(!cur->isNeighbor(i)) continue;
+      if(edge_marked[index][i] || edge_marked[i][index]) continue;
+
+      if(node_marked[i]){
+        // add a cross edge
+        cross_edges.push(Edge(index, i));
+        edge_marked[i][index] = true;
+      }
+      else{
+        // add a tree edge & enqueue next node
+        node_marked[i] = true;
+        edge_marked[i][index] = true;
+        tree_edges.push(Edge(index, i));
+        node_queue.push(i);
+      }
+    }
+
+  }
+
+  Edge*** ret = new Edge**[2];
+
+  int num_tree_edges = tree_edges.getSize();
+  ret[0] = new Edge*[num_tree_edges+1];
+  ret[0][num_tree_edges] = nullptr;
+  for(int i = 0; i < num_tree_edges; i++){
+    ret[0][i] = new Edge(tree_edges.pop());
+  }
+
+  int num_cross_edges = cross_edges.getSize();
+  ret[1] = new Edge*[num_cross_edges+1];
+  ret[1][num_cross_edges] = nullptr;
+  for(int i = 0; i < num_cross_edges; i++){
+    ret[1][i] = new Edge(cross_edges.pop());
+  }
+
+  return ret;
+
+}
+
 Edge*** Graph::dfs() const{
 
     bool* edge_marked[5];

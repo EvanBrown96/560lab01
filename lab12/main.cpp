@@ -43,7 +43,7 @@ int main(int argc, char** argv){
   vals[4][4] = 0;
 
   Graph g(5, vals);
-  Edge*** dfs_res = g.dfs();
+  Edge*** dfs_res = g.bfs();
 
 
   int iter = 0;
