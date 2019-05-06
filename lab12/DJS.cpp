@@ -85,12 +85,14 @@ void DJS<T>::setUnion(Set<T>* s1, Set<T>* s2){
   if(s1->getRank() < s2->getRank()){
     SetNode<T>* old_root = s1->getRoot();
     old_root->setParent(s2->getRoot());
+    s1->setRoot(nullptr);
     removeSet(s1);
     addNode(old_root);
   }
   else{
     SetNode<T>* old_root = s2->getRoot();
     old_root->setParent(s1->getRoot());
+    s2->setRoot(nullptr);
     removeSet(s2);
     addNode(old_root);
   }
@@ -138,6 +140,7 @@ void DJS<T>::removeSet(Set<T>* rem_set){
   else
     next->setPrev(rem_set->getPrev());
 
+  if(rem_set->getRoot() != nullptr) delete rem_set->getRoot();
   delete rem_set;
 
 }

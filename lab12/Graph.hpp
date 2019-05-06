@@ -23,7 +23,7 @@ public:
   Edge** kruskal() const;
   Edge** prim() const;
 
-  static void cleanup_mst(int** mst_result);
+  static void cleanup_mst(Edge** mst_result);
 
 private:
 

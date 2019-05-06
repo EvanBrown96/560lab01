@@ -72,6 +72,13 @@ int main(int argc, char** argv){
     iter++;
   }
   std::cout << "\ncost: " << total_cost << "\n";
+
+  Graph::cleanup_mst(krusk);
+
+  for(int i = 0; i < 5; i++){
+    delete[] vals[i];
+  }
+  delete[] vals;
   // DJS<int> x;
   // x.makeSet(12);
   // x.makeSet(19);

@@ -248,7 +248,16 @@ Edge** Graph::kruskal() const{
 
 Edge** Graph::prim() const{}
 
-void Graph::cleanup_mst(int** mst_result){}
+void Graph::cleanup_mst(Edge** mst_result){
+
+  int iter = 0;
+  while(mst_result[iter] != nullptr){
+    delete mst_result[iter];
+    iter++;
+  }
+  delete[] mst_result;
+
+}
 
 void Graph::copyGraph(const Graph& copy){
 
