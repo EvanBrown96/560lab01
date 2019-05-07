@@ -268,7 +268,6 @@ Edge** Graph::prim() const{
 
   QuickQueue<Edge> qq(10);
 
-  // loop
   while(num_visited != num_nodes){
     // initialize minimum as infinity
     int cur_min = -1;
@@ -287,7 +286,7 @@ Edge** Graph::prim() const{
       }
     }
 
-    if(cur_node < 0) throw std::runtime_error("Given graph is not connected");
+    if(cur_node < 0) throw std::runtime_error("No Solution");
 
     num_visited++;
     visited[cur_node] = true;

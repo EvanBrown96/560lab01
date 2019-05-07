@@ -117,34 +117,46 @@ void UserInput::userDFS(){
 
 void UserInput::userKruskal(){
 
-  Edge** mst_res = g->kruskal();
+  try{
 
-  int iter = 0;
-  int total_cost = 0;
-  while(mst_res[iter] != nullptr){
-    std::cout << *mst_res[iter] << ", ";
-    total_cost += mst_res[iter]->cost;
-    iter++;
+    Edge** mst_res = g->kruskal();
+    int iter = 0;
+    int total_cost = 0;
+    while(mst_res[iter] != nullptr){
+      std::cout << *mst_res[iter] << ", ";
+      total_cost += mst_res[iter]->cost;
+      iter++;
+    }
+    std::cout << "\ncost: " << total_cost << "\n";
+
+    Graph::cleanup_mst(mst_res);
+
   }
-  std::cout << "\ncost: " << total_cost << "\n";
-
-  Graph::cleanup_mst(mst_res);
+  catch(std::runtime_error& e){
+    std::cout << e.what() << "\n";
+  }
 
 }
 
 void UserInput::userPrim(){
 
-  Edge** mst_res = g->prim();
+  try{
+    
+    Edge** mst_res = g->prim();
+    int iter = 0;
+    int total_cost = 0;
+    while(mst_res[iter] != nullptr){
+      std::cout << *mst_res[iter] << ", ";
+      total_cost += mst_res[iter]->cost;
+      iter++;
+    }
+    std::cout << "\ncost: " << total_cost << "\n";
 
-  int iter = 0;
-  int total_cost = 0;
-  while(mst_res[iter] != nullptr){
-    std::cout << *mst_res[iter] << ", ";
-    total_cost += mst_res[iter]->cost;
-    iter++;
+    Graph::cleanup_mst(mst_res);
+
   }
-  std::cout << "\ncost: " << total_cost << "\n";
-
-  Graph::cleanup_mst(mst_res);
+  catch(std::runtime_error& e){
+    std::cout << e.what() << "\n";
+  }
 
 }

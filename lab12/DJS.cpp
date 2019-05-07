@@ -6,9 +6,6 @@ template <typename T>
 DJS<T>::DJS():
     first_set(nullptr), last_set(nullptr), first_node(nullptr), last_node(nullptr){}
 
-    // roots(new SetNode<T>*[DJS_INIT_SIZE]), roots_size(DJS_INIT_SIZE), roots_count(0),
-    // others(new SetNode<T>*[DJS_INIT_SIZE]), others_size(DJS_INIT_SIZE), others_count(0){}
-
 template <typename T>
 DJS<T>::~DJS(){
   destroyDJS();
