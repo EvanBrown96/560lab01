@@ -1,5 +1,6 @@
 #include "ValueNotFound.hpp"
 #include <stdexcept>
+#include "QuickQueue.hpp"
 
 template <typename T>
 DJS<T>::DJS():
@@ -55,8 +56,15 @@ Set<T>* DJS<T>::find(const T& item){
   SetNode<T>* cur_node = first_node;
   while(cur_node != nullptr){
     if(cur_node->getItem() == item){
-      while(cur_node->getMySet() == nullptr)
+      QuickQueue<SetNode<T>*> path_nodes(10);
+      while(cur_node->getMySet() == nullptr){
+        path_nodes.push(cur_node);
         cur_node = cur_node->getParent();
+      }
+      // path compression
+      while(!path_nodes.isEmpty()){
+        path_nodes.pop()->setParent(cur_node);
+      }
       return cur_node->getMySet();
     }
     cur_node = cur_node->getNext();
